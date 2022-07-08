@@ -110,9 +110,9 @@ dist
 /games/Uninvited Guests/html/build/
 /games/Uninvited Guests/.gradle/
 /games/Uninvited Guests/.idea/
-/games/Uninvited Guests//android/libs/armeabi-v7a/
-/games/Uninvited Guests//android/libs/arm64-v8a/
-/games/Uninvited Guests//android/libs/x86/
-/games/Uninvited Guests//android/libs/x86_64/
+/games/Uninvited Guests/android/libs/armeabi-v7a/
+/games/Uninvited Guests/android/libs/arm64-v8a/
+/games/Uninvited Guests/android/libs/x86/
+/games/Uninvited Guests/android/libs/x86_64/
 
 
