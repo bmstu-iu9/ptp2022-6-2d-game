@@ -114,5 +114,13 @@ dist
 /games/Uninvited Guests/android/libs/arm64-v8a/
 /games/Uninvited Guests/android/libs/x86/
 /games/Uninvited Guests/android/libs/x86_64/
-
-
+/games/Uninvited Guests/android/res/
+/games/Uninvited Guests/html/war/
+/games/Uninvited Guests/local.properties
+/games/Uninvited Guests/gradle.properties
+/games/Uninvited Guests/gradlew
+/games/Uninvited Guests/gradlew.bat
+/games/Uninvited Guests/android/ic_launcher-web.png
+/games/Uninvited Guests/android/proguard-rules.pro
+/games/Uninvited Guests/android/project.properties
+/games/Uninvited Guests/html/webapp/WEB-INF
