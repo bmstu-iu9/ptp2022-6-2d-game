@@ -9,6 +9,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.qualityworkstudio.uninvitedguests.GameSettings;
 
+/**
+ * The main screen of the game.
+ *
+ * @author Andrey Karanik
+ */
+
 public class MainScreen implements Screen {
 
     private Game game;
@@ -23,7 +29,6 @@ public class MainScreen implements Screen {
         batch = new SpriteBatch();
         camera = new OrthographicCamera(settings.getCameraSize(), settings.getCameraSize() *
                 ((float) Gdx.graphics.getHeight() / Gdx.graphics.getWidth()));
-
     }
 
     @Override
