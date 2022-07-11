@@ -5,9 +5,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.qualityworkstudio.uninvitedguests.GameSettings;
+import com.qualityworkstudio.uninvitedguests.Player;
 
 /**
  * The main screen of the game.
@@ -21,14 +23,14 @@ public class MainScreen implements Screen {
     private GameSettings settings;
 
     private SpriteBatch batch;
-    private OrthographicCamera camera;
+
+    private Player player;
 
     public MainScreen(Game game, GameSettings settings) {
         this.game = game;
         this.settings = settings;
         batch = new SpriteBatch();
-        camera = new OrthographicCamera(settings.getCameraSize(), settings.getCameraSize() *
-                ((float) Gdx.graphics.getHeight() / Gdx.graphics.getWidth()));
+        player = new Player(new Texture(Gdx.files.internal("white_square.png")), settings);
     }
 
     @Override
@@ -38,18 +40,20 @@ public class MainScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        camera.update();
+        player.update(Gdx.graphics.getDeltaTime());
+
         ScreenUtils.clear(Color.GOLD);
-        batch.setProjectionMatrix(camera.combined);
+        batch.setProjectionMatrix(player.getCamera().combined);
         batch.begin();
+        player.draw(batch);
         batch.end();
     }
 
     @Override
     public void resize(int width, int height) {
-        camera.viewportWidth = settings.getCameraSize();
-        camera.viewportHeight = settings.getCameraSize() * ((float) height / width);
-        camera.update();
+        player.getCamera().viewportWidth = settings.getCameraSize();
+        player.getCamera().viewportHeight = settings.getCameraSize() * ((float) height / width);
+        player.getCamera().update();
     }
 
     @Override
