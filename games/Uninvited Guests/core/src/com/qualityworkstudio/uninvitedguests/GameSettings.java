@@ -33,6 +33,11 @@ public class GameSettings {
      */
     private boolean mobileMode;
 
+    /**
+     * The boolean value indicates whether the developer mode is enabled.
+     */
+    private boolean developerMode;
+
     public GameSettings() {
         cameraSize = STANDARD_CAMERA_SIZE;
         viewportSize = STANDARD_VIEWPORT_SIZE;
@@ -97,5 +102,23 @@ public class GameSettings {
      */
     public void setMobileMode(boolean mobileMode) {
         this.mobileMode = mobileMode;
+    }
+
+    /**
+     * Indicates if the developer mode is enabled.
+     *
+     * @return whether the developer mode is enabled.
+     */
+    public boolean isDeveloperMode() {
+        return developerMode;
+    }
+
+    /**
+     * Sets the developer mode. Default is false.
+     *
+     * @param developerMode whether the developer mode will be enabled.
+     */
+    public void setDeveloperMode(boolean developerMode) {
+        this.developerMode = developerMode;
     }
 }

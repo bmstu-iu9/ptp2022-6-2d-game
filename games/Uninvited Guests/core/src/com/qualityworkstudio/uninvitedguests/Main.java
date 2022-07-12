@@ -14,6 +14,7 @@ public class Main extends Game {
 	@Override
 	public void create () {
 		GameSettings settings = new GameSettings();
+		settings.setDeveloperMode(true);
 		setScreen(new MainScreen(this, settings));
 	}
 }

@@ -6,15 +6,25 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.physics.box2d.Body;
+
+/**
+ *
+ * @author Andrey Karanik
+ */
 
 public class Player {
 
+    private Body body;
     private Sprite sprite;
-    private float movementSpeed;
-    private OrthographicCamera camera;
 
+    private float movementSpeed;
+
+    private OrthographicCamera camera;
+    private boolean fixedCamera;
 
     public Player(Texture texture, GameSettings settings) {
+
         sprite = new Sprite(texture);
         sprite.setOriginCenter();
         sprite.setSize(8f, 8f);
@@ -26,6 +36,10 @@ public class Player {
 
     public void update(float deltaTime) {
         camera.update();
+
+        if (!fixedCamera) {
+            camera.position.set(sprite.getX(), sprite.getY(), 0);
+        }
 
         if (Gdx.input.isKeyPressed(Input.Keys.W)) {
             sprite.translate(0, movementSpeed * deltaTime);
@@ -47,5 +61,13 @@ public class Player {
 
     public OrthographicCamera getCamera() {
         return camera;
+    }
+
+    public boolean isFixedCamera() {
+        return fixedCamera;
+    }
+
+    public void setFixedCamera(boolean fixedCamera) {
+        this.fixedCamera = fixedCamera;
     }
 }
