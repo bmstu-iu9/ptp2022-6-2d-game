@@ -1,6 +1,8 @@
 package com.qualityworkstudio.uninvitedguests;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
 import com.qualityworkstudio.uninvitedguests.screens.MainScreen;
 
 /**
@@ -15,6 +17,7 @@ public class Main extends Game {
 	public void create () {
 		GameSettings settings = new GameSettings();
 		settings.setDeveloperMode(true);
-		setScreen(new MainScreen(this, settings));
+		AssetManager assetManager = new AssetManager();
+		setScreen(new MainScreen(this, assetManager, settings));
 	}
 }

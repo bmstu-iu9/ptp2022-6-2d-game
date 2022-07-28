@@ -32,10 +32,10 @@ public class Player {
     public Player(World world, Texture texture, GameSettings settings) {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
-        bodyDef.linearDamping = 5;
+        bodyDef.linearDamping = 30;
         body = world.createBody(bodyDef);
         CircleShape shape = new CircleShape();
-        shape.setRadius(8f);
+        shape.setRadius(2f);
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
         fixtureDef.density = 0.5f;
@@ -44,9 +44,9 @@ public class Player {
         shape.dispose();
 
         sprite = new Sprite(texture);
+        sprite.setSize(16f, 16f);
         sprite.setOriginCenter();
-        sprite.setSize(8f, 8f);
-        movementSpeed = 256f;
+        movementSpeed = 64f;
         camera = new OrthographicCamera(settings.getCameraSize(), settings.getCameraSize() *
                 ((float) Gdx.graphics.getHeight() / Gdx.graphics.getWidth()));
     }
@@ -72,6 +72,10 @@ public class Player {
         }
 
         sprite.setPosition(body.getPosition().x - sprite.getWidth() / 2f, body.getPosition().y - sprite.getHeight() / 2f);
+
+        Vector2 playerPosOnScreen = new Vector2(((sprite.getX() + sprite.getWidth() / 2f) * (Gdx.graphics.getWidth() / camera.viewportWidth) + Gdx.graphics.getWidth() / 2f),
+                Gdx.graphics.getHeight() - ((sprite.getY() + sprite.getHeight() / 2f) * (Gdx.graphics.getHeight() / camera.viewportHeight) + Gdx.graphics.getHeight() / 2f));
+        sprite.setRotation(-(float)Math.toDegrees(Math.atan2(Gdx.input.getY() - playerPosOnScreen.y, Gdx.input.getX() - playerPosOnScreen.x)) - 90f);
     }
 
     public void draw(SpriteBatch batch) {

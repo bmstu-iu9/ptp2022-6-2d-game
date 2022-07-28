@@ -3,6 +3,7 @@ package com.qualityworkstudio.uninvitedguests.screens;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -17,7 +18,12 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.qualityworkstudio.uninvitedguests.GameSettings;
+import com.qualityworkstudio.uninvitedguests.Map;
 import com.qualityworkstudio.uninvitedguests.Player;
+
+import box2dLight.ConeLight;
+import box2dLight.PointLight;
+import box2dLight.RayHandler;
 
 /**
  * The main screen of the game.
@@ -37,16 +43,21 @@ public class MainScreen extends ScreenAdapter {
     private BitmapFont font;
 
     private Player player;
+    private Map map;
 
-    //For developers
     private Box2DDebugRenderer debugRenderer;
 
-    public MainScreen(Game game, GameSettings settings) {
+    public MainScreen(Game game, AssetManager assetManager, GameSettings settings) {
         this.game = game;
         this.settings = settings;
         batch = new SpriteBatch();
         world = new World(new Vector2(0, 0), false);
-        player = new Player(world, new Texture(Gdx.files.internal("white_square.png")), settings);
+        assetManager.load("character.png", Texture.class);
+        assetManager.load("maps/main_map_layer1.png", Texture.class);
+        assetManager.load("maps/main_map_layer2.png", Texture.class);
+        assetManager.finishLoading();
+        map = new Map(128, assetManager.<Texture>get("maps/main_map_layer1.png"), assetManager.<Texture>get("maps/main_map_layer2.png"));
+        player = new Player(world, assetManager.<Texture>get("character.png"), settings);
         player.setFixedCamera(true);
         viewport = new FitViewport(1920f, 1920f * (
                 (float)Gdx.graphics.getHeight() / Gdx.graphics.getWidth()));
@@ -69,16 +80,14 @@ public class MainScreen extends ScreenAdapter {
         world.step(1 / 60f, 6, 2);
         player.update(delta);
 
-        ScreenUtils.clear(Color.GOLD);
+        ScreenUtils.clear(Color.BLACK);
 
         batch.setProjectionMatrix(player.getCamera().combined);
         batch.begin();
+        map.draw(batch);
         player.draw(batch);
+        map.draw(batch);
         batch.end();
-
-        if (settings.isDeveloperMode()) {
-            debugRenderer.render(world, player.getCamera().combined);
-        }
 
         stage.act(delta);
         stage.draw();
