@@ -7,7 +7,6 @@ import com.qualityworkstudio.uninvitedguests.screens.MainScreen;
 
 /**
  * The main class for launching the game.
- *
  * @author Andrey Karanik
  */
 
