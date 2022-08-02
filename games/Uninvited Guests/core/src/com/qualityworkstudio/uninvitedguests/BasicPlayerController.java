@@ -8,8 +8,10 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 
 /**
+ * The class contains methods to control the player.
  *
  * @author Andrey Karanik
+ * @see PlayerController
  */
 
 public class BasicPlayerController implements PlayerController {

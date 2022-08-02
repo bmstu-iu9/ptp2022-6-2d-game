@@ -86,7 +86,7 @@ public class GameSettings {
     }
 
     /**
-     * Indicates if the mobile mode is enabled.
+     * Returns true when the mobile mode is enabled.
      *
      * @return whether the mobile mode is enabled.
      */
@@ -105,7 +105,7 @@ public class GameSettings {
     }
 
     /**
-     * Indicates if the developer mode is enabled.
+     * Returns true when the developer mode is enabled.
      *
      * @return whether the developer mode is enabled.
      */

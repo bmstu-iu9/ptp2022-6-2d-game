@@ -28,8 +28,6 @@ public class Player {
     private boolean fixedCamera;
 
     /**
-     * Constructs a player.
-     *
      * @param world a world object.
      * @param texture a texture.
      * @param settings game settings.
@@ -57,7 +55,7 @@ public class Player {
     }
 
     /**
-     * The method updates player.
+     * The method updates the state of the player. Before using this method, make sure you have set the player controller.
      * @param deltaTime the time span between the last frame and the current frame in seconds.
      */
     public void update(float deltaTime) {
@@ -73,6 +71,7 @@ public class Player {
 
     /**
      * This method draws the player.
+     *
      * @param batch a sprite batch.
      */
     public void draw(SpriteBatch batch) {
@@ -143,10 +142,20 @@ public class Player {
         return camera;
     }
 
+    /**
+     * Returns true when the player camera is fixed.
+     *
+     * @return whether the player camera is fixed.
+     */
     public boolean isFixedCamera() {
         return fixedCamera;
     }
 
+    /**
+     * Sets whether the player camera is fixed. Default is false.
+     *
+     * @param fixedCamera whether the player camera is fixed.
+     */
     public void setFixedCamera(boolean fixedCamera) {
         this.fixedCamera = fixedCamera;
     }
