@@ -35,8 +35,6 @@ public class Player {
      * @param settings game settings.
      */
     public Player(World world, Texture texture, GameSettings settings) {
-        controller = new BasicPlayerController(this);
-
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         bodyDef.linearDamping = 30;
