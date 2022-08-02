@@ -59,6 +59,7 @@ public class MainScreen extends ScreenAdapter {
         assetManager.finishLoading();
         map = new Map(128, assetManager.<Texture>get("maps/main_map_layer1.png"), assetManager.<Texture>get("maps/main_map_layer2.png"));
         player = new Player(world, assetManager.<Texture>get("character.png"), settings);
+        player.setController(new BasicPlayerController(player));
         player.setFixedCamera(true);
         viewport = new FitViewport(settings.getViewportSize(), settings.getViewportSize() * (
                 (float)Gdx.graphics.getHeight() / Gdx.graphics.getWidth()));
