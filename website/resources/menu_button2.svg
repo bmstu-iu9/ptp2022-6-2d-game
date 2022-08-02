@@ -1,9 +1,0 @@
-<svg width="256" height="256" xmlns="http://www.w3.org/2000/svg">
- <g id="Layer_1">
-  <title>Layer 1</title>
-  <rect stroke-width="0" stroke="#000" id="svg_1" height="256" width="52" y="0" x="0" fill="#fff"/>
-  <rect stroke-width="0" id="svg_2" height="256" width="52" y="0" x="102" stroke="#000" fill="#fff"/>
-  <rect stroke-width="0" id="svg_3" height="256" width="52" y="0" x="204" stroke="#000" fill="#fff"/>
- </g>
-
-</svg>
