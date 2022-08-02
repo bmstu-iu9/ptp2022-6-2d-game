@@ -17,6 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.qualityworkstudio.uninvitedguests.BasicPlayerController;
 import com.qualityworkstudio.uninvitedguests.GameSettings;
 import com.qualityworkstudio.uninvitedguests.Map;
 import com.qualityworkstudio.uninvitedguests.Player;
@@ -59,7 +60,7 @@ public class MainScreen extends ScreenAdapter {
         map = new Map(128, assetManager.<Texture>get("maps/main_map_layer1.png"), assetManager.<Texture>get("maps/main_map_layer2.png"));
         player = new Player(world, assetManager.<Texture>get("character.png"), settings);
         player.setFixedCamera(true);
-        viewport = new FitViewport(1920f, 1920f * (
+        viewport = new FitViewport(settings.getViewportSize(), settings.getViewportSize() * (
                 (float)Gdx.graphics.getHeight() / Gdx.graphics.getWidth()));
         stage = new Stage(viewport);
         Gdx.input.setInputProcessor(stage);
@@ -104,6 +105,7 @@ public class MainScreen extends ScreenAdapter {
     @Override
     public void dispose() {
         batch.dispose();
+        world.dispose();
         stage.dispose();
     }
 }

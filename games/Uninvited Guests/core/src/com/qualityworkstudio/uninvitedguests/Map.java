@@ -3,6 +3,11 @@ package com.qualityworkstudio.uninvitedguests;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+/**
+ *
+ * @author Andrey Karanik
+ */
+
 public class Map {
 
     private float size;

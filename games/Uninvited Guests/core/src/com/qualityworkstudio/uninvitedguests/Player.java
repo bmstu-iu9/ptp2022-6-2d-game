@@ -1,16 +1,13 @@
 package com.qualityworkstudio.uninvitedguests;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
-import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 
@@ -23,13 +20,23 @@ public class Player {
 
     private Body body;
     private Sprite sprite;
+    private PlayerController controller;
 
     private float movementSpeed;
 
     private OrthographicCamera camera;
     private boolean fixedCamera;
 
+    /**
+     * Constructs a player.
+     *
+     * @param world a world object.
+     * @param texture a texture.
+     * @param settings game settings.
+     */
     public Player(World world, Texture texture, GameSettings settings) {
+        controller = new BasicPlayerController(this);
+
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         bodyDef.linearDamping = 30;
@@ -51,6 +58,10 @@ public class Player {
                 ((float) Gdx.graphics.getHeight() / Gdx.graphics.getWidth()));
     }
 
+    /**
+     * The method updates player.
+     * @param deltaTime the time span between the last frame and the current frame in seconds.
+     */
     public void update(float deltaTime) {
         camera.update();
 
@@ -58,28 +69,71 @@ public class Player {
             camera.position.set(sprite.getX(), sprite.getY(), 0);
         }
 
-        if (Gdx.input.isKeyPressed(Input.Keys.W)) {
-            body.applyLinearImpulse(0, movementSpeed, body.getPosition().x, body.getPosition().y, true);
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-            body.applyLinearImpulse(-movementSpeed, 0, body.getPosition().x, body.getPosition().y, true);
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.S)) {
-            body.applyLinearImpulse(0, -movementSpeed, body.getPosition().x, body.getPosition().y, true);
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-            body.applyLinearImpulse(movementSpeed, 0, body.getPosition().x, body.getPosition().y, true);
-        }
-
-        sprite.setPosition(body.getPosition().x - sprite.getWidth() / 2f, body.getPosition().y - sprite.getHeight() / 2f);
-
-        Vector2 playerPosOnScreen = new Vector2(((sprite.getX() + sprite.getWidth() / 2f) * (Gdx.graphics.getWidth() / camera.viewportWidth) + Gdx.graphics.getWidth() / 2f),
-                Gdx.graphics.getHeight() - ((sprite.getY() + sprite.getHeight() / 2f) * (Gdx.graphics.getHeight() / camera.viewportHeight) + Gdx.graphics.getHeight() / 2f));
-        sprite.setRotation(-(float)Math.toDegrees(Math.atan2(Gdx.input.getY() - playerPosOnScreen.y, Gdx.input.getX() - playerPosOnScreen.x)) - 90f);
+        controller.move();
+        controller.look();
     }
 
+    /**
+     * This method draws the player.
+     * @param batch a sprite batch.
+     */
     public void draw(SpriteBatch batch) {
         sprite.draw(batch);
+    }
+
+    /**
+     * Gets the player controller.
+     *
+     * @return the player controller.
+     */
+    public PlayerController getController() {
+        return controller;
+    }
+
+    /**
+     * Sets the player controller.
+     *
+     * @param controller a new player controller.
+     */
+    public void setController(PlayerController controller) {
+        // Following the dependency inversion principle (DIP from SOLID)
+        this.controller = controller;
+    }
+
+    /**
+     * Gets the player body.
+     *
+     * @return the player body.
+     */
+    public Body getBody() {
+        return body;
+    }
+
+    /**
+     * Gets the player sprite.
+     *
+     * @return the player sprite.
+     */
+    public Sprite getSprite() {
+        return sprite;
+    }
+
+    /**
+     * Gets the player movement speed.
+     *
+     * @return the player movement speed.
+     */
+    public float getMovementSpeed() {
+        return movementSpeed;
+    }
+
+    /**
+     * Sets the player movement speed.
+     *
+     * @param movementSpeed a new player movement speed.
+     */
+    public void setMovementSpeed(float movementSpeed) {
+        this.movementSpeed = movementSpeed;
     }
 
     /**
