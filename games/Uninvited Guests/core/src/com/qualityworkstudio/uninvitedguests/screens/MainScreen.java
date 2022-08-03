@@ -18,6 +18,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.qualityworkstudio.uninvitedguests.BasicPlayerController;
+import com.qualityworkstudio.uninvitedguests.Door;
 import com.qualityworkstudio.uninvitedguests.GameSettings;
 import com.qualityworkstudio.uninvitedguests.Map;
 import com.qualityworkstudio.uninvitedguests.Player;
@@ -45,6 +46,7 @@ public class MainScreen extends ScreenAdapter {
 
     private Player player;
     private Map map;
+    private Door door;
 
     private Box2DDebugRenderer debugRenderer;
 
@@ -56,8 +58,11 @@ public class MainScreen extends ScreenAdapter {
         assetManager.load("character.png", Texture.class);
         assetManager.load("maps/main_map_layer1.png", Texture.class);
         assetManager.load("maps/main_map_layer2.png", Texture.class);
+        assetManager.load("left_green_door_part.png", Texture.class);
+        assetManager.load("right_green_door_part.png", Texture.class);
         assetManager.finishLoading();
         map = new Map(128, assetManager.<Texture>get("maps/main_map_layer1.png"), assetManager.<Texture>get("maps/main_map_layer2.png"));
+        door = new Door(world, assetManager.<Texture>get("left_green_door_part.png"), assetManager.<Texture>get("right_green_door_part.png"));
         player = new Player(world, assetManager.<Texture>get("character.png"), settings);
         player.setController(new BasicPlayerController(player));
         player.setFixedCamera(true);
@@ -81,15 +86,19 @@ public class MainScreen extends ScreenAdapter {
     public void render(float delta) {
         world.step(1 / 60f, 6, 2);
         player.update(delta);
+        door.update(delta);
 
         ScreenUtils.clear(Color.BLACK);
 
         batch.setProjectionMatrix(player.getCamera().combined);
         batch.begin();
         map.draw(batch);
-        player.draw(batch);
+        door.draw(batch);
         map.draw(batch);
+        player.draw(batch);
         batch.end();
+
+        debugRenderer.render(world, player.getCamera().combined);
 
         stage.act(delta);
         stage.draw();
