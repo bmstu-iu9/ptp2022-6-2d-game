@@ -1,5 +1,7 @@
 package com.qualityworkstudio.uninvitedguests;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -34,6 +36,8 @@ public class Door {
 
     private boolean fixed;
 
+    private  float maxOpennessDegree;
+
     public Door(World world, Texture ... textures) {
         this.textures = textures;
         float width = 6f;
@@ -59,6 +63,7 @@ public class Door {
         rightPartSprite.setOriginCenter();
 
         radius = 3f;
+        maxOpennessDegree = 1.5f * radius;
         position = new Vector2();
 
         leftPartBody.setTransform(position.x - radius, 0f, 0f);
@@ -68,16 +73,22 @@ public class Door {
     public void update(float deltaTime) {
         if (!fixed) {
             float distance = radius + opennessDegree;
+            float k = 0.1f;
             switch (state) {
                 case IS_OPENING:
-                    float maxOpennessDegree = 1.5f * radius;
-                    float k = 0.1f;
-                    if (opennessDegree >= maxOpennessDegree) {
+                    if (opennessDegree >= maxOpennessDegree - 0.01f) {
+                        opennessDegree = maxOpennessDegree;
                         state = OPEN;
                     }
                     opennessDegree = opennessDegree + (maxOpennessDegree - opennessDegree) * k;
                     break;
                 case IS_CLOSING:
+                    System.out.println(opennessDegree);
+                    if (opennessDegree <= 0 + 0.01f) {
+                        opennessDegree = 0;
+                        state = CLOSED;
+                    }
+                    opennessDegree = opennessDegree - (opennessDegree) * k;
                     break;
             }
             leftPartBody.setTransform(position.x - distance * (float)Math.cos(rotation),
@@ -106,6 +117,15 @@ public class Door {
 
         opennessDegree = 0;
         state = IS_OPENING;
+    }
+
+    public void close() {
+        if ((state & (CLOSED | IS_CLOSING | IS_OPENING)) != 0) {
+            return;
+        }
+
+        opennessDegree = maxOpennessDegree;
+        state = IS_CLOSING;
     }
 
     public void setPosition(Vector2 position) {
