@@ -58,11 +58,11 @@ public class MainScreen extends ScreenAdapter {
         assetManager.load("character.png", Texture.class);
         assetManager.load("maps/main_map_layer1.png", Texture.class);
         assetManager.load("maps/main_map_layer2.png", Texture.class);
-        assetManager.load("left_green_door_part.png", Texture.class);
-        assetManager.load("right_green_door_part.png", Texture.class);
+        assetManager.load("green_door_part.png", Texture.class);
         assetManager.finishLoading();
         map = new Map(128, assetManager.<Texture>get("maps/main_map_layer1.png"), assetManager.<Texture>get("maps/main_map_layer2.png"));
-        door = new Door(world, assetManager.<Texture>get("left_green_door_part.png"), assetManager.<Texture>get("right_green_door_part.png"));
+        door = new Door(world, assetManager.<Texture>get("green_door_part.png"));
+        door.setPosition(0f, 16f);
         player = new Player(world, assetManager.<Texture>get("character.png"), settings);
         player.setController(new BasicPlayerController(player));
         player.setFixedCamera(true);
