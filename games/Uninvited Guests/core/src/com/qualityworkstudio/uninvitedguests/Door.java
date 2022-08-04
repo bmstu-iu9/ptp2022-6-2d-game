@@ -11,6 +11,12 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 
 public class Door {
+
+    public static final int CLOSED = 1;
+    public static final int OPEN = 2;
+    public static final int IS_CLOSING = 4;
+    public static final int IS_OPENING = 8;
+
     private Body leftPartBody;
     private Body rightPartBody;
 
@@ -18,6 +24,8 @@ public class Door {
     private Sprite rightPartSprite;
 
     private Texture[] textures;
+
+    private int state;
 
     private float radius;
     private float opennessDegree;
@@ -60,6 +68,18 @@ public class Door {
     public void update(float deltaTime) {
         if (!fixed) {
             float distance = radius + opennessDegree;
+            switch (state) {
+                case IS_OPENING:
+                    float maxOpennessDegree = 1.5f * radius;
+                    float k = 0.1f;
+                    if (opennessDegree >= maxOpennessDegree) {
+                        state = OPEN;
+                    }
+                    opennessDegree = opennessDegree + (maxOpennessDegree - opennessDegree) * k;
+                    break;
+                case IS_CLOSING:
+                    break;
+            }
             leftPartBody.setTransform(position.x - distance * (float)Math.cos(rotation),
                     position.y - distance * (float)Math.sin(rotation), rotation);
             rightPartBody.setTransform(position.x + distance * (float)Math.cos(rotation),
@@ -77,6 +97,15 @@ public class Door {
     public void draw(SpriteBatch batch) {
         leftPartSprite.draw(batch);
         rightPartSprite.draw(batch);
+    }
+
+    public void open() {
+        if ((state & (OPEN | IS_CLOSING | IS_OPENING)) != 0) {
+            return;
+        }
+
+        opennessDegree = 0;
+        state = IS_OPENING;
     }
 
     public void setPosition(Vector2 position) {
