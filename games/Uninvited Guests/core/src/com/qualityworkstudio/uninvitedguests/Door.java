@@ -62,7 +62,7 @@ public class Door {
         rightPartSprite.setSize(width, height);
         rightPartSprite.setOriginCenter();
 
-        radius = 3f;
+        radius = width / 2f;
         maxOpennessDegree = 1.5f * radius;
         position = new Vector2();
 

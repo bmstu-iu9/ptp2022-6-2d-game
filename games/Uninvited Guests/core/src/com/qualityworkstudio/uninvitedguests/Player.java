@@ -22,6 +22,7 @@ public class Player {
     private Sprite sprite;
     private PlayerController controller;
 
+    private float size;
     private float movementSpeed;
 
     private OrthographicCamera camera;
@@ -33,21 +34,23 @@ public class Player {
      * @param settings game settings.
      */
     public Player(World world, Texture texture, GameSettings settings) {
+        size = 16f;
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         bodyDef.linearDamping = 30;
         body = world.createBody(bodyDef);
         CircleShape shape = new CircleShape();
-        shape.setRadius(2f);
+        shape.setRadius(size / 8f);
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
         fixtureDef.density = 0.5f;
         fixtureDef.friction = 0.5f;
         body.createFixture(fixtureDef);
+        body.setFixedRotation(true);
         shape.dispose();
 
         sprite = new Sprite(texture);
-        sprite.setSize(16f, 16f);
+        sprite.setSize(size, size);
         sprite.setOriginCenter();
         movementSpeed = 64f;
         camera = new OrthographicCamera(settings.getCameraSize(), settings.getCameraSize() *
@@ -67,6 +70,9 @@ public class Player {
 
         controller.move();
         controller.look();
+
+        sprite.setPosition(body.getPosition().x - size / 2f, body.getPosition().y - size / 2f);
+        sprite.setRotation((float)Math.toDegrees(body.getAngle()));
     }
 
     /**
@@ -158,5 +164,9 @@ public class Player {
      */
     public void setFixedCamera(boolean fixedCamera) {
         this.fixedCamera = fixedCamera;
+    }
+
+    public float getSize() {
+        return size;
     }
 }

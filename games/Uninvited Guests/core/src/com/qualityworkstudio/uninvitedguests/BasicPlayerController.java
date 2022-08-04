@@ -24,7 +24,6 @@ public class BasicPlayerController implements PlayerController {
     @Override
     public void move() {
         Body body = player.getBody();
-        Sprite sprite = player.getSprite();
         float movementSpeed = player.getMovementSpeed();
 
         if (Gdx.input.isKeyPressed(Input.Keys.W)) {
@@ -39,17 +38,16 @@ public class BasicPlayerController implements PlayerController {
         if (Gdx.input.isKeyPressed(Input.Keys.D)) {
             body.applyLinearImpulse(movementSpeed, 0, body.getPosition().x, body.getPosition().y, true);
         }
-
-        sprite.setPosition(body.getPosition().x - sprite.getWidth() / 2f, body.getPosition().y - sprite.getHeight() / 2f);
     }
 
     @Override
     public void look() {
-        Sprite sprite = player.getSprite();
+        Body body = player.getBody();
         OrthographicCamera camera = player.getCamera();
 
-        Vector2 playerPosOnScreen = new Vector2(((sprite.getX() + sprite.getWidth() / 2f) * (Gdx.graphics.getWidth() / camera.viewportWidth) + Gdx.graphics.getWidth() / 2f),
-                Gdx.graphics.getHeight() - ((sprite.getY() + sprite.getHeight() / 2f) * (Gdx.graphics.getHeight() / camera.viewportHeight) + Gdx.graphics.getHeight() / 2f));
-        sprite.setRotation(-(float)Math.toDegrees(Math.atan2(Gdx.input.getY() - playerPosOnScreen.y, Gdx.input.getX() - playerPosOnScreen.x)) - 90f);
+        Vector2 playerPosOnScreen = new Vector2((body.getPosition().x * (Gdx.graphics.getWidth() / camera.viewportWidth) + Gdx.graphics.getWidth() / 2f),
+                Gdx.graphics.getHeight() - (body.getPosition().y * (Gdx.graphics.getHeight() / camera.viewportHeight) + Gdx.graphics.getHeight() / 2f));
+        System.out.println(playerPosOnScreen);
+        body.setTransform(body.getPosition(), -(float)(Math.atan2(Gdx.input.getY() - playerPosOnScreen.y, Gdx.input.getX() - playerPosOnScreen.x)) - (float)Math.PI / 2f);
     }
 }
