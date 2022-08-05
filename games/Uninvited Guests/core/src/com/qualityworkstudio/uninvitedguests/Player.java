@@ -29,6 +29,8 @@ public class Player {
     private boolean fixedCamera;
 
     /**
+     * Constructs a new player.
+     *
      * @param world a world object.
      * @param texture a texture.
      * @param settings game settings.
@@ -59,6 +61,7 @@ public class Player {
 
     /**
      * The method updates the state of the player. Before using this method, make sure you have set the player controller.
+     *
      * @param deltaTime the time span between the last frame and the current frame in seconds.
      */
     public void update(float deltaTime) {

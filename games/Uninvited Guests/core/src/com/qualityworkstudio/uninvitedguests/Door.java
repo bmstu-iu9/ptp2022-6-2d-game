@@ -1,7 +1,5 @@
 package com.qualityworkstudio.uninvitedguests;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -12,8 +10,15 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 
+/**
+ * The class represents a door that the {@code Player} can interact with.
+ *
+ * @author Andrey Karanik
+ */
+
 public class Door {
 
+    // Door states
     public static final int CLOSED = 1;
     public static final int OPEN = 2;
     public static final int IS_CLOSING = 4;
@@ -25,21 +30,24 @@ public class Door {
     private Sprite leftPartSprite;
     private Sprite rightPartSprite;
 
-    private Texture[] textures;
-
     private int state;
 
     private float radius;
     private float opennessDegree;
+    private float maxOpennessDegree;
+
     private Vector2 position;
     private float rotation;
 
     private boolean fixed;
 
-    private  float maxOpennessDegree;
-
-    public Door(World world, Texture ... textures) {
-        this.textures = textures;
+    /**
+     * Constructs a door.
+     *
+     * @param world a world object.
+     * @param texture a texture.
+     */
+    public Door(World world, Texture texture) {
         float width = 6f;
         float height = 4f;
 
@@ -55,10 +63,10 @@ public class Door {
         rightPartBody.createFixture(fixtureDef);
         shape.dispose();
 
-        leftPartSprite = new Sprite(textures[0]);
+        leftPartSprite = new Sprite(texture);
         leftPartSprite.setSize(width, height);
         leftPartSprite.setOriginCenter();
-        rightPartSprite = new Sprite(textures[0]);
+        rightPartSprite = new Sprite(texture);
         rightPartSprite.setSize(width, height);
         rightPartSprite.setOriginCenter();
 
@@ -70,6 +78,11 @@ public class Door {
         rightPartBody.setTransform(position.y + radius, 0f, (float)Math.PI);
     }
 
+    /**
+     * The method updates the state of the door.
+     *
+     * @param deltaTime the time span between the last frame and the current frame in seconds.
+     */
     public void update(float deltaTime) {
         if (!fixed) {
             float distance = radius + opennessDegree;
@@ -105,11 +118,19 @@ public class Door {
         rightPartSprite.setRotation((float)Math.toDegrees(rightPartBody.getAngle()));
     }
 
+    /**
+     * The method draws the door.
+     *
+     * @param batch a sprite batch.
+     */
     public void draw(SpriteBatch batch) {
         leftPartSprite.draw(batch);
         rightPartSprite.draw(batch);
     }
 
+    /**
+     * This method opens the door.
+     */
     public void open() {
         if ((state & (OPEN | IS_CLOSING | IS_OPENING)) != 0) {
             return;
@@ -119,6 +140,9 @@ public class Door {
         state = IS_OPENING;
     }
 
+    /**
+     * This method closes the door.
+     */
     public void close() {
         if ((state & (CLOSED | IS_CLOSING | IS_OPENING)) != 0) {
             return;
@@ -128,31 +152,86 @@ public class Door {
         state = IS_CLOSING;
     }
 
+    /**
+     * Sets the door position.
+     *
+     * @param position a new position.
+     */
     public void setPosition(Vector2 position) {
         this.position.set(position);
     }
 
+    /**
+     * Sets the door position.
+     *
+     * @param x a new x position.
+     * @param y a new y position.
+     */
     public void setPosition(float x, float y) {
         position.set(x, y);
     }
 
+    /**
+     * Gets the door position.
+     *
+     * @return the door position.
+     */
     public Vector2 getPosition() {
         return position;
     }
 
+    /**
+     * Sets the door rotation.
+     *
+     * @param radians a new angle in radians.
+     */
     public void setRotation(float radians) {
         rotation = radians;
     }
 
+    /**
+     * Gets the door rotation.
+     *
+     * @return the door rotation in radians.
+     */
     public float getRotation() {
         return rotation;
     }
 
+    /**
+     * Sets whether the door is fixed.
+     *
+     * @param flag whether the door is fixed.
+     */
     public void setFixed(boolean flag) {
         fixed = flag;
     }
 
+    /**
+     * Returns true when the door is fixed.
+     *
+     * @return whether the door is fixed.
+     */
     public boolean isFixed() {
         return fixed;
+    }
+
+    /**
+     * Sets the door texture.
+     *
+     * @param texture a new texture.
+     */
+    public void setTexture(Texture texture) {
+        leftPartSprite.setTexture(texture);
+        rightPartSprite.setTexture(texture);
+    }
+
+    /**
+     * Gets the door state.
+     *
+     * @return the door state.
+     */
+    public int getState() {
+        return state;
     }
 }
