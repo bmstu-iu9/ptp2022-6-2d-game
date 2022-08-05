@@ -8,6 +8,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
+import com.badlogic.gdx.physics.box2d.Filter;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 
@@ -47,8 +49,12 @@ public class Player {
         fixtureDef.shape = shape;
         fixtureDef.density = 0.5f;
         fixtureDef.friction = 0.5f;
-        body.createFixture(fixtureDef);
+        Fixture fixture = body.createFixture(fixtureDef);
+        Filter filter = new Filter();
+        filter.groupIndex = GroupIndices.PLAYER;
+        fixture.setFilterData(filter);
         body.setFixedRotation(true);
+        body.setUserData(this);
         shape.dispose();
 
         sprite = new Sprite(texture);

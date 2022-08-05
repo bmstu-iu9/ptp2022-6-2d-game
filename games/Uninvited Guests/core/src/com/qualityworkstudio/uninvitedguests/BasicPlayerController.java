@@ -48,7 +48,6 @@ public class BasicPlayerController implements PlayerController {
 
         Vector2 playerPosOnScreen = new Vector2((body.getPosition().x * (Gdx.graphics.getWidth() / camera.viewportWidth) + Gdx.graphics.getWidth() / 2f),
                 Gdx.graphics.getHeight() - (body.getPosition().y * (Gdx.graphics.getHeight() / camera.viewportHeight) + Gdx.graphics.getHeight() / 2f));
-        System.out.println(playerPosOnScreen);
         body.setTransform(body.getPosition(), -(float)(Math.atan2(Gdx.input.getY() - playerPosOnScreen.y, Gdx.input.getX() - playerPosOnScreen.x)) - (float)Math.PI / 2f);
     }
 }

@@ -17,6 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.qualityworkstudio.uninvitedguests.BasicContactListener;
 import com.qualityworkstudio.uninvitedguests.BasicPlayerController;
 import com.qualityworkstudio.uninvitedguests.Door;
 import com.qualityworkstudio.uninvitedguests.GameSettings;
@@ -55,6 +56,7 @@ public class MainScreen extends ScreenAdapter {
         this.settings = settings;
         batch = new SpriteBatch();
         world = new World(new Vector2(0, 0), false);
+        world.setContactListener(new BasicContactListener());
         assetManager.load("character.png", Texture.class);
         assetManager.load("maps/main_map_layer1.png", Texture.class);
         assetManager.load("maps/main_map_layer2.png", Texture.class);

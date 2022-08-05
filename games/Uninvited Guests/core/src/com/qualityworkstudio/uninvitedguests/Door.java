@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.Filter;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
@@ -26,6 +28,7 @@ public class Door {
 
     private Body leftPartBody;
     private Body rightPartBody;
+    private Body interactionArea;
 
     private Sprite leftPartSprite;
     private Sprite rightPartSprite;
@@ -61,7 +64,6 @@ public class Door {
         fixtureDef.shape = shape;
         leftPartBody.createFixture(fixtureDef);
         rightPartBody.createFixture(fixtureDef);
-        shape.dispose();
 
         leftPartSprite = new Sprite(texture);
         leftPartSprite.setSize(width, height);
@@ -70,12 +72,23 @@ public class Door {
         rightPartSprite.setSize(width, height);
         rightPartSprite.setOriginCenter();
 
+        interactionArea = world.createBody(bodyDef);
+        shape.setAsBox(width, 2*height);
+        fixtureDef.isSensor = true;
+        Fixture fixture = interactionArea.createFixture(fixtureDef);
+        Filter filter = new Filter();
+        filter.groupIndex = GroupIndices.DOOR;
+        fixture.setFilterData(filter);
+        shape.dispose();
+        interactionArea.setUserData(this);
+
         radius = width / 2f;
         maxOpennessDegree = 1.5f * radius;
         position = new Vector2();
 
-        leftPartBody.setTransform(position.x - radius, 0f, 0f);
-        rightPartBody.setTransform(position.y + radius, 0f, (float)Math.PI);
+        leftPartBody.setTransform(position.x - radius, 0f, rotation);
+        rightPartBody.setTransform(position.y + radius, 0f, rotation + (float)Math.PI);
+        interactionArea.setTransform(position, rotation);
     }
 
     /**
@@ -108,6 +121,7 @@ public class Door {
                     position.y - distance * (float)Math.sin(rotation), rotation);
             rightPartBody.setTransform(position.x + distance * (float)Math.cos(rotation),
                     position.y + distance * (float)Math.sin(rotation), rotation + (float)Math.PI);
+            interactionArea.setTransform(position, rotation);
         }
 
         leftPartSprite.setPosition(leftPartBody.getPosition().x - leftPartSprite.getWidth() / 2f,
