@@ -34,17 +34,24 @@ body {
   background-color: black;
   color: white;
 }
-
+body._lock {
+  overflow: hidden;
+}
 .wrapper {
   min-height: 100%;
 }
 
 .page {
-  padding: 90px 0px 30px 0px;
+  padding: 60px 0px 30px 0px;
 }
 
 .page_section {
+  max-width: 1800px;
   padding: 30px;
+  margin: 0px auto;
+}
+.page_section_1 {
+  background-color: #320A18;
 }
 
 
@@ -59,14 +66,13 @@ body {
 }
 
 .header_container {
+  max-width: 1800px;
   margin: 0px auto;
   display: flex;
   padding: 0px 30px;
   align-items: center;
   justify-content: space-between;
-  min-height: 70px;
-  max-height: 70px;
-  
+  min-height: 70px;  
 
 }
 
@@ -92,6 +98,9 @@ body {
   font-size: 18px;
 }
 
+.menu_icon {
+  display: none;
+}
 
 @media (min-width: 767px) {
   .menu_list {
@@ -100,6 +109,91 @@ body {
   }
   .menu_list > li {
     padding: 10px 0;
+  }
+}
+
+/* Меню бургер */
+@media (max-width: 767px) {
+  .menu_icon{
+    z-index: 5;
+    display: block;
+    position: relative;
+    width: 30px;
+    height: 18px;
+    cursor: pointer;
+  }
+  .menu_icon span,
+  .menu_icon::before, 
+  .menu_icon::after {
+    left: 0;
+    position: absolute;
+    height: 10%;
+    width: 100%;
+    transition: all 0.3s ease 0s;
+    background-color: white;
+  }
+  .menu_icon::before, 
+  .menu_icon::after {
+    content: "";
+  }
+  .menu_icon::before {
+    top: 0;
+  }
+  .menu_icon::after {
+    bottom: 0;
+  }
+  .menu_icon span{
+    top: 50%;
+    transform: scale(1) translate(0px, -50%);
+  }
+  /*Анимация полос*/
+  .menu_icon._active span {
+    transform: scale(0) translate(0px, -50%);
+  }
+  .menu_icon._active::before {
+    top: 50%;
+    transform: rotate(45deg) translate(0px, 50%);
+  }
+  .menu_icon._active::after {
+    bottom: 50%;
+    transform: rotate(-45deg) translate(0px, -50%);
+  }
+
+
+  .menu_body {
+    position: fixed;
+    top: 0;
+    left: -110%;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    padding: 100px 30px 30px 30px;
+    transition: left 0.3s ease 0s;
+    overflow: auto;
+  }
+  .menu_body._active {
+    left: 0;
+  }
+  .menu_body::before {
+    content: "";
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    height: 70px;
+    background-color: #000ff0;
+    z-index: 2;
+
+  }
+  .menu_list > li {
+    flex-wrap: wrap;
+    margin: 0px 0px 30px 0px;
+  }
+  .menu_list > li::last-child {
+    margin-bottom: 0;
+  }
+  .menu_link {
+    font-size: 24px;
   }
 }
 
