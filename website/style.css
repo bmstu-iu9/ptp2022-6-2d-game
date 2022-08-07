@@ -46,13 +46,9 @@ body._lock {
 }
 
 .page_section {
-  max-width: 1800px;
+  max-width: 1920px;
   padding: 30px;
   margin: 0px auto;
-}
-
-.page_section_2 {
-  position:static;
 }
 
 
@@ -67,7 +63,6 @@ body._lock {
 }
 
 .header_container {
-  max-width: 1800px;
   margin: 0px auto;
   display: flex;
   padding: 0px 30px;
@@ -207,6 +202,7 @@ body._lock {
 .button {
   width: 150px;
   height: 26px;
+  border: none;
   background-color: black; /* Green */
   text-align: center;
   display: inline-block;
