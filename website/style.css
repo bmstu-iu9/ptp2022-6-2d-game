@@ -51,6 +51,9 @@ body._lock {
   margin: 0px auto;
 }
 
+.page_section_2 {
+  position:static;
+}
 
 
 .header {
@@ -74,15 +77,19 @@ body._lock {
 
 }
 
+/* Логотип */
 .header_logo {
   border-radius: 50%;
-  background-color: white;
   position: relative;
   z-index: 5;
-  width: 70px;
-  height: 70px;
+  flex: 0 0 60px;
+  overflow: hidden;
 }
 
+.header_logo img {
+  max-width: 100%;
+  display: block;
+}
 .menu_list > li {
   position: relative;
   margin: 0px 0px 0px 40px;
@@ -198,6 +205,7 @@ body._lock {
 /* Стиль кнопки */
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+SC:wght@300&family=Dancing+Script&display=swap');
 .button {
+
   background-color: black; /* Green */
   border: none;
   color: black;
@@ -216,12 +224,11 @@ body._lock {
 
 }
 .button1 {
+  font-size: 24px;
   background-color: black; 
   color: red; 
-  font-size: 24px;
 }
 
 .button1:hover {
   color: blue;
-  font-size: 25px;
 }
