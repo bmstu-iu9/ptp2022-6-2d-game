@@ -18,6 +18,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.qualityworkstudio.uninvitedguests.BasicContactListener;
+import com.qualityworkstudio.uninvitedguests.BasicDoor;
 import com.qualityworkstudio.uninvitedguests.BasicPlayerController;
 import com.qualityworkstudio.uninvitedguests.Door;
 import com.qualityworkstudio.uninvitedguests.GameSettings;
@@ -47,7 +48,7 @@ public class MainScreen extends ScreenAdapter {
 
     private Player player;
     private Map map;
-    private Door door;
+    private BasicDoor door;
 
     private Box2DDebugRenderer debugRenderer;
 
@@ -61,9 +62,11 @@ public class MainScreen extends ScreenAdapter {
         assetManager.load("maps/main_map_layer1.png", Texture.class);
         assetManager.load("maps/main_map_layer2.png", Texture.class);
         assetManager.load("green_door_part.png", Texture.class);
+        assetManager.load("yellow_door_part.png", Texture.class);
+        assetManager.load("red_door_part.png", Texture.class);
         assetManager.finishLoading();
         map = new Map(128, assetManager.<Texture>get("maps/main_map_layer1.png"), assetManager.<Texture>get("maps/main_map_layer2.png"));
-        door = new Door(world, assetManager.<Texture>get("green_door_part.png"));
+        door = new BasicDoor(world, assetManager);
         door.setPosition(0f, 16f);
         player = new Player(world, assetManager.<Texture>get("character.png"), settings);
         player.setController(new BasicPlayerController(player));

@@ -26,9 +26,10 @@ public class Door {
     public static final int IS_CLOSING = 4;
     public static final int IS_OPENING = 8;
 
+    private World world;
+
     private Body leftPartBody;
     private Body rightPartBody;
-    private Body interactionArea;
 
     private Sprite leftPartSprite;
     private Sprite rightPartSprite;
@@ -48,47 +49,38 @@ public class Door {
      * Constructs a door.
      *
      * @param world a world object.
+     * @param shapeSize a shape size.
+     * @param spriteSize a sprite size.
      * @param texture a texture.
      */
-    public Door(World world, Texture texture) {
-        float width = 6f;
-        float height = 4f;
+    public Door(World world, Vector2 shapeSize, Vector2 spriteSize, Texture texture) {
+        this.world = world;
 
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.StaticBody;
         leftPartBody = world.createBody(bodyDef);
         rightPartBody = world.createBody(bodyDef);
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(width / 2f, 1.687f);
+        shape.setAsBox(shapeSize.x, shapeSize.y);
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
         leftPartBody.createFixture(fixtureDef);
         rightPartBody.createFixture(fixtureDef);
+        shape.dispose();
 
         leftPartSprite = new Sprite(texture);
-        leftPartSprite.setSize(width, height);
+        leftPartSprite.setSize(spriteSize.x, spriteSize.y);
         leftPartSprite.setOriginCenter();
         rightPartSprite = new Sprite(texture);
-        rightPartSprite.setSize(width, height);
+        rightPartSprite.setSize(spriteSize.x, spriteSize.y);
         rightPartSprite.setOriginCenter();
 
-        interactionArea = world.createBody(bodyDef);
-        shape.setAsBox(width, 2*height);
-        fixtureDef.isSensor = true;
-        Fixture fixture = interactionArea.createFixture(fixtureDef);
-        Filter filter = new Filter();
-        filter.groupIndex = GroupIndices.DOOR;
-        fixture.setFilterData(filter);
-        shape.dispose();
-        interactionArea.setUserData(this);
-
-        radius = width / 2f;
+        this.radius = shapeSize.x;
         maxOpennessDegree = 1.5f * radius;
         position = new Vector2();
 
         leftPartBody.setTransform(position.x - radius, 0f, rotation);
         rightPartBody.setTransform(position.y + radius, 0f, rotation + (float)Math.PI);
-        interactionArea.setTransform(position, rotation);
     }
 
     /**
@@ -109,7 +101,6 @@ public class Door {
                     opennessDegree = opennessDegree + (maxOpennessDegree - opennessDegree) * k;
                     break;
                 case IS_CLOSING:
-                    System.out.println(opennessDegree);
                     if (opennessDegree <= 0 + 0.01f) {
                         opennessDegree = 0;
                         state = CLOSED;
@@ -121,7 +112,6 @@ public class Door {
                     position.y - distance * (float)Math.sin(rotation), rotation);
             rightPartBody.setTransform(position.x + distance * (float)Math.cos(rotation),
                     position.y + distance * (float)Math.sin(rotation), rotation + (float)Math.PI);
-            interactionArea.setTransform(position, rotation);
         }
 
         leftPartSprite.setPosition(leftPartBody.getPosition().x - leftPartSprite.getWidth() / 2f,
@@ -238,6 +228,14 @@ public class Door {
     public void setTexture(Texture texture) {
         leftPartSprite.setTexture(texture);
         rightPartSprite.setTexture(texture);
+    }
+
+    public void setRadius(float radius) {
+        this.radius = radius;
+    }
+
+    public void setMaxOpennessDegree(float value) {
+        maxOpennessDegree = value;
     }
 
     /**
