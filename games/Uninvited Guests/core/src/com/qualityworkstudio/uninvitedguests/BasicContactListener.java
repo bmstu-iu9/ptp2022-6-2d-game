@@ -12,7 +12,6 @@ public class BasicContactListener implements ContactListener {
     public void beginContact(Contact contact) {
         Fixture a = contact.getFixtureA();
         Fixture b = contact.getFixtureB();
-        System.out.println(a.getFilterData().groupIndex + " " + b.getFilterData().groupIndex);
 
         if (a.getFilterData().groupIndex == GroupIndices.PLAYER && b.getFilterData().groupIndex == GroupIndices.DOOR) {
             Door door = (Door)b.getBody().getUserData();

@@ -15,7 +15,7 @@ public class BasicDoor extends Door {
 
     private int type;
 
-    private Body interactionArea;
+    private InteractionArea interactionArea;
 
     private Texture greenDoorTexture;
     private Texture yellowDoorTexture;
@@ -34,20 +34,7 @@ public class BasicDoor extends Door {
         yellowDoorTexture = assetManager.<Texture>get("yellow_door_part.png");
         redDoorTexture = assetManager.<Texture>get("red_door_part.png");
 
-        BodyDef bodyDef = new BodyDef();
-        bodyDef.type = BodyDef.BodyType.StaticBody;
-        interactionArea = world.createBody(bodyDef);
-        PolygonShape shape = new PolygonShape();
-        shape.setAsBox(6f, 8f);
-        FixtureDef fixtureDef = new FixtureDef();
-        fixtureDef.shape = shape;
-        fixtureDef.isSensor = true;
-        Fixture fixture = interactionArea.createFixture(fixtureDef);
-        Filter filter = new Filter();
-        filter.groupIndex = GroupIndices.DOOR;
-        fixture.setFilterData(filter);
-        shape.dispose();
-        interactionArea.setUserData(this);
+        interactionArea = new InteractionArea(world, new Vector2(9f, 9f), this, GroupIndices.DOOR);
 
         type = Type.GREEN;
     }
@@ -55,7 +42,8 @@ public class BasicDoor extends Door {
     @Override
     public void update(float deltaTime) {
         super.update(deltaTime);
-        interactionArea.setTransform(getPosition(), getRotation());
+        interactionArea.setPosition(getPosition());
+        interactionArea.setRotation(getRotation());
     }
 
     public void setType(int type) {
