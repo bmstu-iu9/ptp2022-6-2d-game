@@ -22,6 +22,7 @@ import com.qualityworkstudio.uninvitedguests.BasicDoor;
 import com.qualityworkstudio.uninvitedguests.BasicPlayerController;
 import com.qualityworkstudio.uninvitedguests.Door;
 import com.qualityworkstudio.uninvitedguests.GameSettings;
+import com.qualityworkstudio.uninvitedguests.LevelMenu;
 import com.qualityworkstudio.uninvitedguests.Map;
 import com.qualityworkstudio.uninvitedguests.Player;
 
@@ -64,6 +65,12 @@ public class MainScreen extends ScreenAdapter {
         assetManager.load("green_door_part.png", Texture.class);
         assetManager.load("yellow_door_part.png", Texture.class);
         assetManager.load("red_door_part.png", Texture.class);
+        assetManager.load("level_button.png", Texture.class);
+        assetManager.load("selected_level_button.png", Texture.class);
+        assetManager.load("levelmenu_bg.png", Texture.class);
+        assetManager.load("level1_image.png", Texture.class);
+        assetManager.load("level_start_button.png", Texture.class);
+
         assetManager.finishLoading();
         map = new Map(128, assetManager.<Texture>get("maps/main_map_layer1.png"), assetManager.<Texture>get("maps/main_map_layer2.png"));
         door = new BasicDoor(world, assetManager);
@@ -83,6 +90,8 @@ public class MainScreen extends ScreenAdapter {
         Label.LabelStyle style = new Label.LabelStyle(font, Color.WHITE);
         Label label = new Label("QualityWork Studio", style);
         stage.addActor(label);
+
+        LevelMenu levelMenu = new LevelMenu(stage, assetManager);
 
         debugRenderer = new Box2DDebugRenderer();
     }
