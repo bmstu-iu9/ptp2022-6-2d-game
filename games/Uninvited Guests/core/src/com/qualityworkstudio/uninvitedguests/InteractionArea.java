@@ -14,6 +14,7 @@ public class InteractionArea {
 
     private Body body;
     private Fixture fixture;
+    private boolean interacted;
 
     public InteractionArea(World world, Vector2 size, Object data, int index) {
         BodyDef bodyDef = new BodyDef();
@@ -29,7 +30,8 @@ public class InteractionArea {
         filter.groupIndex = (short)index;
         fixture.setFilterData(filter);
         shape.dispose();
-        body.setUserData(data);
+        fixture.setUserData(data);
+        body.setUserData(this);
     }
 
     public InteractionArea(World world, float radius, Object data, int index) {
@@ -46,15 +48,16 @@ public class InteractionArea {
         filter.groupIndex = (short)index;
         fixture.setFilterData(filter);
         shape.dispose();
-        body.setUserData(data);
+        fixture.setUserData(data);
+        body.setUserData(this);
     }
 
     public void setUserData(Object data) {
-        body.setUserData(data);
+        fixture.setUserData(data);
     }
 
-    public void setGroupIndex(short index) {
-        fixture.getFilterData().groupIndex = index;
+    public void setGroupIndex(int index) {
+        fixture.getFilterData().groupIndex = (short)index;
     }
 
     public void setPosition(Vector2 position) {
@@ -71,5 +74,13 @@ public class InteractionArea {
 
     public float getRotation() {
         return body.getAngle();
+    }
+
+    public void setInteracted(boolean interacted) {
+        this.interacted = interacted;
+    }
+
+    public boolean isInteracted() {
+        return interacted;
     }
 }

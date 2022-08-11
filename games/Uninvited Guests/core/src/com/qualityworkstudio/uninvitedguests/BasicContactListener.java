@@ -14,12 +14,12 @@ public class BasicContactListener implements ContactListener {
         Fixture b = contact.getFixtureB();
 
         if (a.getFilterData().groupIndex == GroupIndices.PLAYER && b.getFilterData().groupIndex == GroupIndices.DOOR) {
-            Door door = (Door)b.getBody().getUserData();
+            Door door = (Door)b.getUserData();
             door.open();
         }
 
         if (a.getFilterData().groupIndex == GroupIndices.DOOR && b.getFilterData().groupIndex == GroupIndices.PLAYER) {
-            Door door = (Door)a.getBody().getUserData();
+            Door door = (Door)a.getUserData();
             door.open();
         }
     }
@@ -30,12 +30,12 @@ public class BasicContactListener implements ContactListener {
         Fixture b = contact.getFixtureB();
 
         if (a.getFilterData().groupIndex == GroupIndices.PLAYER && b.getFilterData().groupIndex == GroupIndices.DOOR) {
-            Door door = (Door)b.getBody().getUserData();
+            Door door = (Door)b.getUserData();
             door.close();
         }
 
         if (a.getFilterData().groupIndex == GroupIndices.DOOR && b.getFilterData().groupIndex == GroupIndices.PLAYER) {
-            Door door = (Door)a.getBody().getUserData();
+            Door door = (Door)a.getUserData();
             door.close();
         }
     }

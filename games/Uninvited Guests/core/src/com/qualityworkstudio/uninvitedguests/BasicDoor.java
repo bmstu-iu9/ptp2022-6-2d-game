@@ -42,6 +42,7 @@ public class BasicDoor extends Door {
     @Override
     public void update(float deltaTime) {
         super.update(deltaTime);
+
         interactionArea.setPosition(getPosition());
         interactionArea.setRotation(getRotation());
     }
