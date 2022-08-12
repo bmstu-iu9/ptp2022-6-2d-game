@@ -20,15 +20,10 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.qualityworkstudio.uninvitedguests.BasicContactListener;
 import com.qualityworkstudio.uninvitedguests.BasicDoor;
 import com.qualityworkstudio.uninvitedguests.BasicPlayerController;
-import com.qualityworkstudio.uninvitedguests.Door;
 import com.qualityworkstudio.uninvitedguests.GameSettings;
 import com.qualityworkstudio.uninvitedguests.LevelMenu;
 import com.qualityworkstudio.uninvitedguests.Map;
 import com.qualityworkstudio.uninvitedguests.Player;
-
-import box2dLight.ConeLight;
-import box2dLight.PointLight;
-import box2dLight.RayHandler;
 
 /**
  * The main screen of the game.
@@ -91,7 +86,7 @@ public class MainScreen extends ScreenAdapter {
         Label label = new Label("QualityWork Studio", style);
         stage.addActor(label);
 
-        LevelMenu levelMenu = new LevelMenu(stage, assetManager);
+        LevelMenu levelMenu = new LevelMenu(stage, assetManager, game);
 
         debugRenderer = new Box2DDebugRenderer();
     }

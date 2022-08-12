@@ -1,47 +1,59 @@
 package com.qualityworkstudio.uninvitedguests;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class LevelMenu {
 
-    public LevelMenu(Stage stage, AssetManager assetManager) {
-        TextureRegionDrawable levelMenuTexture = new TextureRegionDrawable(assetManager.<Texture>get("levelmenu_bg.png"));
-        TextureRegionDrawable levelButtonTexture = new TextureRegionDrawable(assetManager.<Texture>get("level_button.png"));
-        TextureRegionDrawable startButtonTexture = new TextureRegionDrawable(assetManager.<Texture>get("level_start_button.png"));
+    private int selectedLevelIndex;
+    private List<LevelButton> buttonList;
+    private ImageButton startButton;
 
-        Group group = new Group();
-        group.setSize(1344, 768);
-        group.setPosition(960, 540, Align.center);
+    private Drawable levelButtonImage;
+    private Drawable selectedLevelButtonImage;
+    private float levelImagePadTop;
 
-        Image background = new Image(levelMenuTexture);
+    private HorizontalGroup horizontalGroup;
 
-        ImageButton button1 = new ImageButton(levelButtonTexture);
+    public LevelMenu(Stage stage, AssetManager assetManager, Game game) {
+        TextureRegionDrawable levelMenuImage = new TextureRegionDrawable(assetManager.<Texture>get("levelmenu_bg.png"));
+        TextureRegionDrawable startButtonImage = new TextureRegionDrawable(assetManager.<Texture>get("level_start_button.png"));
+
+        levelButtonImage = new TextureRegionDrawable(assetManager.<Texture>get("level_button.png"));
+        selectedLevelButtonImage = new TextureRegionDrawable(assetManager.<Texture>get("selected_level_button.png"));
+        levelImagePadTop = 100;
+
+        buttonList = new ArrayList<>();
+
+        Table table = new Table();
+        table.setBackground(levelMenuImage);
+        table.setSize(levelMenuImage.getMinWidth(), levelMenuImage.getMinHeight());
+        table.setPosition(stage.getWidth() / 2f, stage.getHeight() / 2f, Align.center);
 
         Table holdTable = new Table();
         holdTable.setSize(1016, 448);
         holdTable.setPosition(672, 396, Align.center);
 
-        HorizontalGroup horizontalGroup = new HorizontalGroup();
+        horizontalGroup = new HorizontalGroup();
         ScrollPane scrollPane = new ScrollPane(horizontalGroup);
-        horizontalGroup.addActor(button1);
-        horizontalGroup.rowRight();
         holdTable.add(scrollPane);
         holdTable.row();
 
-        final ImageButton startButton = new ImageButton(startButtonTexture);
+        startButton = new ImageButton(startButtonImage);
         startButton.setPosition(672, 96, Align.center);
         startButton.addListener(new ClickListener() {
             @Override
@@ -56,10 +68,38 @@ public class LevelMenu {
             }
         });
 
-        group.addActor(background);
-        group.addActor(holdTable);
-        group.addActor(startButton);
+        table.addActor(holdTable);
+        table.addActor(startButton);
 
-        stage.addActor(group);
+        stage.addActor(table);
+    }
+
+    public void addLevel(int map, Texture levelTexture) {
+        TextureRegionDrawable levelImage = new TextureRegionDrawable(levelTexture);
+
+        LevelButton.LevelButtonStyle style = new LevelButton.LevelButtonStyle();
+        style.levelImage = levelImage;
+        style.levelButtonImage = levelButtonImage;
+        style.selectedLevelButtonImage = selectedLevelButtonImage;
+        style.levelImagePadTop = levelImagePadTop;
+
+        LevelButton button = new LevelButton(style,this, buttonList.size());
+
+        horizontalGroup.addActor(button);
+        horizontalGroup.rowRight();
+
+        buttonList.add(button);
+    }
+
+    public void setSelectedLevelIndex(int index) {
+        if (selectedLevelIndex != index) {
+            buttonList.get(selectedLevelIndex).setSelected(false);
+        }
+
+        selectedLevelIndex = index;
+    }
+
+    public int getSelectedLevelIndex() {
+        return selectedLevelIndex;
     }
 }
