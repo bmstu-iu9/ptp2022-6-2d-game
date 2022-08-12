@@ -17,7 +17,7 @@ import com.badlogic.gdx.utils.Align;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BasicLevelMenu {
+public class BasicLevelMenu implements LevelMenu {
 
     private int selectedLevelIndex;
     private List<LevelButton> buttonList;
@@ -72,6 +72,16 @@ public class BasicLevelMenu {
         table.addActor(startButton);
 
         stage.addActor(table);
+    }
+
+    @Override
+    public void open() {
+
+    }
+
+    @Override
+    public void close() {
+
     }
 
     public void addLevel(int map, Texture levelTexture) {

@@ -7,7 +7,7 @@ package com.qualityworkstudio.uninvitedguests;
  */
 
 public interface PlayerController {
-    public void move();
+    void move();
 
-    public void look();
+    void look();
 }
