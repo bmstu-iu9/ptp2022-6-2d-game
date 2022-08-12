@@ -3,8 +3,11 @@ package com.qualityworkstudio.uninvitedguests;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.actions.ScaleToAction;
 import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
@@ -19,6 +22,7 @@ import java.util.List;
 
 public class BasicLevelMenu implements LevelMenu {
 
+    private Table table;
     private int selectedLevelIndex;
     private List<LevelButton> buttonList;
     private ImageButton startButton;
@@ -39,14 +43,16 @@ public class BasicLevelMenu implements LevelMenu {
 
         buttonList = new ArrayList<>();
 
-        Table table = new Table();
+        table = new Table();
         table.setBackground(levelMenuImage);
         table.setSize(levelMenuImage.getMinWidth(), levelMenuImage.getMinHeight());
         table.setPosition(stage.getWidth() / 2f, stage.getHeight() / 2f, Align.center);
+        table.setOrigin(table.getWidth() / 2f, table.getHeight() / 2f);
+        table.setTransform(true);
+        table.setScale(0f);
 
         Table holdTable = new Table();
         holdTable.setSize(1016, 448);
-        holdTable.setPosition(672, 396, Align.center);
 
         horizontalGroup = new HorizontalGroup();
         ScrollPane scrollPane = new ScrollPane(horizontalGroup);
@@ -54,34 +60,48 @@ public class BasicLevelMenu implements LevelMenu {
         holdTable.row();
 
         startButton = new ImageButton(startButtonImage);
-        startButton.setPosition(672, 96, Align.center);
+        startButton.setOrigin(startButton.getWidth() / 2f, startButton.getHeight() / 2f);
+        startButton.setTransform(true);
+        startButton.setScale(1f, 0f);
         startButton.addListener(new ClickListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                startButton.addAction(Actions.scaleTo(0.9f, 0.9f, 0.1f, Interpolation.swingIn));
                 startButton.getImage().setColor(0.75f, 0.75f, 0.75f, 1f);
                 return true;
             }
 
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                startButton.addAction(Actions.scaleTo(1f, 1f, 0.1f, Interpolation.swingOut));
                 startButton.getImage().setColor(1f, 1f, 1f, 1f);
             }
         });
 
+        holdTable.setPosition(table.getWidth() / 2f, table.getHeight() / 2f + 12f, Align.center);
         table.addActor(holdTable);
+        startButton.setPosition(table.getWidth() / 2f, 96f, Align.center);
         table.addActor(startButton);
 
         stage.addActor(table);
+        selectedLevelIndex = -1;
     }
 
     @Override
-    public void open() {
-
+    public void show() {
+        ScaleToAction action = new ScaleToAction();
+        action.setScale(1f);
+        action.setDuration(0.75f);
+        action.setInterpolation(Interpolation.swingOut);
+        table.addAction(action);
     }
 
     @Override
-    public void close() {
-
+    public void hide() {
+        ScaleToAction action = new ScaleToAction();
+        action.setScale(0f);
+        action.setDuration(0.75f);
+        table.addAction(action);
     }
 
     public void addLevel(int map, Texture levelTexture) {
@@ -103,10 +123,16 @@ public class BasicLevelMenu implements LevelMenu {
 
     public void setSelectedLevelIndex(int index) {
         if (selectedLevelIndex != index) {
-            buttonList.get(selectedLevelIndex).setSelected(false);
+            if (selectedLevelIndex != -1) {
+                buttonList.get(selectedLevelIndex).setSelected(false);
+            }
+            if (index != -1) {
+                startButton.addAction(Actions.scaleTo(1f, 1f, 0.25f, Interpolation.swingOut));
+            } else {
+                startButton.addAction(Actions.scaleTo(1f, 0f, 0.25f, Interpolation.swingIn));
+            }
+            selectedLevelIndex = index;
         }
-
-        selectedLevelIndex = index;
     }
 
     public int getSelectedLevelIndex() {

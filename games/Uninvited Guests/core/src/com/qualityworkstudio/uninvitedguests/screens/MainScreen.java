@@ -88,6 +88,13 @@ public class MainScreen extends ScreenAdapter {
         stage.addActor(label);
 
         LevelMenu levelMenu = new BasicLevelMenu(stage, assetManager, game);
+        levelMenu.addLevel(1, assetManager.<Texture>get("level1_image.png"));
+        levelMenu.addLevel(1, assetManager.<Texture>get("level1_image.png"));
+        levelMenu.addLevel(1, assetManager.<Texture>get("level1_image.png"));
+        levelMenu.addLevel(1, assetManager.<Texture>get("level1_image.png"));
+        levelMenu.addLevel(1, assetManager.<Texture>get("level1_image.png"));
+        levelMenu.addLevel(1, assetManager.<Texture>get("level1_image.png"));
+        levelMenu.show();
 
         debugRenderer = new Box2DDebugRenderer();
     }

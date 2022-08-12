@@ -3,6 +3,7 @@ package com.qualityworkstudio.uninvitedguests;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
@@ -15,11 +16,11 @@ public class LevelButton extends Table {
     private boolean selected;
     private int index;
 
-    public LevelButton(LevelButtonStyle style, BasicLevelMenu levelMenu, int index) {
+    public LevelButton(LevelButtonStyle style, BasicLevelMenu menu, int i) {
         super();
         this.style = style;
-        this.levelMenu = levelMenu;
-        this.index = index;
+        levelMenu = menu;
+        index = i;
 
         setBackground(style.levelButtonImage);
         align(Align.top);
@@ -32,6 +33,11 @@ public class LevelButton extends Table {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 setSelected(!selected);
+                if (selected) {
+                    levelMenu.setSelectedLevelIndex(index);
+                } else {
+                    levelMenu.setSelectedLevelIndex(-1);
+                }
             }
         });
     }
@@ -39,15 +45,15 @@ public class LevelButton extends Table {
     public void setSelected(boolean selected) {
         if (selected) {
             setBackground(style.selectedLevelButtonImage);
-            levelMenu.setSelectedLevelIndex(index);
         } else {
             setBackground(style.levelButtonImage);
-            if (levelMenu.getSelectedLevelIndex() == index) {
-                levelMenu.setSelectedLevelIndex(-1);
-            }
         }
 
         this.selected = selected;
+    }
+
+    public boolean isSelected() {
+        return selected;
     }
 
     public int getIndex() {
@@ -58,15 +64,18 @@ public class LevelButton extends Table {
         public Drawable levelImage;
         public Drawable levelButtonImage;
         public Drawable selectedLevelButtonImage;
+        public Label.LabelStyle labelStyle;
         public float levelImagePadTop;
 
         public LevelButtonStyle() {
         }
 
-        public LevelButtonStyle(Drawable levelImage, Drawable levelButtonImage, Drawable selectedLevelButtonImage, float levelImagePadTop) {
+        public LevelButtonStyle(Drawable levelImage, Drawable levelButtonImage, Drawable selectedLevelButtonImage,
+                                Label.LabelStyle labelStyle, float levelImagePadTop) {
             this.levelImage = levelImage;
             this.levelButtonImage = levelButtonImage;
             this.selectedLevelButtonImage = selectedLevelButtonImage;
+            this.labelStyle = labelStyle;
             this.levelImagePadTop = levelImagePadTop;
         }
     }
