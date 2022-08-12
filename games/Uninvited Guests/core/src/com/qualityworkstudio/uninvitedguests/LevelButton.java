@@ -11,11 +11,11 @@ import com.badlogic.gdx.utils.Align;
 public class LevelButton extends Table {
 
     private LevelButtonStyle style;
-    private LevelMenu levelMenu;
+    private BasicLevelMenu levelMenu;
     private boolean selected;
     private int index;
 
-    public LevelButton(LevelButtonStyle style, LevelMenu levelMenu, int index) {
+    public LevelButton(LevelButtonStyle style, BasicLevelMenu levelMenu, int index) {
         super();
         this.style = style;
         this.levelMenu = levelMenu;

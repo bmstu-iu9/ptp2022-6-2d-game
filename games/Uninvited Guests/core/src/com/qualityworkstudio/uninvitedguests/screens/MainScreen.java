@@ -21,7 +21,7 @@ import com.qualityworkstudio.uninvitedguests.BasicContactListener;
 import com.qualityworkstudio.uninvitedguests.BasicDoor;
 import com.qualityworkstudio.uninvitedguests.BasicPlayerController;
 import com.qualityworkstudio.uninvitedguests.GameSettings;
-import com.qualityworkstudio.uninvitedguests.LevelMenu;
+import com.qualityworkstudio.uninvitedguests.BasicLevelMenu;
 import com.qualityworkstudio.uninvitedguests.Map;
 import com.qualityworkstudio.uninvitedguests.Player;
 
@@ -86,7 +86,7 @@ public class MainScreen extends ScreenAdapter {
         Label label = new Label("QualityWork Studio", style);
         stage.addActor(label);
 
-        LevelMenu levelMenu = new LevelMenu(stage, assetManager, game);
+        BasicLevelMenu levelMenu = new BasicLevelMenu(stage, assetManager, game);
 
         debugRenderer = new Box2DDebugRenderer();
     }

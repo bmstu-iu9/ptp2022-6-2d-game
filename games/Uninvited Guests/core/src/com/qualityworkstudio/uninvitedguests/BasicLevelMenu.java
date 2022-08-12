@@ -17,7 +17,7 @@ import com.badlogic.gdx.utils.Align;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LevelMenu {
+public class BasicLevelMenu {
 
     private int selectedLevelIndex;
     private List<LevelButton> buttonList;
@@ -29,7 +29,7 @@ public class LevelMenu {
 
     private HorizontalGroup horizontalGroup;
 
-    public LevelMenu(Stage stage, AssetManager assetManager, Game game) {
+    public BasicLevelMenu(Stage stage, AssetManager assetManager, Game game) {
         TextureRegionDrawable levelMenuImage = new TextureRegionDrawable(assetManager.<Texture>get("levelmenu_bg.png"));
         TextureRegionDrawable startButtonImage = new TextureRegionDrawable(assetManager.<Texture>get("level_start_button.png"));
 
