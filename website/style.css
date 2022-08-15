@@ -221,9 +221,23 @@ body._lock {
   font-size: 24px;
   background-color: black; 
   color: red; 
+  animation: animate_pulse 3s infinite;
 }
 
 .button1:hover {
   color: blue;
   font-size: 25px;
+  animation: none;
+}
+
+@keyframes animate_pulse {
+	0% {
+		color: red;
+	}
+	50% {
+		color: black;
+	}
+  100% {
+    color: red;
+  }
 }
