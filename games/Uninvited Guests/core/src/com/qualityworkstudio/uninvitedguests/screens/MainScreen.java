@@ -3,7 +3,10 @@ package com.qualityworkstudio.uninvitedguests.screens;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.assets.loaders.BitmapFontLoader;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -41,7 +44,6 @@ public class MainScreen extends ScreenAdapter {
     private World world;
     private Viewport viewport;
     private Stage stage;
-    private BitmapFont font;
 
     private Player player;
     private Map map;
@@ -52,9 +54,7 @@ public class MainScreen extends ScreenAdapter {
     public MainScreen(Game game, AssetManager assetManager, GameSettings settings) {
         this.game = game;
         this.settings = settings;
-        batch = new SpriteBatch();
-        world = new World(new Vector2(0, 0), false);
-        world.setContactListener(new BasicContactListener());
+
         assetManager.load("character.png", Texture.class);
         assetManager.load("maps/main_map_layer1.png", Texture.class);
         assetManager.load("maps/main_map_layer2.png", Texture.class);
@@ -66,26 +66,24 @@ public class MainScreen extends ScreenAdapter {
         assetManager.load("levelmenu_bg.png", Texture.class);
         assetManager.load("level1_image.png", Texture.class);
         assetManager.load("level_start_button.png", Texture.class);
-
+        assetManager.load("font.fnt", BitmapFont.class);
         assetManager.finishLoading();
+
+        batch = new SpriteBatch();
+        world = new World(new Vector2(0, 0), false);
+        world.setContactListener(new BasicContactListener());
         map = new Map(128, assetManager.<Texture>get("maps/main_map_layer1.png"), assetManager.<Texture>get("maps/main_map_layer2.png"));
         door = new BasicDoor(world, assetManager);
         door.setPosition(0f, 16f);
+        door.setType(BasicDoor.Type.GREEN);
         player = new Player(world, assetManager.<Texture>get("character.png"), settings);
         player.setController(new BasicPlayerController(player));
         player.setFixedCamera(true);
+
         viewport = new FitViewport(settings.getViewportSize(), settings.getViewportSize() * (
                 (float)Gdx.graphics.getHeight() / Gdx.graphics.getWidth()));
         stage = new Stage(viewport);
         Gdx.input.setInputProcessor(stage);
-
-        Texture texture = new Texture(Gdx.files.internal("font.png"));
-        texture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-        font = new BitmapFont(Gdx.files.internal("font.fnt"), new TextureRegion(texture), false);
-
-        Label.LabelStyle style = new Label.LabelStyle(font, Color.WHITE);
-        Label label = new Label("QualityWork Studio", style);
-        stage.addActor(label);
 
         LevelMenu levelMenu = new BasicLevelMenu(stage, assetManager, game);
         levelMenu.addLevel(1, assetManager.<Texture>get("level1_image.png"));
@@ -94,9 +92,6 @@ public class MainScreen extends ScreenAdapter {
         levelMenu.addLevel(1, assetManager.<Texture>get("level1_image.png"));
         levelMenu.addLevel(1, assetManager.<Texture>get("level1_image.png"));
         levelMenu.addLevel(1, assetManager.<Texture>get("level1_image.png"));
-        levelMenu.show();
-
-        debugRenderer = new Box2DDebugRenderer();
     }
 
     @Override
@@ -114,8 +109,6 @@ public class MainScreen extends ScreenAdapter {
         map.draw(batch);
         player.draw(batch);
         batch.end();
-
-        debugRenderer.render(world, player.getCamera().combined);
 
         stage.act(delta);
         stage.draw();

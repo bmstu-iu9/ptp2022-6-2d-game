@@ -14,12 +14,17 @@ public class BasicContactListener implements ContactListener {
         Fixture b = contact.getFixtureB();
 
         if (a.getFilterData().groupIndex == GroupIndices.PLAYER && b.getFilterData().groupIndex == GroupIndices.DOOR) {
-            Door door = (Door)b.getUserData();
+            InteractionArea area = (InteractionArea)b.getBody().getUserData();
+            area.setInteracted(true);
+            Door door = (Door)area.getData();
             door.open();
+
         }
 
         if (a.getFilterData().groupIndex == GroupIndices.DOOR && b.getFilterData().groupIndex == GroupIndices.PLAYER) {
-            Door door = (Door)a.getUserData();
+            InteractionArea area = (InteractionArea)a.getBody().getUserData();
+            area.setInteracted(true);
+            Door door = (Door)area.getData();
             door.open();
         }
     }
@@ -30,12 +35,16 @@ public class BasicContactListener implements ContactListener {
         Fixture b = contact.getFixtureB();
 
         if (a.getFilterData().groupIndex == GroupIndices.PLAYER && b.getFilterData().groupIndex == GroupIndices.DOOR) {
-            Door door = (Door)b.getUserData();
+            InteractionArea area = (InteractionArea)b.getBody().getUserData();
+            area.setInteracted(false);
+            Door door = (Door)area.getData();
             door.close();
         }
 
         if (a.getFilterData().groupIndex == GroupIndices.DOOR && b.getFilterData().groupIndex == GroupIndices.PLAYER) {
-            Door door = (Door)a.getUserData();
+            InteractionArea area = (InteractionArea)a.getBody().getUserData();
+            area.setInteracted(false);
+            Door door = (Door)area.getData();
             door.close();
         }
     }

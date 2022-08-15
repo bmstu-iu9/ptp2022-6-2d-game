@@ -1,7 +1,9 @@
 package com.qualityworkstudio.uninvitedguests;
 
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -23,10 +25,16 @@ public class LevelButton extends Table {
         index = i;
 
         setBackground(style.levelButtonImage);
+        setSize(style.levelButtonImage.getMinWidth(), style.levelButtonImage.getMinHeight());
+        setOrigin(getWidth() / 2f, getHeight() / 2f);
+        setTransform(true);
         align(Align.top);
+        Label label = new Label("Level 1", style.labelStyle);
+        label.setAlignment(Align.center);
+        add(label).expandX().top().padTop(style.labelPadTop);
+        row();
         Image image = new Image(style.levelImage);
-        add(image);
-        padTop(style.levelImagePadTop);
+        add(image).expandX().expandY().top().padTop(style.levelImagePadTop);
 
         setTouchable(Touchable.enabled);
         addListener(new ClickListener() {
@@ -38,6 +46,8 @@ public class LevelButton extends Table {
                 } else {
                     levelMenu.setSelectedLevelIndex(-1);
                 }
+                addAction(Actions.sequence(Actions.scaleTo(0.9f, 0.9f, 0.2f, Interpolation.swingIn),
+                        Actions.scaleTo(1f, 1f, 0.2f, Interpolation.swingOut)));
             }
         });
     }
@@ -66,17 +76,19 @@ public class LevelButton extends Table {
         public Drawable selectedLevelButtonImage;
         public Label.LabelStyle labelStyle;
         public float levelImagePadTop;
+        public float labelPadTop;
 
         public LevelButtonStyle() {
         }
 
         public LevelButtonStyle(Drawable levelImage, Drawable levelButtonImage, Drawable selectedLevelButtonImage,
-                                Label.LabelStyle labelStyle, float levelImagePadTop) {
+                                Label.LabelStyle labelStyle, float levelImagePadTop, float labelPadTop) {
             this.levelImage = levelImage;
             this.levelButtonImage = levelButtonImage;
             this.selectedLevelButtonImage = selectedLevelButtonImage;
             this.labelStyle = labelStyle;
             this.levelImagePadTop = levelImagePadTop;
+            this.labelPadTop = labelPadTop;
         }
     }
 }

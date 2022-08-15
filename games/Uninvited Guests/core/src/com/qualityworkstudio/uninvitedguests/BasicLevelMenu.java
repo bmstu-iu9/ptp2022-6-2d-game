@@ -2,7 +2,11 @@ package com.qualityworkstudio.uninvitedguests;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -10,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.ScaleToAction;
 import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -29,7 +34,9 @@ public class BasicLevelMenu implements LevelMenu {
 
     private Drawable levelButtonImage;
     private Drawable selectedLevelButtonImage;
+    private BitmapFont levelButtonFont;
     private float levelImagePadTop;
+    private float labelPadTop;
 
     private HorizontalGroup horizontalGroup;
 
@@ -39,7 +46,9 @@ public class BasicLevelMenu implements LevelMenu {
 
         levelButtonImage = new TextureRegionDrawable(assetManager.<Texture>get("level_button.png"));
         selectedLevelButtonImage = new TextureRegionDrawable(assetManager.<Texture>get("selected_level_button.png"));
-        levelImagePadTop = 100;
+        levelButtonFont = assetManager.get("font.fnt", BitmapFont.class);
+        levelImagePadTop = 10;
+        labelPadTop = 50;
 
         buttonList = new ArrayList<>();
 
@@ -111,7 +120,9 @@ public class BasicLevelMenu implements LevelMenu {
         style.levelImage = levelImage;
         style.levelButtonImage = levelButtonImage;
         style.selectedLevelButtonImage = selectedLevelButtonImage;
+        style.labelStyle = new Label.LabelStyle(levelButtonFont, Color.WHITE);
         style.levelImagePadTop = levelImagePadTop;
+        style.labelPadTop = labelPadTop;
 
         LevelButton button = new LevelButton(style,this, buttonList.size());
 

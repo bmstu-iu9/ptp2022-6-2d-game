@@ -34,7 +34,7 @@ public class BasicDoor extends Door {
         yellowDoorTexture = assetManager.<Texture>get("yellow_door_part.png");
         redDoorTexture = assetManager.<Texture>get("red_door_part.png");
 
-        interactionArea = new InteractionArea(world, new Vector2(9f, 9f), this, GroupIndices.DOOR);
+        interactionArea = new InteractionArea(world, new Vector2(6f, 6f), this, GroupIndices.DOOR);
 
         type = Type.GREEN;
     }
@@ -45,6 +45,16 @@ public class BasicDoor extends Door {
 
         interactionArea.setPosition(getPosition());
         interactionArea.setRotation(getRotation());
+    }
+
+    @Override
+    public void open() {
+        setState(IS_OPENING);
+    }
+
+    @Override
+    public void close() {
+        setState(IS_CLOSING);
     }
 
     public void setType(int type) {

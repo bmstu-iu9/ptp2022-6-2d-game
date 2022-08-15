@@ -14,6 +14,7 @@ public class InteractionArea {
 
     private Body body;
     private Fixture fixture;
+    private Object data;
     private boolean interacted;
 
     public InteractionArea(World world, Vector2 size, Object data, int index) {
@@ -30,8 +31,8 @@ public class InteractionArea {
         filter.groupIndex = (short)index;
         fixture.setFilterData(filter);
         shape.dispose();
-        fixture.setUserData(data);
         body.setUserData(this);
+        this.data = data;
     }
 
     public InteractionArea(World world, float radius, Object data, int index) {
@@ -48,12 +49,16 @@ public class InteractionArea {
         filter.groupIndex = (short)index;
         fixture.setFilterData(filter);
         shape.dispose();
-        fixture.setUserData(data);
         body.setUserData(this);
+        this.data = data;
     }
 
-    public void setUserData(Object data) {
-        fixture.setUserData(data);
+    public void setData(Object data) {
+        this.data = data;
+    }
+
+    public Object getData() {
+        return data;
     }
 
     public void setGroupIndex(int index) {

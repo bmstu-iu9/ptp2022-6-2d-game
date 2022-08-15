@@ -55,6 +55,7 @@ public class Door {
      */
     public Door(World world, Vector2 shapeSize, Vector2 spriteSize, Texture texture) {
         this.world = world;
+        state = CLOSED;
 
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.StaticBody;
@@ -245,5 +246,9 @@ public class Door {
      */
     public int getState() {
         return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
     }
 }
