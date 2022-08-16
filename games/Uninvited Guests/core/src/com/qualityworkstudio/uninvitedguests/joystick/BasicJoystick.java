@@ -33,7 +33,7 @@ public class BasicJoystick implements Joystick{
     private float radius;
 
     public BasicJoystick(final Stage stage, AssetManager assetManager){
-        Drawable backgroundDrawable = new TextureRegionDrawable(assetManager.<Texture>get("joystick_bg.png"));
+        final Drawable backgroundDrawable = new TextureRegionDrawable(assetManager.<Texture>get("joystick_bg.png"));
         Drawable stickDrawable = new TextureRegionDrawable(assetManager.<Texture>get("joystick_stick.png"));
         background = new Image(backgroundDrawable);
         background.setScale(0);
@@ -46,7 +46,7 @@ public class BasicJoystick implements Joystick{
         stage.addActor(stick);
 
 
-        joystickPosition = new Vector2(background.getWidth()/2, background.getHeight()/2);
+        joystickPosition = new Vector2(background.getWidth() / 2f, background.getHeight() / 2f);
         stick.setPosition(joystickPosition.x,joystickPosition.y,Align.center);
         direction = new Vector2();
 
@@ -62,16 +62,16 @@ public class BasicJoystick implements Joystick{
             public void touchDragged(InputEvent event, float x, float y, int pointer) {
                 super.touchDragged(event, x, y, pointer);
 
-                float dx = x - joystickPosition.x;
-                float dy = y - joystickPosition.y;
+                float dx = x - background.getWidth() / 2f;
+                float dy = y - background.getHeight() / 2f;
                 float dist = (float) Math.sqrt(dx*dx + dy*dy);
 
                 direction.set(dx / dist, dy / dist);
 
                 if(dist > radius){
-                    stick.setPosition(direction.x*radius + joystickPosition.x, direction.y * radius + joystickPosition.y,Align.center);
+                    stick.setPosition(direction.x*radius + joystickPosition.x, direction.y * radius + joystickPosition.y, Align.center);
                 }else{
-                    stick.setPosition(x,y,Align.center);
+                    stick.setPosition(dx + joystickPosition.x, dy + joystickPosition.y, Align.center);
                 }
             }
         });

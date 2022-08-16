@@ -42,7 +42,7 @@ public class MainScreen extends ScreenAdapter {
     private Viewport viewport;
     private Stage stage;
 
-    private Joystick joystick;
+    private Joystick movementJoystick,rotationJoystick;
 
     private Player player;
     private Map map;
@@ -94,9 +94,13 @@ public class MainScreen extends ScreenAdapter {
         levelMenu.addLevel(1, assetManager.<Texture>get("level1_image.png"));
         levelMenu.addLevel(1, assetManager.<Texture>get("level1_image.png"));
 
-        Joystick joystick = new BasicJoystick(stage, assetManager);
-        joystick.setPosition(new Vector2(300f,300f));
-        joystick.show();
+        movementJoystick = new BasicJoystick(stage, assetManager);
+        movementJoystick.setPosition(new Vector2(300f,300f));
+        movementJoystick.show();
+
+        rotationJoystick = new BasicJoystick(stage,assetManager);
+        rotationJoystick.setPosition(new Vector2(stage.getWidth() - 300f, 300f));
+        rotationJoystick.show();
     }
 
     @Override
