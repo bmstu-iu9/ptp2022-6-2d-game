@@ -31,9 +31,9 @@ public class MobilePlayerController implements PlayerController{
     public void look() {
         Body body = player.getBody();
         if (rotationJoystick.isTouched()){
-            body.setTransform(body.getPosition(), (float) Math.toRadians(rotationJoystick.getAngle()) - 90f);
+            body.setTransform(body.getPosition(), (float) Math.toRadians(rotationJoystick.getAngle() - 90f));
         }else{
-            body.setTransform(body.getPosition(), (float) Math.toRadians(movementJoystick.getAngle()) - 90f);
+            body.setTransform(body.getPosition(), (float) Math.toRadians(movementJoystick.getAngle() - 90f));
         }
 
     }
