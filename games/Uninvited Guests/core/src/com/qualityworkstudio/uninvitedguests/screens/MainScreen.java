@@ -3,20 +3,15 @@ package com.qualityworkstudio.uninvitedguests.screens;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
-import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.assets.loaders.BitmapFontLoader;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -28,6 +23,8 @@ import com.qualityworkstudio.uninvitedguests.BasicLevelMenu;
 import com.qualityworkstudio.uninvitedguests.LevelMenu;
 import com.qualityworkstudio.uninvitedguests.Map;
 import com.qualityworkstudio.uninvitedguests.Player;
+import com.qualityworkstudio.uninvitedguests.joystick.BasicJoystick;
+import com.qualityworkstudio.uninvitedguests.joystick.Joystick;
 
 /**
  * The main screen of the game.
@@ -45,16 +42,18 @@ public class MainScreen extends ScreenAdapter {
     private Viewport viewport;
     private Stage stage;
 
+    private Joystick joystick;
+
     private Player player;
     private Map map;
     private BasicDoor door;
 
     private Box2DDebugRenderer debugRenderer;
 
+
     public MainScreen(Game game, AssetManager assetManager, GameSettings settings) {
         this.game = game;
         this.settings = settings;
-
         assetManager.load("character.png", Texture.class);
         assetManager.load("maps/main_map_layer1.png", Texture.class);
         assetManager.load("maps/main_map_layer2.png", Texture.class);
@@ -67,6 +66,8 @@ public class MainScreen extends ScreenAdapter {
         assetManager.load("level1_image.png", Texture.class);
         assetManager.load("level_start_button.png", Texture.class);
         assetManager.load("font.fnt", BitmapFont.class);
+        assetManager.load("joystick_bg.png", Texture.class);
+        assetManager.load("joystick_stick.png", Texture.class);
         assetManager.finishLoading();
 
         batch = new SpriteBatch();
@@ -92,6 +93,15 @@ public class MainScreen extends ScreenAdapter {
         levelMenu.addLevel(1, assetManager.<Texture>get("level1_image.png"));
         levelMenu.addLevel(1, assetManager.<Texture>get("level1_image.png"));
         levelMenu.addLevel(1, assetManager.<Texture>get("level1_image.png"));
+
+        Joystick joystick = new BasicJoystick(stage, assetManager);
+        joystick.setPosition(new Vector2(300f,300f));
+        joystick.show();
+    }
+
+    @Override
+    public void show(){
+
     }
 
     @Override
@@ -99,6 +109,7 @@ public class MainScreen extends ScreenAdapter {
         world.step(1 / 60f, 6, 2);
         player.update(delta);
         door.update(delta);
+        stage.act(delta);
 
         ScreenUtils.clear(Color.BLACK);
 
@@ -109,8 +120,6 @@ public class MainScreen extends ScreenAdapter {
         map.draw(batch);
         player.draw(batch);
         batch.end();
-
-        stage.act(delta);
         stage.draw();
     }
 
@@ -128,4 +137,7 @@ public class MainScreen extends ScreenAdapter {
         world.dispose();
         stage.dispose();
     }
+
+
+    //public void multiTouch(float x, float y, boolean isTouchDown, int pointer){for (int i = 0; i < 5; i++) {joystick.update(x, y, isTouchDown, pointer);}}
 }
