@@ -58,7 +58,7 @@ body._lock {
   left: 0;
   width: 100%;
   z-index: 10;
-  background: #000ff0;
+  background: black;
 
 }
 
@@ -181,7 +181,7 @@ body._lock {
     top: 0;
     left: 0;
     height: 70px;
-    background-color: #000ff0;
+    background-color: rgb(0, 0, 0);
     z-index: 2;
 
   }
