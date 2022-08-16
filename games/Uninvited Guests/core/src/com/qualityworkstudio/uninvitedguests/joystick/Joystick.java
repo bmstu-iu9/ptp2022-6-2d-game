@@ -13,4 +13,5 @@ public interface Joystick {
     void setPosition(Vector2 position);
     Vector2 getPosition();
     void setRadius(float radius);
+    boolean isTouched();
 }

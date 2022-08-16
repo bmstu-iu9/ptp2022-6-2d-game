@@ -22,6 +22,7 @@ import com.qualityworkstudio.uninvitedguests.GameSettings;
 import com.qualityworkstudio.uninvitedguests.BasicLevelMenu;
 import com.qualityworkstudio.uninvitedguests.LevelMenu;
 import com.qualityworkstudio.uninvitedguests.Map;
+import com.qualityworkstudio.uninvitedguests.MobilePlayerController;
 import com.qualityworkstudio.uninvitedguests.Player;
 import com.qualityworkstudio.uninvitedguests.joystick.BasicJoystick;
 import com.qualityworkstudio.uninvitedguests.joystick.Joystick;
@@ -77,9 +78,6 @@ public class MainScreen extends ScreenAdapter {
         door = new BasicDoor(world, assetManager);
         door.setPosition(0f, 16f);
         door.setType(BasicDoor.Type.GREEN);
-        player = new Player(world, assetManager.<Texture>get("character.png"), settings);
-        player.setController(new BasicPlayerController(player));
-        player.setFixedCamera(true);
 
         viewport = new FitViewport(settings.getViewportSize(), settings.getViewportSize() * (
                 (float)Gdx.graphics.getHeight() / Gdx.graphics.getWidth()));
@@ -101,6 +99,11 @@ public class MainScreen extends ScreenAdapter {
         rotationJoystick = new BasicJoystick(stage,assetManager);
         rotationJoystick.setPosition(new Vector2(stage.getWidth() - 300f, 300f));
         rotationJoystick.show();
+
+        player = new Player(world, assetManager.<Texture>get("character.png"), settings);
+        player.setController(new MobilePlayerController(player,movementJoystick,rotationJoystick));
+        player.setFixedCamera(true);
+
     }
 
     @Override
