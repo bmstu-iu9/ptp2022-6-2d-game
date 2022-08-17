@@ -20,6 +20,8 @@ import com.qualityworkstudio.uninvitedguests.BasicDoor;
 import com.qualityworkstudio.uninvitedguests.BasicPlayerController;
 import com.qualityworkstudio.uninvitedguests.GameSettings;
 import com.qualityworkstudio.uninvitedguests.BasicLevelMenu;
+import com.qualityworkstudio.uninvitedguests.GroupIndices;
+import com.qualityworkstudio.uninvitedguests.InteractionArea;
 import com.qualityworkstudio.uninvitedguests.LevelMenu;
 import com.qualityworkstudio.uninvitedguests.Map;
 import com.qualityworkstudio.uninvitedguests.MobilePlayerController;
@@ -30,7 +32,7 @@ import com.qualityworkstudio.uninvitedguests.joystick.Joystick;
 /**
  * The main screen of the game.
  *
- * @author Andrey Karanik
+ * @author Andrey Karanik, Bogdan Teryukhov
  */
 
 public class MainScreen extends ScreenAdapter {
@@ -43,11 +45,13 @@ public class MainScreen extends ScreenAdapter {
     private Viewport viewport;
     private Stage stage;
 
-    private Joystick movementJoystick,rotationJoystick;
+    private Joystick movementJoystick;
+    private Joystick rotationJoystick;
 
     private Player player;
     private Map map;
     private BasicDoor door;
+    private InteractionArea levelMenuArea;
 
     private Box2DDebugRenderer debugRenderer;
 
@@ -71,6 +75,24 @@ public class MainScreen extends ScreenAdapter {
         assetManager.load("joystick_stick.png", Texture.class);
         assetManager.finishLoading();
 
+        viewport = new FitViewport(settings.getViewportSize(), settings.getViewportSize() * (
+                (float)Gdx.graphics.getHeight() / Gdx.graphics.getWidth()));
+        stage = new Stage(viewport);
+        Gdx.input.setInputProcessor(stage);
+
+        movementJoystick = new BasicJoystick(stage, assetManager);
+        movementJoystick.setPosition(new Vector2(300f,300f));
+        rotationJoystick = new BasicJoystick(stage,assetManager);
+        rotationJoystick.setPosition(new Vector2(stage.getWidth() - 300f, 300f));
+
+        LevelMenu levelMenu = new BasicLevelMenu(stage, assetManager, game);
+        levelMenu.addLevel(1, assetManager.<Texture>get("level1_image.png"));
+        levelMenu.addLevel(2, assetManager.<Texture>get("level1_image.png"));
+        levelMenu.addLevel(3, assetManager.<Texture>get("level1_image.png"));
+        levelMenu.addLevel(4, assetManager.<Texture>get("level1_image.png"));
+        levelMenu.addLevel(5, assetManager.<Texture>get("level1_image.png"));
+        levelMenu.addLevel(6, assetManager.<Texture>get("level1_image.png"));
+
         batch = new SpriteBatch();
         world = new World(new Vector2(0, 0), false);
         world.setContactListener(new BasicContactListener());
@@ -78,37 +100,17 @@ public class MainScreen extends ScreenAdapter {
         door = new BasicDoor(world, assetManager);
         door.setPosition(0f, 16f);
         door.setType(BasicDoor.Type.GREEN);
-
-        viewport = new FitViewport(settings.getViewportSize(), settings.getViewportSize() * (
-                (float)Gdx.graphics.getHeight() / Gdx.graphics.getWidth()));
-        stage = new Stage(viewport);
-        Gdx.input.setInputProcessor(stage);
-
-        LevelMenu levelMenu = new BasicLevelMenu(stage, assetManager, game);
-        levelMenu.addLevel(1, assetManager.<Texture>get("level1_image.png"));
-        levelMenu.addLevel(1, assetManager.<Texture>get("level1_image.png"));
-        levelMenu.addLevel(1, assetManager.<Texture>get("level1_image.png"));
-        levelMenu.addLevel(1, assetManager.<Texture>get("level1_image.png"));
-        levelMenu.addLevel(1, assetManager.<Texture>get("level1_image.png"));
-        levelMenu.addLevel(1, assetManager.<Texture>get("level1_image.png"));
-
-        movementJoystick = new BasicJoystick(stage, assetManager);
-        movementJoystick.setPosition(new Vector2(300f,300f));
-        movementJoystick.show();
-
-        rotationJoystick = new BasicJoystick(stage,assetManager);
-        rotationJoystick.setPosition(new Vector2(stage.getWidth() - 300f, 300f));
-        rotationJoystick.show();
-
         player = new Player(world, assetManager.<Texture>get("character.png"), settings);
         player.setController(new MobilePlayerController(player,movementJoystick,rotationJoystick));
         player.setFixedCamera(true);
-
+        levelMenuArea = new InteractionArea(world, new Vector2(6f, 1f), levelMenu, GroupIndices.LEVEL_MENU_AREA);
+        levelMenuArea.setPosition(door.getPosition());
     }
 
     @Override
-    public void show(){
-
+    public void show() {
+        movementJoystick.show();
+        rotationJoystick.show();
     }
 
     @Override
@@ -144,7 +146,4 @@ public class MainScreen extends ScreenAdapter {
         world.dispose();
         stage.dispose();
     }
-
-
-    //public void multiTouch(float x, float y, boolean isTouchDown, int pointer){for (int i = 0; i < 5; i++) {joystick.update(x, y, isTouchDown, pointer);}}
 }

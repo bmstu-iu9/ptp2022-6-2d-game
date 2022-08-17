@@ -18,7 +18,7 @@ public class BasicContactListener implements ContactListener {
             area.setInteracted(true);
             Door door = (Door)area.getData();
             door.open();
-
+            return;
         }
 
         if (a.getFilterData().groupIndex == GroupIndices.DOOR && b.getFilterData().groupIndex == GroupIndices.PLAYER) {
@@ -26,6 +26,22 @@ public class BasicContactListener implements ContactListener {
             area.setInteracted(true);
             Door door = (Door)area.getData();
             door.open();
+            return;
+        }
+
+        if (a.getFilterData().groupIndex == GroupIndices.PLAYER && b.getFilterData().groupIndex == GroupIndices.LEVEL_MENU_AREA) {
+            InteractionArea area = (InteractionArea)b.getBody().getUserData();
+            area.setInteracted(true);
+            LevelMenu menu = (LevelMenu)area.getData();
+            menu.show();
+            return;
+        }
+
+        if (a.getFilterData().groupIndex == GroupIndices.LEVEL_MENU_AREA && b.getFilterData().groupIndex == GroupIndices.PLAYER) {
+            InteractionArea area = (InteractionArea)a.getBody().getUserData();
+            area.setInteracted(true);
+            LevelMenu menu = (LevelMenu)area.getData();
+            menu.show();
         }
     }
 

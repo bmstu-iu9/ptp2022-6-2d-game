@@ -12,11 +12,16 @@ import com.qualityworkstudio.uninvitedguests.screens.MainScreen;
 
 public class Main extends Game {
 
+	private GameSettings settings;
+
+	public Main(GameSettings settings) {
+		this.settings = settings;
+	}
+
 	@Override
 	public void create () {
-		GameSettings settings = new GameSettings();
-		settings.setDeveloperMode(true);
 		AssetManager assetManager = new AssetManager();
+		settings.setDeveloperMode(true);
 		setScreen(new MainScreen(this, assetManager, settings));
 	}
 }
