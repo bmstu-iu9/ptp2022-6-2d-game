@@ -1,14 +1,10 @@
 package com.qualityworkstudio.uninvitedguests.joystick;
 
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
@@ -19,10 +15,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 
-import java.awt.Graphics;
-
 /**
- * @author Bogdan Teryukhov
+ * @author Bogdan Teryukhov, Andrey Karanik
  */
 
 public class BasicJoystick implements Joystick{
@@ -34,7 +28,7 @@ public class BasicJoystick implements Joystick{
     private boolean isTouched;
 
     public BasicJoystick(Stage stage, AssetManager assetManager){
-        final Drawable backgroundDrawable = new TextureRegionDrawable(assetManager.<Texture>get("joystick_bg.png"));
+        Drawable backgroundDrawable = new TextureRegionDrawable(assetManager.<Texture>get("joystick_bg.png"));
         Drawable stickDrawable = new TextureRegionDrawable(assetManager.<Texture>get("joystick_stick.png"));
         background = new Image(backgroundDrawable);
         background.setScale(0);
@@ -48,7 +42,7 @@ public class BasicJoystick implements Joystick{
 
 
         joystickPosition = new Vector2(background.getWidth() / 2f, background.getHeight() / 2f);
-        stick.setPosition(joystickPosition.x,joystickPosition.y,Align.center);
+        stick.setPosition(joystickPosition.x, joystickPosition.y, Align.center);
         direction = new Vector2();
 
         background.addListener(new ClickListener(){
@@ -63,8 +57,8 @@ public class BasicJoystick implements Joystick{
                 super.touchUp(event, x, y, pointer, button);
                 isTouched = false;
                 direction.set(0,0);
-                stick.addAction(Actions.moveTo(joystickPosition.x - stick.getWidth()/2f,
-                        joystickPosition.y - stick.getHeight()/2f, 1f, Interpolation.swingOut));
+                stick.addAction(Actions.moveTo(joystickPosition.x - stick.getWidth() / 2f,
+                        joystickPosition.y - stick.getHeight() / 2f, 0.25f, Interpolation.swingOut));
             }
 
             @Override
@@ -112,13 +106,24 @@ public class BasicJoystick implements Joystick{
     @Override
     public void setPosition(Vector2 position) {
         joystickPosition.set(position);
-        background.setPosition(position.x,position.y, Align.center);
-        stick.setPosition(position.x,position.y,Align.center);
+        background.setPosition(position.x, position.y, Align.center);
+        stick.setPosition(position.x, position.y, Align.center);
     }
 
     @Override
     public Vector2 getPosition() {
         return joystickPosition;
+    }
+
+    @Override
+    public void setSize(Vector2 size) {
+        background.setSize(size.x, size.y);
+        stick.setSize(size.x, size.y);
+    }
+
+    @Override
+    public Vector2 getSize() {
+        return new Vector2(background.getWidth(), background.getHeight());
     }
 
     @Override

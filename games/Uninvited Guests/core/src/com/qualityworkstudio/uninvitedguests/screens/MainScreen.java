@@ -6,7 +6,6 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
@@ -26,8 +25,6 @@ import com.qualityworkstudio.uninvitedguests.LevelMenu;
 import com.qualityworkstudio.uninvitedguests.Map;
 import com.qualityworkstudio.uninvitedguests.MobilePlayerController;
 import com.qualityworkstudio.uninvitedguests.Player;
-import com.qualityworkstudio.uninvitedguests.joystick.BasicJoystick;
-import com.qualityworkstudio.uninvitedguests.joystick.Joystick;
 
 /**
  * The main screen of the game.
@@ -45,8 +42,7 @@ public class MainScreen extends ScreenAdapter {
     private Viewport viewport;
     private Stage stage;
 
-    private Joystick movementJoystick;
-    private Joystick rotationJoystick;
+    private MobileInterface mobileInterface;
 
     private Player player;
     private Map map;
@@ -59,31 +55,15 @@ public class MainScreen extends ScreenAdapter {
     public MainScreen(Game game, AssetManager assetManager, GameSettings settings) {
         this.game = game;
         this.settings = settings;
-        assetManager.load("character.png", Texture.class);
-        assetManager.load("maps/main_map_layer1.png", Texture.class);
-        assetManager.load("maps/main_map_layer2.png", Texture.class);
-        assetManager.load("green_door_part.png", Texture.class);
-        assetManager.load("yellow_door_part.png", Texture.class);
-        assetManager.load("red_door_part.png", Texture.class);
-        assetManager.load("level_button.png", Texture.class);
-        assetManager.load("selected_level_button.png", Texture.class);
-        assetManager.load("levelmenu_bg.png", Texture.class);
-        assetManager.load("level1_image.png", Texture.class);
-        assetManager.load("level_start_button.png", Texture.class);
-        assetManager.load("font.fnt", BitmapFont.class);
-        assetManager.load("joystick_bg.png", Texture.class);
-        assetManager.load("joystick_stick.png", Texture.class);
-        assetManager.finishLoading();
 
         viewport = new FitViewport(settings.getViewportSize(), settings.getViewportSize() * (
                 (float)Gdx.graphics.getHeight() / Gdx.graphics.getWidth()));
         stage = new Stage(viewport);
         Gdx.input.setInputProcessor(stage);
 
-        movementJoystick = new BasicJoystick(stage, assetManager);
-        movementJoystick.setPosition(new Vector2(300f,300f));
-        rotationJoystick = new BasicJoystick(stage,assetManager);
-        rotationJoystick.setPosition(new Vector2(stage.getWidth() - 300f, 300f));
+        if (settings.isMobileMode()) {
+            mobileInterface = new MobileInterface(stage, assetManager);
+        }
 
         LevelMenu levelMenu = new BasicLevelMenu(stage, assetManager, game);
         levelMenu.addLevel(1, assetManager.<Texture>get("level1_image.png"));
@@ -101,7 +81,11 @@ public class MainScreen extends ScreenAdapter {
         door.setPosition(0f, 16f);
         door.setType(BasicDoor.Type.GREEN);
         player = new Player(world, assetManager.<Texture>get("character.png"), settings);
-        player.setController(new MobilePlayerController(player,movementJoystick,rotationJoystick));
+        if (settings.isMobileMode()) {
+            player.setController(new MobilePlayerController(player, mobileInterface.getMovementJoystick(), mobileInterface.getRotationJoystick()));
+        } else {
+            player.setController(new BasicPlayerController(player));
+        }
         player.setFixedCamera(true);
         levelMenuArea = new InteractionArea(world, new Vector2(6f, 1f), levelMenu, GroupIndices.LEVEL_MENU_AREA);
         levelMenuArea.setPosition(door.getPosition());
@@ -109,8 +93,9 @@ public class MainScreen extends ScreenAdapter {
 
     @Override
     public void show() {
-        movementJoystick.show();
-        rotationJoystick.show();
+        if (settings.isMobileMode()) {
+            mobileInterface.show();
+        }
     }
 
     @Override

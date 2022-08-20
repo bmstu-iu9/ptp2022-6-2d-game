@@ -24,6 +24,7 @@ public class Main extends Game {
 	@Override
 	public void create () {
 		settings.setDeveloperMode(true);
+		settings.setMobileMode(true);
 
 		AssetManager assetManager = new AssetManager();
 		assetManager.load("loading_image1.png", Texture.class);
