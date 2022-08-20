@@ -2,6 +2,9 @@ package com.qualityworkstudio.uninvitedguests;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.qualityworkstudio.uninvitedguests.screens.LoadingScreen;
 import com.qualityworkstudio.uninvitedguests.screens.MainScreen;
 
 /**
@@ -20,8 +23,15 @@ public class Main extends Game {
 
 	@Override
 	public void create () {
-		AssetManager assetManager = new AssetManager();
 		settings.setDeveloperMode(true);
-		setScreen(new MainScreen(this, assetManager, settings));
+
+		AssetManager assetManager = new AssetManager();
+		assetManager.load("loading_image1.png", Texture.class);
+		assetManager.load("loading_image2.png", Texture.class);
+		assetManager.load("font.fnt", BitmapFont.class);
+		assetManager.finishLoading();
+
+		LoadingData loadingData = new LoadingData("json/firstload.json");
+		setScreen(new LoadingScreen(this, assetManager, settings, loadingData));
 	}
 }
