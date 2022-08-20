@@ -20,8 +20,8 @@ public class MobileInterface {
         rotationJoystick = new BasicJoystick(stage, assetManager);
         movementJoystick.setSize(new Vector2(420, 420));
         rotationJoystick.setSize(new Vector2(420, 420));
-        movementJoystick.setRadius(160);
-        rotationJoystick.setRadius(160);
+        movementJoystick.setRadius(140);
+        rotationJoystick.setRadius(140);
         movementJoystick.setPosition(new Vector2(235, 235));
         rotationJoystick.setPosition(new Vector2(stage.getWidth() - 235, 235));
     }

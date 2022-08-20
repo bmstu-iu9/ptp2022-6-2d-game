@@ -19,10 +19,10 @@ import com.qualityworkstudio.uninvitedguests.BasicDoor;
 import com.qualityworkstudio.uninvitedguests.BasicPlayerController;
 import com.qualityworkstudio.uninvitedguests.GameSettings;
 import com.qualityworkstudio.uninvitedguests.BasicLevelMenu;
-import com.qualityworkstudio.uninvitedguests.GroupIndices;
 import com.qualityworkstudio.uninvitedguests.InteractionArea;
 import com.qualityworkstudio.uninvitedguests.LevelMenu;
 import com.qualityworkstudio.uninvitedguests.Map;
+import com.qualityworkstudio.uninvitedguests.MobileInterface;
 import com.qualityworkstudio.uninvitedguests.MobilePlayerController;
 import com.qualityworkstudio.uninvitedguests.Player;
 
@@ -66,12 +66,12 @@ public class MainScreen extends ScreenAdapter {
         }
 
         LevelMenu levelMenu = new BasicLevelMenu(stage, assetManager, game);
-        levelMenu.addLevel(1, assetManager.<Texture>get("level1_image.png"));
-        levelMenu.addLevel(2, assetManager.<Texture>get("level1_image.png"));
-        levelMenu.addLevel(3, assetManager.<Texture>get("level1_image.png"));
-        levelMenu.addLevel(4, assetManager.<Texture>get("level1_image.png"));
-        levelMenu.addLevel(5, assetManager.<Texture>get("level1_image.png"));
-        levelMenu.addLevel(6, assetManager.<Texture>get("level1_image.png"));
+        levelMenu.addLevel(1, "Level 1", assetManager.<Texture>get("level1_image.png"));
+        levelMenu.addLevel(2, "Level 2", assetManager.<Texture>get("level1_image.png"));
+        levelMenu.addLevel(3, "Level 3", assetManager.<Texture>get("level1_image.png"));
+        levelMenu.addLevel(4, "Level 4", assetManager.<Texture>get("level1_image.png"));
+        levelMenu.addLevel(5, "Level 5", assetManager.<Texture>get("level1_image.png"));
+        levelMenu.addLevel(6, "Level 6", assetManager.<Texture>get("level1_image.png"));
 
         batch = new SpriteBatch();
         world = new World(new Vector2(0, 0), false);
@@ -87,7 +87,7 @@ public class MainScreen extends ScreenAdapter {
             player.setController(new BasicPlayerController(player));
         }
         player.setFixedCamera(true);
-        levelMenuArea = new InteractionArea(world, new Vector2(6f, 1f), levelMenu, GroupIndices.LEVEL_MENU_AREA);
+        levelMenuArea = new InteractionArea(world, new Vector2(6f, 1f), new LevelMenuInteraction(levelMenu));
         levelMenuArea.setPosition(door.getPosition());
     }
 

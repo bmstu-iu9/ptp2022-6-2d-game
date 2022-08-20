@@ -48,7 +48,6 @@ public class BasicJoystick implements Joystick{
         background.addListener(new ClickListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                isTouched = true;
                 return super.touchDown(event, x, y, pointer, button);
             }
 
@@ -65,6 +64,7 @@ public class BasicJoystick implements Joystick{
             public void touchDragged(InputEvent event, float x, float y, int pointer) {
                 super.touchDragged(event, x, y, pointer);
 
+                isTouched = true;
                 float dx = x - background.getWidth() / 2f;
                 float dy = y - background.getHeight() / 2f;
                 float dist = (float) Math.sqrt(dx*dx + dy*dy);

@@ -34,7 +34,7 @@ public class BasicDoor extends Door {
         yellowDoorTexture = assetManager.<Texture>get("yellow_door_part.png");
         redDoorTexture = assetManager.<Texture>get("red_door_part.png");
 
-        interactionArea = new InteractionArea(world, new Vector2(6f, 6f), this, GroupIndices.DOOR);
+        interactionArea = new InteractionArea(world, new Vector2(6f, 6f), new DoorInteraction(this));
 
         type = Type.GREEN;
     }

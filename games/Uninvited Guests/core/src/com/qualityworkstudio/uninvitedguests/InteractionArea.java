@@ -14,10 +14,10 @@ public class InteractionArea {
 
     private Body body;
     private Fixture fixture;
-    private Object data;
-    private boolean interacted;
+    private Interaction interaction;
 
-    public InteractionArea(World world, Vector2 size, Object data, int index) {
+    public InteractionArea(World world, Vector2 size, Interaction interaction) {
+        this.interaction = interaction;
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.StaticBody;
         body = world.createBody(bodyDef);
@@ -28,14 +28,14 @@ public class InteractionArea {
         fixtureDef.isSensor = true;
         fixture = body.createFixture(fixtureDef);
         Filter filter = new Filter();
-        filter.groupIndex = (short)index;
+        filter.groupIndex = GroupIndices.INTERACTION_AREA;
         fixture.setFilterData(filter);
         shape.dispose();
         body.setUserData(this);
-        this.data = data;
     }
 
-    public InteractionArea(World world, float radius, Object data, int index) {
+    public InteractionArea(World world, float radius, Interaction interaction) {
+        this.interaction = interaction;
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.StaticBody;
         body = world.createBody(bodyDef);
@@ -46,19 +46,10 @@ public class InteractionArea {
         fixtureDef.isSensor = true;
         fixture = body.createFixture(fixtureDef);
         Filter filter = new Filter();
-        filter.groupIndex = (short)index;
+        filter.groupIndex = GroupIndices.INTERACTION_AREA;
         fixture.setFilterData(filter);
         shape.dispose();
         body.setUserData(this);
-        this.data = data;
-    }
-
-    public void setData(Object data) {
-        this.data = data;
-    }
-
-    public Object getData() {
-        return data;
     }
 
     public void setGroupIndex(int index) {
@@ -81,11 +72,11 @@ public class InteractionArea {
         return body.getAngle();
     }
 
-    public void setInteracted(boolean interacted) {
-        this.interacted = interacted;
+    public void setInteraction(Interaction interaction) {
+        this.interaction = interaction;
     }
 
-    public boolean isInteracted() {
-        return interacted;
+    public Interaction getInteraction() {
+        return interaction;
     }
 }

@@ -13,35 +13,16 @@ public class BasicContactListener implements ContactListener {
         Fixture a = contact.getFixtureA();
         Fixture b = contact.getFixtureB();
 
-        if (a.getFilterData().groupIndex == GroupIndices.PLAYER && b.getFilterData().groupIndex == GroupIndices.DOOR) {
+        if (a.getFilterData().groupIndex == GroupIndices.PLAYER && b.getFilterData().groupIndex == GroupIndices.INTERACTION_AREA) {
             InteractionArea area = (InteractionArea)b.getBody().getUserData();
-            area.setInteracted(true);
-            Door door = (Door)area.getData();
-            door.open();
+            area.getInteraction().interactIn();
             return;
         }
 
-        if (a.getFilterData().groupIndex == GroupIndices.DOOR && b.getFilterData().groupIndex == GroupIndices.PLAYER) {
+        if (a.getFilterData().groupIndex == GroupIndices.INTERACTION_AREA && b.getFilterData().groupIndex == GroupIndices.PLAYER) {
             InteractionArea area = (InteractionArea)a.getBody().getUserData();
-            area.setInteracted(true);
-            Door door = (Door)area.getData();
-            door.open();
+            area.getInteraction().interactIn();
             return;
-        }
-
-        if (a.getFilterData().groupIndex == GroupIndices.PLAYER && b.getFilterData().groupIndex == GroupIndices.LEVEL_MENU_AREA) {
-            InteractionArea area = (InteractionArea)b.getBody().getUserData();
-            area.setInteracted(true);
-            LevelMenu menu = (LevelMenu)area.getData();
-            menu.show();
-            return;
-        }
-
-        if (a.getFilterData().groupIndex == GroupIndices.LEVEL_MENU_AREA && b.getFilterData().groupIndex == GroupIndices.PLAYER) {
-            InteractionArea area = (InteractionArea)a.getBody().getUserData();
-            area.setInteracted(true);
-            LevelMenu menu = (LevelMenu)area.getData();
-            menu.show();
         }
     }
 
@@ -50,18 +31,16 @@ public class BasicContactListener implements ContactListener {
         Fixture a = contact.getFixtureA();
         Fixture b = contact.getFixtureB();
 
-        if (a.getFilterData().groupIndex == GroupIndices.PLAYER && b.getFilterData().groupIndex == GroupIndices.DOOR) {
+        if (a.getFilterData().groupIndex == GroupIndices.PLAYER && b.getFilterData().groupIndex == GroupIndices.INTERACTION_AREA) {
             InteractionArea area = (InteractionArea)b.getBody().getUserData();
-            area.setInteracted(false);
-            Door door = (Door)area.getData();
-            door.close();
+            area.getInteraction().interactOut();
+            return;
         }
 
-        if (a.getFilterData().groupIndex == GroupIndices.DOOR && b.getFilterData().groupIndex == GroupIndices.PLAYER) {
+        if (a.getFilterData().groupIndex == GroupIndices.INTERACTION_AREA && b.getFilterData().groupIndex == GroupIndices.PLAYER) {
             InteractionArea area = (InteractionArea)a.getBody().getUserData();
-            area.setInteracted(false);
-            Door door = (Door)area.getData();
-            door.close();
+            area.getInteraction().interactOut();
+            return;
         }
     }
 

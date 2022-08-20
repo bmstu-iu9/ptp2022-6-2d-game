@@ -18,7 +18,7 @@ public class LevelButton extends Table {
     private boolean selected;
     private int index;
 
-    public LevelButton(LevelButtonStyle style, BasicLevelMenu menu, int i) {
+    public LevelButton(LevelButtonStyle style, BasicLevelMenu menu, String text, int i) {
         super();
         this.style = style;
         levelMenu = menu;
@@ -29,7 +29,7 @@ public class LevelButton extends Table {
         setOrigin(getWidth() / 2f, getHeight() / 2f);
         setTransform(true);
         align(Align.top);
-        Label label = new Label("Level 1", style.labelStyle);
+        Label label = new Label(text, style.labelStyle);
         label.setAlignment(Align.center);
         add(label).expandX().top().padTop(style.labelPadTop);
         row();
@@ -46,8 +46,8 @@ public class LevelButton extends Table {
                 } else {
                     levelMenu.setSelectedLevelIndex(-1);
                 }
-                addAction(Actions.sequence(Actions.scaleTo(0.9f, 0.9f, 0.2f, Interpolation.swingIn),
-                        Actions.scaleTo(1f, 1f, 0.2f, Interpolation.swingOut)));
+                addAction(Actions.sequence(Actions.scaleTo(0.9f, 0.9f, 0.125f, Interpolation.swingIn),
+                        Actions.scaleTo(1f, 1f, 0.125f, Interpolation.swingOut)));
             }
         });
     }

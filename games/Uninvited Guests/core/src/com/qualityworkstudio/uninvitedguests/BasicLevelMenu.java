@@ -100,7 +100,7 @@ public class BasicLevelMenu implements LevelMenu {
     public void show() {
         ScaleToAction action = new ScaleToAction();
         action.setScale(1f);
-        action.setDuration(0.75f);
+        action.setDuration(0.5f);
         action.setInterpolation(Interpolation.swingOut);
         table.addAction(action);
     }
@@ -109,11 +109,12 @@ public class BasicLevelMenu implements LevelMenu {
     public void hide() {
         ScaleToAction action = new ScaleToAction();
         action.setScale(0f);
-        action.setDuration(0.75f);
+        action.setDuration(0.5f);
+        action.setInterpolation(Interpolation.swingIn);
         table.addAction(action);
     }
 
-    public void addLevel(int map, Texture levelTexture) {
+    public void addLevel(int map, String name, Texture levelTexture) {
         TextureRegionDrawable levelImage = new TextureRegionDrawable(levelTexture);
 
         LevelButton.LevelButtonStyle style = new LevelButton.LevelButtonStyle();
@@ -124,7 +125,7 @@ public class BasicLevelMenu implements LevelMenu {
         style.levelImagePadTop = levelImagePadTop;
         style.labelPadTop = labelPadTop;
 
-        LevelButton button = new LevelButton(style,this, buttonList.size());
+        LevelButton button = new LevelButton(style,this, name, buttonList.size());
 
         horizontalGroup.addActor(button);
         horizontalGroup.rowRight();
