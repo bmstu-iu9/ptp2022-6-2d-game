@@ -21,6 +21,7 @@ import com.qualityworkstudio.uninvitedguests.GameSettings;
 import com.qualityworkstudio.uninvitedguests.BasicLevelMenu;
 import com.qualityworkstudio.uninvitedguests.InteractionArea;
 import com.qualityworkstudio.uninvitedguests.LevelMenu;
+import com.qualityworkstudio.uninvitedguests.LevelMenuInteraction;
 import com.qualityworkstudio.uninvitedguests.Map;
 import com.qualityworkstudio.uninvitedguests.MobileInterface;
 import com.qualityworkstudio.uninvitedguests.MobilePlayerController;
