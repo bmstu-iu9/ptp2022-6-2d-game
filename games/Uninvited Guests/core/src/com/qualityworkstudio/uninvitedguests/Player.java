@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
@@ -26,9 +27,12 @@ public class Player {
 
     private float size;
     private float movementSpeed;
+    private boolean moveToFixed;
+    private Vector2 moveToPosition;
 
     private OrthographicCamera camera;
     private boolean fixedCamera;
+    private boolean fixed;
 
     /**
      * Constructs a new player.
@@ -77,8 +81,21 @@ public class Player {
             camera.position.set(sprite.getX(), sprite.getY(), 0);
         }
 
-        controller.move();
-        controller.look();
+        if (!moveToFixed && !fixed) {
+            controller.move();
+            controller.look();
+        } else if (moveToFixed) {
+            float dx = moveToPosition.x - body.getPosition().x;
+            float dy = moveToPosition.y - body.getPosition().y;
+            float dist = (float)Math.sqrt(dx*dx + dy*dy);
+            body.applyLinearImpulse(movementSpeed * dx / dist,
+                    movementSpeed * dy / dist,
+                    body.getPosition().x, body.getPosition().y, true);
+            body.setTransform(body.getPosition(), (float)(Math.atan2(dy, dx) - Math.PI / 2f));
+            if (Math.abs(dx) < 0.1 && Math.abs(dy) < 0.1) {
+                moveToFixed = false;
+            }
+        }
 
         sprite.setPosition(body.getPosition().x - size / 2f, body.getPosition().y - size / 2f);
         sprite.setRotation((float)Math.toDegrees(body.getAngle()));
@@ -175,7 +192,20 @@ public class Player {
         this.fixedCamera = fixedCamera;
     }
 
+    public void setFixed(boolean fixed) {
+        this.fixed = fixed;
+    }
+
+    public boolean isFixed() {
+        return fixed;
+    }
+
     public float getSize() {
         return size;
+    }
+
+    public void moveTo(Vector2 position) {
+        moveToPosition = position;
+        moveToFixed = true;
     }
 }

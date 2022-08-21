@@ -16,7 +16,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 
 public class BasicPlayerController implements PlayerController {
 
-    public Player player;
+    private Player player;
 
     public BasicPlayerController(Player player) {
         this.player = player;

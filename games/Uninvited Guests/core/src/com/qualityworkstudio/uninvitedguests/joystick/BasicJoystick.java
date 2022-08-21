@@ -31,9 +31,11 @@ public class BasicJoystick implements Joystick{
         Drawable backgroundDrawable = new TextureRegionDrawable(assetManager.<Texture>get("joystick_bg.png"));
         Drawable stickDrawable = new TextureRegionDrawable(assetManager.<Texture>get("joystick_stick.png"));
         background = new Image(backgroundDrawable);
+        background.setOrigin(background.getWidth() / 2f, background.getHeight() / 2f);
         background.setScale(0);
 
         stick = new Image(stickDrawable);
+        stick.setOrigin(stick.getWidth() / 2f, stick.getHeight() / 2f);
         stick.setScale(0);
         stick.setTouchable(Touchable.disabled);
 
@@ -83,14 +85,14 @@ public class BasicJoystick implements Joystick{
 
     @Override
     public void show() {
-        background.setScale(1);
-        stick.setScale(1);
+        background.addAction(Actions.scaleTo(1f, 1f, 0.25f, Interpolation.swingOut));
+        stick.addAction(Actions.scaleTo(1f, 1f, 0.25f, Interpolation.swingOut));
     }
 
     @Override
     public void hide() {
-        background.setScale(0);
-        stick.setScale(0);
+        background.addAction(Actions.scaleTo(0f, 0f, 0.25f, Interpolation.swingIn));
+        stick.addAction(Actions.scaleTo(0f, 0f, 0.25f, Interpolation.swingIn));
     }
 
     @Override

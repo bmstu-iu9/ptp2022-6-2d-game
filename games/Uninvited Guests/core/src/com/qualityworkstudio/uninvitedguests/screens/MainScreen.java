@@ -10,7 +10,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -42,6 +44,7 @@ public class MainScreen extends ScreenAdapter {
     private World world;
     private Viewport viewport;
     private Stage stage;
+    private BasicLevelMenu levelMenu;
 
     private MobileInterface mobileInterface;
 
@@ -53,20 +56,18 @@ public class MainScreen extends ScreenAdapter {
     private Box2DDebugRenderer debugRenderer;
 
 
-    public MainScreen(Game game, AssetManager assetManager, GameSettings settings) {
+    public MainScreen(Game game, AssetManager assetManager, GameSettings gameSettings) {
         this.game = game;
-        this.settings = settings;
+        this.settings = gameSettings;
 
         viewport = new FitViewport(settings.getViewportSize(), settings.getViewportSize() * (
                 (float)Gdx.graphics.getHeight() / Gdx.graphics.getWidth()));
         stage = new Stage(viewport);
         Gdx.input.setInputProcessor(stage);
 
-        if (settings.isMobileMode()) {
-            mobileInterface = new MobileInterface(stage, assetManager);
-        }
+        mobileInterface = new MobileInterface(stage, assetManager);
 
-        LevelMenu levelMenu = new BasicLevelMenu(stage, assetManager, game);
+        levelMenu = new BasicLevelMenu(stage, assetManager, game);
         levelMenu.addLevel(1, "Level 1", assetManager.<Texture>get("level1_image.png"));
         levelMenu.addLevel(2, "Level 2", assetManager.<Texture>get("level1_image.png"));
         levelMenu.addLevel(3, "Level 3", assetManager.<Texture>get("level1_image.png"));
@@ -88,7 +89,19 @@ public class MainScreen extends ScreenAdapter {
             player.setController(new BasicPlayerController(player));
         }
         player.setFixedCamera(true);
-        levelMenuArea = new InteractionArea(world, new Vector2(6f, 1f), new LevelMenuInteraction(levelMenu));
+        levelMenuArea = new InteractionArea(world, new Vector2(6f, 1f), new LevelMenuInteraction(levelMenu, player, mobileInterface, settings));
+        levelMenu.getCloseButton().addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+                levelMenu.hide();
+                player.setFixed(false);
+                player.moveTo(new Vector2(0, 0));
+                if (settings.isMobileMode()) {
+                    mobileInterface.show();
+                }
+            }
+        });
         levelMenuArea.setPosition(door.getPosition());
     }
 

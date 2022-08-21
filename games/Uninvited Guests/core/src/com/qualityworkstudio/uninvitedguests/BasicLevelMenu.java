@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
@@ -31,6 +32,7 @@ public class BasicLevelMenu implements LevelMenu {
     private int selectedLevelIndex;
     private List<LevelButton> buttonList;
     private ImageButton startButton;
+    private ImageButton closeButton;
 
     private Drawable levelButtonImage;
     private Drawable selectedLevelButtonImage;
@@ -43,6 +45,7 @@ public class BasicLevelMenu implements LevelMenu {
     public BasicLevelMenu(Stage stage, AssetManager assetManager, Game game) {
         TextureRegionDrawable levelMenuImage = new TextureRegionDrawable(assetManager.<Texture>get("levelmenu_bg.png"));
         TextureRegionDrawable startButtonImage = new TextureRegionDrawable(assetManager.<Texture>get("level_start_button.png"));
+        TextureRegionDrawable closeButtonImage = new TextureRegionDrawable(assetManager.<Texture>get("level_close_button.png"));
 
         levelButtonImage = new TextureRegionDrawable(assetManager.<Texture>get("level_button.png"));
         selectedLevelButtonImage = new TextureRegionDrawable(assetManager.<Texture>get("selected_level_button.png"));
@@ -87,10 +90,31 @@ public class BasicLevelMenu implements LevelMenu {
             }
         });
 
+        closeButton = new ImageButton(closeButtonImage);
+        closeButton.setOrigin(closeButton.getWidth() / 2f, closeButton.getHeight() / 2f);
+        closeButton.setTransform(true);
+        closeButton.addListener(new ClickListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                closeButton.addAction(Actions.scaleTo(0.9f, 0.9f, 0.1f, Interpolation.swingIn));
+                closeButton.getImage().setColor(0.75f, 0.75f, 0.75f, 1f);
+                return true;
+            }
+
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                closeButton.addAction(Actions.scaleTo(1f, 1f, 0.1f, Interpolation.swingOut));
+                closeButton.getImage().setColor(1f, 1f, 1f, 1f);
+            }
+        });
+
+
         holdTable.setPosition(table.getWidth() / 2f, table.getHeight() / 2f + 12f, Align.center);
         table.addActor(holdTable);
         startButton.setPosition(table.getWidth() / 2f, 96f, Align.center);
         table.addActor(startButton);
+        closeButton.setPosition(table.getWidth() - 128f, table.getHeight() - 110f, Align.center);
+        table.addActor(closeButton);
 
         stage.addActor(table);
         selectedLevelIndex = -1;
@@ -98,20 +122,12 @@ public class BasicLevelMenu implements LevelMenu {
 
     @Override
     public void show() {
-        ScaleToAction action = new ScaleToAction();
-        action.setScale(1f);
-        action.setDuration(0.5f);
-        action.setInterpolation(Interpolation.swingOut);
-        table.addAction(action);
+        table.addAction(Actions.scaleTo(1f, 1f, 0.5f, Interpolation.swingOut));
     }
 
     @Override
     public void hide() {
-        ScaleToAction action = new ScaleToAction();
-        action.setScale(0f);
-        action.setDuration(0.5f);
-        action.setInterpolation(Interpolation.swingIn);
-        table.addAction(action);
+        table.addAction(Actions.scaleTo(0f, 0f, 0.5f, Interpolation.swingIn));
     }
 
     public void addLevel(int map, String name, Texture levelTexture) {
@@ -149,5 +165,9 @@ public class BasicLevelMenu implements LevelMenu {
 
     public int getSelectedLevelIndex() {
         return selectedLevelIndex;
+    }
+
+    public ImageButton getCloseButton() {
+        return closeButton;
     }
 }
