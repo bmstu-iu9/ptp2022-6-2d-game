@@ -6,16 +6,12 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.qualityworkstudio.uninvitedguests.joystick.BasicJoystick;
 import com.qualityworkstudio.uninvitedguests.joystick.Joystick;
 
-/**
- * @author Andrey Karanik
- */
-
-public class MobileInterface {
+public class MobilePlayerInterface implements PlayerInterface {
 
     private Joystick movementJoystick;
     private Joystick rotationJoystick;
 
-    public MobileInterface(Stage stage, AssetManager assetManager) {
+    public MobilePlayerInterface(Stage stage, AssetManager assetManager) {
         movementJoystick = new BasicJoystick(stage, assetManager);
         rotationJoystick = new BasicJoystick(stage, assetManager);
         movementJoystick.setSize(new Vector2(420, 420));
