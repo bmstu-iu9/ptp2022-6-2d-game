@@ -24,8 +24,10 @@ public class Player {
     private Body body;
     private Sprite sprite;
     private PlayerController controller;
+    private PlayerInterface playerInterface;
 
-    private float size;
+    private float spriteSize;
+    private float bodyRadius;
     private float movementSpeed;
     private boolean moveToFixed;
     private Vector2 moveToPosition;
@@ -42,13 +44,16 @@ public class Player {
      * @param settings game settings.
      */
     public Player(World world, Texture texture, GameSettings settings) {
-        size = 16f;
+        spriteSize = 16f;
+        bodyRadius = 2f;
+        movementSpeed = bodyRadius * settings.getCameraSize() * 0.25f;
+
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         bodyDef.linearDamping = 30;
         body = world.createBody(bodyDef);
         CircleShape shape = new CircleShape();
-        shape.setRadius(size / 8f);
+        shape.setRadius(bodyRadius);
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
         fixtureDef.density = 0.5f;
@@ -62,15 +67,14 @@ public class Player {
         shape.dispose();
 
         sprite = new Sprite(texture);
-        sprite.setSize(size, size);
+        sprite.setSize(spriteSize, spriteSize);
         sprite.setOriginCenter();
-        movementSpeed = 64f;
         camera = new OrthographicCamera(settings.getCameraSize(), settings.getCameraSize() *
                 ((float) Gdx.graphics.getHeight() / Gdx.graphics.getWidth()));
     }
 
     /**
-     * The method updates the state of the player. Before using this method, make sure you have set the player controller.
+     * The method updates the state of the player.
      *
      * @param deltaTime the time span between the last frame and the current frame in seconds.
      */
@@ -81,7 +85,7 @@ public class Player {
             camera.position.set(sprite.getX(), sprite.getY(), 0);
         }
 
-        if (!moveToFixed && !fixed) {
+        if (!moveToFixed && !fixed && controller != null) {
             controller.move();
             controller.look();
         } else if (moveToFixed) {
@@ -97,7 +101,7 @@ public class Player {
             }
         }
 
-        sprite.setPosition(body.getPosition().x - size / 2f, body.getPosition().y - size / 2f);
+        sprite.setPosition(body.getPosition().x - spriteSize / 2f, body.getPosition().y - spriteSize / 2f);
         sprite.setRotation((float)Math.toDegrees(body.getAngle()));
     }
 
@@ -127,6 +131,24 @@ public class Player {
     public void setController(PlayerController controller) {
         // Following the dependency inversion principle (DIP from SOLID)
         this.controller = controller;
+    }
+
+    /**
+     * Gets the player interface.
+     *
+     * @return the player interface.
+     */
+    public PlayerInterface getPlayerInterface() {
+        return playerInterface;
+    }
+
+    /**
+     * Sets the player interface.
+     *
+     * @param playerInterface a new player interface.
+     */
+    public void setPlayerInterface(PlayerInterface playerInterface) {
+        this.playerInterface = playerInterface;
     }
 
     /**
@@ -192,16 +214,22 @@ public class Player {
         this.fixedCamera = fixedCamera;
     }
 
-    public void setFixed(boolean fixed) {
-        this.fixed = fixed;
-    }
-
+    /**
+     * Returns true when the player is fixed.
+     *
+     * @return whether the player is fixed.
+     */
     public boolean isFixed() {
         return fixed;
     }
 
-    public float getSize() {
-        return size;
+    /**
+     * Sets whether the player is fixed. Default is false.
+     *
+     * @param fixed whether the player is fixed.
+     */
+    public void setFixed(boolean fixed) {
+        this.fixed = fixed;
     }
 
     public void moveTo(Vector2 position) {

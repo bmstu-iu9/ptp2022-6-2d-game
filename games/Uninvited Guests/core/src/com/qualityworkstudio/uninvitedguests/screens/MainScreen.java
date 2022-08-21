@@ -22,10 +22,8 @@ import com.qualityworkstudio.uninvitedguests.BasicPlayerController;
 import com.qualityworkstudio.uninvitedguests.GameSettings;
 import com.qualityworkstudio.uninvitedguests.BasicLevelMenu;
 import com.qualityworkstudio.uninvitedguests.InteractionArea;
-import com.qualityworkstudio.uninvitedguests.LevelMenu;
 import com.qualityworkstudio.uninvitedguests.LevelMenuInteraction;
 import com.qualityworkstudio.uninvitedguests.Map;
-import com.qualityworkstudio.uninvitedguests.MobileInterface;
 import com.qualityworkstudio.uninvitedguests.MobilePlayerController;
 import com.qualityworkstudio.uninvitedguests.Player;
 
@@ -46,8 +44,6 @@ public class MainScreen extends ScreenAdapter {
     private Stage stage;
     private BasicLevelMenu levelMenu;
 
-    private MobileInterface mobileInterface;
-
     private Player player;
     private Map map;
     private BasicDoor door;
@@ -64,8 +60,6 @@ public class MainScreen extends ScreenAdapter {
                 (float)Gdx.graphics.getHeight() / Gdx.graphics.getWidth()));
         stage = new Stage(viewport);
         Gdx.input.setInputProcessor(stage);
-
-        mobileInterface = new MobileInterface(stage, assetManager);
 
         levelMenu = new BasicLevelMenu(stage, assetManager, game);
         levelMenu.addLevel(1, "Level 1", assetManager.<Texture>get("level1_image.png"));
@@ -84,12 +78,15 @@ public class MainScreen extends ScreenAdapter {
         door.setType(BasicDoor.Type.GREEN);
         player = new Player(world, assetManager.<Texture>get("character.png"), settings);
         if (settings.isMobileMode()) {
-            player.setController(new MobilePlayerController(player, mobileInterface.getMovementJoystick(), mobileInterface.getRotationJoystick()));
+            MobilePlayerInterface playerInterface = new MobilePlayerInterface(stage, assetManager);
+            player.setController(new MobilePlayerController(player, playerInterface.getMovementJoystick(), playerInterface.getRotationJoystick()));
+            player.setPlayerInterface(playerInterface);
         } else {
             player.setController(new BasicPlayerController(player));
+            player.setPlayerInterface(new BasicPlayerInterface());
         }
         player.setFixedCamera(true);
-        levelMenuArea = new InteractionArea(world, new Vector2(6f, 1f), new LevelMenuInteraction(levelMenu, player, mobileInterface, settings));
+        levelMenuArea = new InteractionArea(world, new Vector2(6f, 1f), new LevelMenuInteraction(levelMenu, player));
         levelMenu.getCloseButton().addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -98,7 +95,7 @@ public class MainScreen extends ScreenAdapter {
                 player.setFixed(false);
                 player.moveTo(new Vector2(0, 0));
                 if (settings.isMobileMode()) {
-                    mobileInterface.show();
+                    player.getPlayerInterface().show();
                 }
             }
         });
@@ -107,9 +104,7 @@ public class MainScreen extends ScreenAdapter {
 
     @Override
     public void show() {
-        if (settings.isMobileMode()) {
-            mobileInterface.show();
-        }
+        player.getPlayerInterface().show();
     }
 
     @Override
