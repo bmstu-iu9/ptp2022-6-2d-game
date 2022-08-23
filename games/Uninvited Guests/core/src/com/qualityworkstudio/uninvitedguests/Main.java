@@ -32,7 +32,6 @@ public class Main extends Game {
 		assetManager.load("loading_image1.png", Texture.class);
 		assetManager.load("loading_image2.png", Texture.class);
 		assetManager.load("font.fnt", BitmapFont.class);
-		assetManager.load("ratio_adjustment_image.png", Texture.class);
 		assetManager.finishLoading();
 
 		LoadingData loadingData = new LoadingData("json/firstload.json");

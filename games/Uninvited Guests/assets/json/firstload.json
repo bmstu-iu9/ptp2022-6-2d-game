@@ -15,7 +15,12 @@
     "maps/main_map_layer1.png",
     "maps/main_map_layer2.png",
     "maps/lvl1_map_layer1.png",
-    "maps/lvl1_map_layer2.png"
+    "maps/lvl1_map_layer2.png",
+    "ra_h_window_image.png",
+    "ra_v_window_image.png",
+    "ra_mobile_image.png",
+    "ra_image.png",
+    "continue_button.png"
   ],
 
   "bitmapFontFiles": [
