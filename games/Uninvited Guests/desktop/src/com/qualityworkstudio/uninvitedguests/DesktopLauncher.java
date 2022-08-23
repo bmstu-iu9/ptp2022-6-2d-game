@@ -9,7 +9,7 @@ public class DesktopLauncher {
 		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
 		config.setForegroundFPS(60);
 		config.setTitle("Uninvited Guests");
-		config.setWindowedMode(1280, 720);
+		config.setWindowedMode(720, 900);
 		GameSettings settings = new GameSettings();
 		new Lwjgl3Application(new Main(settings), config);
 	}

@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.qualityworkstudio.uninvitedguests.screens.LoadingScreen;
 import com.qualityworkstudio.uninvitedguests.screens.MainScreen;
+import com.qualityworkstudio.uninvitedguests.screens.RatioAdjustmentScreen;
+import com.qualityworkstudio.uninvitedguests.screens.Screens;
 
 /**
  * The main class.
@@ -30,9 +32,10 @@ public class Main extends Game {
 		assetManager.load("loading_image1.png", Texture.class);
 		assetManager.load("loading_image2.png", Texture.class);
 		assetManager.load("font.fnt", BitmapFont.class);
+		assetManager.load("ratio_adjustment_image.png", Texture.class);
 		assetManager.finishLoading();
 
 		LoadingData loadingData = new LoadingData("json/firstload.json");
-		setScreen(new LoadingScreen(this, assetManager, settings, loadingData));
+		setScreen(new LoadingScreen(Screens.MAIN_SCREEN, this, assetManager, settings, loadingData));
 	}
 }

@@ -3,7 +3,6 @@ package com.qualityworkstudio.uninvitedguests.screens;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
-import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
@@ -27,6 +26,7 @@ public class LoadingScreen extends ScreenAdapter {
     private Game game;
     private AssetManager assetManager;
     private GameSettings settings;
+    private int screen;
 
     private Viewport viewport;
     private Stage stage;
@@ -38,10 +38,11 @@ public class LoadingScreen extends ScreenAdapter {
     private float currentTime;
     private int step;
 
-    public LoadingScreen(Game game, AssetManager assetManager, GameSettings settings, LoadingData loadingData) {
+    public LoadingScreen(int screen, Game game, AssetManager assetManager, GameSettings settings, LoadingData loadingData) {
         this.game = game;
         this.assetManager = assetManager;
         this.settings = settings;
+        this.screen = screen;
 
         viewport = new FitViewport(settings.getViewportSize(), settings.getViewportSize() * (
                 (float) Gdx.graphics.getHeight() / Gdx.graphics.getWidth()));
@@ -113,7 +114,7 @@ public class LoadingScreen extends ScreenAdapter {
                 calculateTime(delta);
                 break;
             case 3:
-                game.setScreen(new MainScreen(game, assetManager, settings));
+                game.setScreen(Screens.getScreen(screen, game, assetManager, settings));
                 break;
         }
 
