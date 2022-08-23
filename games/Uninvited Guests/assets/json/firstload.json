@@ -15,7 +15,8 @@
     "maps/main_map_layer1.png",
     "maps/main_map_layer2.png",
     "maps/lvl1_map_layer1.png",
-    "maps/lvl1_map_layer2.png"
+    "maps/lvl1_map_layer2.png",
+    "ratio_adjustment_image.png"
   ],
 
   "bitmapFontFiles": [
