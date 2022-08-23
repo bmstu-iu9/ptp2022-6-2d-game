@@ -7,5 +7,5 @@ public interface LevelMenu {
 
     void hide();
 
-    void addLevel(int map, String name, Texture levelTexture);
+    void addLevel(String name, Texture levelTexture);
 }

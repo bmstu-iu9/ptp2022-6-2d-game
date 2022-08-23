@@ -2,17 +2,13 @@ package com.qualityworkstudio.uninvitedguests;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.scenes.scene2d.actions.ScaleToAction;
 import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -28,6 +24,10 @@ import java.util.List;
 
 public class BasicLevelMenu implements LevelMenu {
 
+    private Game game;
+    private AssetManager assetManager;
+    private GameSettings settings;
+
     private Table table;
     private int selectedLevelIndex;
     private List<LevelButton> buttonList;
@@ -42,7 +42,10 @@ public class BasicLevelMenu implements LevelMenu {
 
     private HorizontalGroup horizontalGroup;
 
-    public BasicLevelMenu(Stage stage, AssetManager assetManager, Game game) {
+    public BasicLevelMenu(Stage stage, AssetManager manager, Game gm, GameSettings gameSettings) {
+        game = gm;
+        assetManager = manager;
+        settings = gameSettings;
         TextureRegionDrawable levelMenuImage = new TextureRegionDrawable(assetManager.<Texture>get("levelmenu_bg.png"));
         TextureRegionDrawable startButtonImage = new TextureRegionDrawable(assetManager.<Texture>get("level_start_button.png"));
         TextureRegionDrawable closeButtonImage = new TextureRegionDrawable(assetManager.<Texture>get("level_close_button.png"));
@@ -80,13 +83,25 @@ public class BasicLevelMenu implements LevelMenu {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 startButton.addAction(Actions.scaleTo(0.9f, 0.9f, 0.1f, Interpolation.swingIn));
                 startButton.getImage().setColor(0.75f, 0.75f, 0.75f, 1f);
-                return true;
+                return super.touchDown(event, x, y, pointer, button);
             }
 
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                super.touchUp(event, x, y, pointer, button);
                 startButton.addAction(Actions.scaleTo(1f, 1f, 0.1f, Interpolation.swingOut));
                 startButton.getImage().setColor(1f, 1f, 1f, 1f);
+            }
+
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+                switch (selectedLevelIndex) {
+                    case 0:
+                        game.setScreen(new Level1(game, assetManager, settings));
+                        break;
+                }
+
             }
         });
 
@@ -98,11 +113,12 @@ public class BasicLevelMenu implements LevelMenu {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 closeButton.addAction(Actions.scaleTo(0.9f, 0.9f, 0.1f, Interpolation.swingIn));
                 closeButton.getImage().setColor(0.75f, 0.75f, 0.75f, 1f);
-                return true;
+                return super.touchDown(event, x, y, pointer, button);
             }
 
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                super.touchUp(event, x, y, pointer, button);
                 closeButton.addAction(Actions.scaleTo(1f, 1f, 0.1f, Interpolation.swingOut));
                 closeButton.getImage().setColor(1f, 1f, 1f, 1f);
             }
@@ -130,7 +146,8 @@ public class BasicLevelMenu implements LevelMenu {
         table.addAction(Actions.scaleTo(0f, 0f, 0.5f, Interpolation.swingIn));
     }
 
-    public void addLevel(int map, String name, Texture levelTexture) {
+    @Override
+    public void addLevel(String name, Texture levelTexture) {
         TextureRegionDrawable levelImage = new TextureRegionDrawable(levelTexture);
 
         LevelButton.LevelButtonStyle style = new LevelButton.LevelButtonStyle();

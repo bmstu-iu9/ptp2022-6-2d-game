@@ -82,7 +82,7 @@ public class Player {
         camera.update();
 
         if (!fixedCamera) {
-            camera.position.set(sprite.getX(), sprite.getY(), 0);
+            camera.position.set(body.getPosition().x, body.getPosition().y, 0);
         }
 
         if (!moveToFixed && !fixed && controller != null) {
@@ -230,6 +230,26 @@ public class Player {
      */
     public void setFixed(boolean fixed) {
         this.fixed = fixed;
+    }
+
+    public void setPosition(float x, float y) {
+        body.setTransform(x, y, body.getAngle());
+    }
+
+    public void setPosition(Vector2 position) {
+        body.setTransform(position.x, position.y, body.getAngle());
+    }
+
+    public void setRotation(float degrees) {
+        body.setTransform(body.getPosition().x, body.getPosition().y, (float)Math.toRadians(degrees));
+    }
+
+    public float getRotation() {
+        return body.getAngle();
+    }
+
+    public Vector2 getMoveToPosition() {
+        return body.getPosition();
     }
 
     public void moveTo(Vector2 position) {

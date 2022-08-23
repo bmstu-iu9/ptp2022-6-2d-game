@@ -19,12 +19,14 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.qualityworkstudio.uninvitedguests.BasicContactListener;
 import com.qualityworkstudio.uninvitedguests.BasicDoor;
 import com.qualityworkstudio.uninvitedguests.BasicPlayerController;
+import com.qualityworkstudio.uninvitedguests.BasicPlayerInterface;
 import com.qualityworkstudio.uninvitedguests.GameSettings;
 import com.qualityworkstudio.uninvitedguests.BasicLevelMenu;
 import com.qualityworkstudio.uninvitedguests.InteractionArea;
 import com.qualityworkstudio.uninvitedguests.LevelMenuInteraction;
 import com.qualityworkstudio.uninvitedguests.Map;
 import com.qualityworkstudio.uninvitedguests.MobilePlayerController;
+import com.qualityworkstudio.uninvitedguests.MobilePlayerInterface;
 import com.qualityworkstudio.uninvitedguests.Player;
 
 /**
@@ -61,13 +63,13 @@ public class MainScreen extends ScreenAdapter {
         stage = new Stage(viewport);
         Gdx.input.setInputProcessor(stage);
 
-        levelMenu = new BasicLevelMenu(stage, assetManager, game);
-        levelMenu.addLevel(1, "Level 1", assetManager.<Texture>get("level1_image.png"));
-        levelMenu.addLevel(2, "Level 2", assetManager.<Texture>get("level1_image.png"));
-        levelMenu.addLevel(3, "Level 3", assetManager.<Texture>get("level1_image.png"));
-        levelMenu.addLevel(4, "Level 4", assetManager.<Texture>get("level1_image.png"));
-        levelMenu.addLevel(5, "Level 5", assetManager.<Texture>get("level1_image.png"));
-        levelMenu.addLevel(6, "Level 6", assetManager.<Texture>get("level1_image.png"));
+        levelMenu = new BasicLevelMenu(stage, assetManager, game, settings);
+        levelMenu.addLevel("Level 1", assetManager.<Texture>get("level1_image.png"));
+        levelMenu.addLevel("Level 2", assetManager.<Texture>get("level1_image.png"));
+        levelMenu.addLevel("Level 3", assetManager.<Texture>get("level1_image.png"));
+        levelMenu.addLevel("Level 4", assetManager.<Texture>get("level1_image.png"));
+        levelMenu.addLevel("Level 5", assetManager.<Texture>get("level1_image.png"));
+        levelMenu.addLevel("Level 6", assetManager.<Texture>get("level1_image.png"));
 
         batch = new SpriteBatch();
         world = new World(new Vector2(0, 0), false);
