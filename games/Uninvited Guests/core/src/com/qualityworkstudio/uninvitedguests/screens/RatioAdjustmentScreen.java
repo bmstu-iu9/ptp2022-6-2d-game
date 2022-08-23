@@ -18,7 +18,10 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.qualityworkstudio.uninvitedguests.BasicRaImage;
 import com.qualityworkstudio.uninvitedguests.GameSettings;
+import com.qualityworkstudio.uninvitedguests.MobileRaImage;
+import com.qualityworkstudio.uninvitedguests.RaImage;
 
 public class RatioAdjustmentScreen extends ScreenAdapter {
 
