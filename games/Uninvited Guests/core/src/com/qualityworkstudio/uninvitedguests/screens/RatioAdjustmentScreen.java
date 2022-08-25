@@ -17,6 +17,7 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.qualityworkstudio.uninvitedguests.BasicClickListener;
 import com.qualityworkstudio.uninvitedguests.BasicRaImage;
 import com.qualityworkstudio.uninvitedguests.Game;
 import com.qualityworkstudio.uninvitedguests.GameSettings;
@@ -56,23 +57,12 @@ public class RatioAdjustmentScreen extends ScreenAdapter {
 
         Drawable drawable = new TextureRegionDrawable(assetManager.<Texture>get("continue_button.png"));
         continueButton = new Image(drawable);
+        continueButton.setSize(stage.getWidth() / 1.5f, stage.getWidth() / 3f);
         continueButton.setOrigin(Align.center);
         continueButton.setPosition(stage.getWidth() / 2f, stage.getHeight() / 2f, Align.center);
         continueButton.setScale(0f);
+        continueButton.addListener(new BasicClickListener(continueButton));
         continueButton.addListener(new ClickListener() {
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                continueButton.addAction(Actions.scaleTo(0.9f, 0.9f, 0.1f, Interpolation.swingIn));
-                continueButton.setColor(0.75f, 0.75f, 0.75f, 1f);
-                return super.touchDown(event, x, y, pointer, button);
-            }
-
-            @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                super.touchUp(event, x, y, pointer, button);
-                continueButton.addAction(Actions.scaleTo(1f, 1f, 0.1f, Interpolation.swingOut));
-                continueButton.setColor(1f, 1f, 1f, 1f);
-            }
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);

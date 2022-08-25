@@ -29,7 +29,6 @@ public class BasicLevelMenu implements LevelMenu {
 
     private Game game;
     private AssetManager assetManager;
-    private GameSettings settings;
 
     private Table table;
     private int selectedLevelIndex;
@@ -45,10 +44,9 @@ public class BasicLevelMenu implements LevelMenu {
 
     private HorizontalGroup horizontalGroup;
 
-    public BasicLevelMenu(Stage stage, AssetManager manager, Game gm, GameSettings gameSettings) {
+    public BasicLevelMenu(Stage stage, Game gm) {
         game = gm;
-        assetManager = manager;
-        settings = gameSettings;
+        assetManager = game.getAssetManager();
         TextureRegionDrawable levelMenuImage = new TextureRegionDrawable(assetManager.<Texture>get("levelmenu_bg.png"));
         TextureRegionDrawable startButtonImage = new TextureRegionDrawable(assetManager.<Texture>get("level_start_button.png"));
         TextureRegionDrawable closeButtonImage = new TextureRegionDrawable(assetManager.<Texture>get("level_close_button.png"));
@@ -81,21 +79,8 @@ public class BasicLevelMenu implements LevelMenu {
         startButton.setOrigin(startButton.getWidth() / 2f, startButton.getHeight() / 2f);
         startButton.setTransform(true);
         startButton.setScale(1f, 0f);
+        startButton.addListener(new BasicClickListener(startButton));
         startButton.addListener(new ClickListener() {
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                startButton.addAction(Actions.scaleTo(0.9f, 0.9f, 0.1f, Interpolation.swingIn));
-                startButton.getImage().setColor(0.75f, 0.75f, 0.75f, 1f);
-                return super.touchDown(event, x, y, pointer, button);
-            }
-
-            @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                super.touchUp(event, x, y, pointer, button);
-                startButton.addAction(Actions.scaleTo(1f, 1f, 0.1f, Interpolation.swingOut));
-                startButton.getImage().setColor(1f, 1f, 1f, 1f);
-            }
-
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);

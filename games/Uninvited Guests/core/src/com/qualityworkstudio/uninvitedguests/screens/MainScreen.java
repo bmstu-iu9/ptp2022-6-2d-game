@@ -63,7 +63,7 @@ public class MainScreen extends ScreenAdapter {
         stage = new Stage(viewport);
         Gdx.input.setInputProcessor(stage);
 
-        levelMenu = new BasicLevelMenu(stage, assetManager, game, settings);
+        levelMenu = new BasicLevelMenu(stage, game);
         levelMenu.addLevel("Level 1", assetManager.<Texture>get("level1_image.png"));
         levelMenu.addLevel("Level 2", assetManager.<Texture>get("level1_image.png"));
         levelMenu.addLevel("Level 3", assetManager.<Texture>get("level1_image.png"));

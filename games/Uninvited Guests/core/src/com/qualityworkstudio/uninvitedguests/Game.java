@@ -7,7 +7,6 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.qualityworkstudio.uninvitedguests.screens.Level1;
-import com.qualityworkstudio.uninvitedguests.screens.LoadingScreen;
 import com.qualityworkstudio.uninvitedguests.screens.MainScreen;
 import com.qualityworkstudio.uninvitedguests.screens.RatioAdjustmentScreen;
 import com.qualityworkstudio.uninvitedguests.screens.Screens;
@@ -34,16 +33,18 @@ public class Game implements ApplicationListener {
 	@Override
 	public void create () {
 		settings.setDeveloperMode(true);
-		settings.setMobileMode(true);
 
 		assetManager = new AssetManager();
 		assetManager.load("loading_image1.png", Texture.class);
 		assetManager.load("loading_image2.png", Texture.class);
+		assetManager.load("mobile_mode_button.png", Texture.class);
+		assetManager.load("selected_mobile_mode_button.png", Texture.class);
+		assetManager.load("continue_button.png", Texture.class);
+		assetManager.load("loading_image2.png", Texture.class);
 		assetManager.load("font.fnt", BitmapFont.class);
 		assetManager.finishLoading();
 
-		LoadingData loadingData = new LoadingData("json/firstload.json");
-		setScreen(new LoadingScreen( this, Screens.MAIN_SCREEN, loadingData));
+		setScreen(new SettingsScreen(this, Screens.MAIN_SCREEN));
 	}
 
 	/**

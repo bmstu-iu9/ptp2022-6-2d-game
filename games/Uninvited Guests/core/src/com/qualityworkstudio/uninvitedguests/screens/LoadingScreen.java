@@ -48,8 +48,13 @@ public class LoadingScreen extends ScreenAdapter {
         this.settings = game.getSettings();
         this.screen = screen;
 
-        viewport = new FitViewport(settings.getViewportSize(), settings.getViewportSize() * (
-                (float) Gdx.graphics.getHeight() / Gdx.graphics.getWidth()));
+        if (Gdx.graphics.getWidth() - Gdx.graphics.getHeight() < 0) {
+            viewport = new FitViewport(settings.getViewportSize() * (
+                    (float) Gdx.graphics.getWidth() / Gdx.graphics.getHeight()), settings.getViewportSize());
+        } else {
+            viewport = new FitViewport(settings.getViewportSize(), settings.getViewportSize() * (
+                    (float) Gdx.graphics.getHeight() / Gdx.graphics.getWidth()));
+        }
         stage = new Stage(viewport);
         Gdx.input.setInputProcessor(stage);
 
@@ -95,6 +100,11 @@ public class LoadingScreen extends ScreenAdapter {
     public void show() {
         loadingImage.show();
         labelContainer.addAction(Actions.scaleTo(1f, 1f, 1f, Interpolation.swingOut));
+    }
+
+    @Override
+    public void hide() {
+        dispose();
     }
 
     @Override
