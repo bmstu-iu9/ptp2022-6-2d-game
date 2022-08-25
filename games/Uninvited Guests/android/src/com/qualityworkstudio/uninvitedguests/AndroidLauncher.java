@@ -4,7 +4,6 @@ import android.os.Bundle;
 
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
-import com.qualityworkstudio.uninvitedguests.Main;
 
 public class AndroidLauncher extends AndroidApplication {
 	@Override
@@ -13,6 +12,6 @@ public class AndroidLauncher extends AndroidApplication {
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
 		GameSettings settings = new GameSettings();
 		settings.setMobileMode(true);
-		initialize(new Main(settings), config);
+		initialize(new Game(settings), config);
 	}
 }

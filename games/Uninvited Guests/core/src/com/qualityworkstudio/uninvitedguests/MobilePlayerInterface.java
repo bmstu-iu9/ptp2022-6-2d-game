@@ -6,6 +6,11 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.qualityworkstudio.uninvitedguests.joystick.BasicJoystick;
 import com.qualityworkstudio.uninvitedguests.joystick.Joystick;
 
+/**
+ * @author Andrey Karanik
+ * @see PlayerInterface
+ */
+
 public class MobilePlayerInterface implements PlayerInterface {
 
     private Joystick movementJoystick;

@@ -3,7 +3,6 @@ package com.qualityworkstudio.uninvitedguests;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 
@@ -17,7 +16,6 @@ import com.badlogic.gdx.physics.box2d.Body;
 public class BasicPlayerController implements PlayerController {
 
     private Player player;
-
     public BasicPlayerController(Player player) {
         this.player = player;
     }
@@ -43,11 +41,11 @@ public class BasicPlayerController implements PlayerController {
 
     @Override
     public void look() {
-        Body body = player.getBody();
         OrthographicCamera camera = player.getCamera();
 
-        Vector2 playerPosOnScreen = new Vector2((body.getPosition().x * (Gdx.graphics.getWidth() / camera.viewportWidth) + Gdx.graphics.getWidth() / 2f),
-                Gdx.graphics.getHeight() - (body.getPosition().y * (Gdx.graphics.getHeight() / camera.viewportHeight) + Gdx.graphics.getHeight() / 2f));
-        body.setTransform(body.getPosition(), -(float)(Math.atan2(Gdx.input.getY() - playerPosOnScreen.y, Gdx.input.getX() - playerPosOnScreen.x)) - (float)Math.PI / 2f);
+        Vector2 playerPosOnScreen = new Vector2(
+                (player.getPosition().x - camera.position.x) * Gdx.graphics.getWidth() / camera.viewportWidth + Gdx.graphics.getWidth() / 2f,
+                (player.getPosition().y - camera.position.y) * Gdx.graphics.getWidth() / camera.viewportWidth + Gdx.graphics.getHeight() / 2f);
+        player.getBody().setTransform(player.getPosition(), (float)(Math.atan2((Gdx.graphics.getHeight() - Gdx.input.getY()) - playerPosOnScreen.y, Gdx.input.getX() - playerPosOnScreen.x)) - (float)Math.PI / 2f);
     }
 }

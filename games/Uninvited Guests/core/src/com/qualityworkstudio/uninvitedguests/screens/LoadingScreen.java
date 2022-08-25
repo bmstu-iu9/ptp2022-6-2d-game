@@ -1,6 +1,5 @@
 package com.qualityworkstudio.uninvitedguests.screens;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.assets.AssetManager;
@@ -17,15 +16,20 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.qualityworkstudio.uninvitedguests.Game;
 import com.qualityworkstudio.uninvitedguests.GameSettings;
 import com.qualityworkstudio.uninvitedguests.LoadingData;
 import com.qualityworkstudio.uninvitedguests.LoadingImage;
 
+/**
+ * @author Andrey Karanik
+ */
+
 public class LoadingScreen extends ScreenAdapter {
 
     private Game game;
-    private AssetManager assetManager;
     private GameSettings settings;
+    private AssetManager assetManager;
     private int screen;
 
     private Viewport viewport;
@@ -38,10 +42,10 @@ public class LoadingScreen extends ScreenAdapter {
     private float currentTime;
     private int step;
 
-    public LoadingScreen(int screen, Game game, AssetManager assetManager, GameSettings settings, LoadingData loadingData) {
+    public LoadingScreen(Game game, int screen, LoadingData loadingData) {
         this.game = game;
-        this.assetManager = assetManager;
-        this.settings = settings;
+        this.assetManager = game.getAssetManager();
+        this.settings = game.getSettings();
         this.screen = screen;
 
         viewport = new FitViewport(settings.getViewportSize(), settings.getViewportSize() * (
@@ -114,7 +118,7 @@ public class LoadingScreen extends ScreenAdapter {
                 calculateTime(delta);
                 break;
             case 3:
-                game.setScreen(Screens.getScreen(screen, game, assetManager, settings));
+                game.setScreen(screen);
                 break;
         }
 

@@ -9,6 +9,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * @author Andrey Karanik
+ */
+
 public class LoadingData {
     private List<String> textureFiles;
     private List<String> bitmapFontFiles;

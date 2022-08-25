@@ -1,6 +1,5 @@
 package com.qualityworkstudio.uninvitedguests.joystick;
 
-
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Interpolation;
@@ -19,15 +18,17 @@ import com.badlogic.gdx.utils.Align;
  * @author Bogdan Teryukhov, Andrey Karanik
  */
 
-public class BasicJoystick implements Joystick{
+public class BasicJoystick implements Joystick {
+
     private Image background;
     private Image stick;
+
     private Vector2 joystickPosition;
     private Vector2 direction;
     private float radius;
     private boolean isTouched;
 
-    public BasicJoystick(Stage stage, AssetManager assetManager){
+    public BasicJoystick(Stage stage, AssetManager assetManager) {
         Drawable backgroundDrawable = new TextureRegionDrawable(assetManager.<Texture>get("joystick_bg.png"));
         Drawable stickDrawable = new TextureRegionDrawable(assetManager.<Texture>get("joystick_stick.png"));
         background = new Image(backgroundDrawable);
@@ -42,12 +43,11 @@ public class BasicJoystick implements Joystick{
         stage.addActor(background);
         stage.addActor(stick);
 
-
         joystickPosition = new Vector2(background.getWidth() / 2f, background.getHeight() / 2f);
         stick.setPosition(joystickPosition.x, joystickPosition.y, Align.center);
         direction = new Vector2();
 
-        background.addListener(new ClickListener(){
+        background.addListener(new ClickListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 return super.touchDown(event, x, y, pointer, button);
@@ -75,11 +75,12 @@ public class BasicJoystick implements Joystick{
 
                 if(dist > radius){
                     stick.setPosition(direction.x*radius + joystickPosition.x, direction.y * radius + joystickPosition.y, Align.center);
-                }else{
+                } else {
                     stick.setPosition(dx + joystickPosition.x, dy + joystickPosition.y, Align.center);
                 }
             }
         });
+
         radius = 220f;
     }
 
@@ -131,6 +132,11 @@ public class BasicJoystick implements Joystick{
     @Override
     public void setRadius(float radius) {
         this.radius = radius;
+    }
+
+    @Override
+    public float getRadius() {
+        return radius;
     }
 
     @Override

@@ -47,6 +47,5 @@ public class MobilePlayerController implements PlayerController {
                 }
             }
         }
-
     }
 }

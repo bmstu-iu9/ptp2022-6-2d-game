@@ -1,11 +1,11 @@
 package com.qualityworkstudio.uninvitedguests.screens;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.qualityworkstudio.uninvitedguests.BasicDoor;
+import com.qualityworkstudio.uninvitedguests.Game;
 import com.qualityworkstudio.uninvitedguests.GameSettings;
 import com.qualityworkstudio.uninvitedguests.Map;
 
@@ -16,8 +16,9 @@ public class Level1 extends LevelScreen {
     private Map map;
     private ArrayList<BasicDoor> doors;
 
-    public Level1(Game game, AssetManager assetManager, GameSettings gameSettings) {
-        super(game, assetManager, gameSettings);
+    public Level1(Game game) {
+        super(game);
+
         map = new Map(128, assetManager.<Texture>get("maps/lvl1_map_layer1.png"), assetManager.<Texture>get("maps/lvl1_map_layer2.png"));
         doors = new ArrayList<>();
         BasicDoor door1 = new BasicDoor(world, assetManager);
@@ -42,7 +43,7 @@ public class Level1 extends LevelScreen {
             door.update(delta);
         }
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
-            game.setScreen(new MainScreen(game, assetManager, settings));
+            game.setScreen(new MainScreen(game));
         }
     }
 

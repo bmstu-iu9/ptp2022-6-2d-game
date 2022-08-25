@@ -15,7 +15,6 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 
 /**
- *
  * @author Andrey Karanik
  */
 
@@ -41,12 +40,12 @@ public class Player {
      *
      * @param world a world object.
      * @param texture a texture.
-     * @param settings game settings.
+     * @param cameraSize a camera size.
      */
-    public Player(World world, Texture texture, GameSettings settings) {
+    public Player(World world, Texture texture, float cameraSize) {
         spriteSize = 16f;
         bodyRadius = 2f;
-        movementSpeed = bodyRadius * settings.getCameraSize() * 0.25f;
+        movementSpeed = bodyRadius * cameraSize * 0.25f;
 
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
@@ -69,7 +68,7 @@ public class Player {
         sprite = new Sprite(texture);
         sprite.setSize(spriteSize, spriteSize);
         sprite.setOriginCenter();
-        camera = new OrthographicCamera(settings.getCameraSize(), settings.getCameraSize() *
+        camera = new OrthographicCamera(cameraSize, cameraSize *
                 ((float) Gdx.graphics.getHeight() / Gdx.graphics.getWidth()));
     }
 
@@ -82,26 +81,28 @@ public class Player {
         camera.update();
 
         if (!fixedCamera) {
-            camera.position.set(body.getPosition().x, body.getPosition().y, 0);
+            camera.position.set(camera.position.x + (getPosition().x - camera.position.x) * 0.1f,
+                                camera.position.y + (getPosition().y - camera.position.y) * 0.1f, 0);
+            //camera.position.set(body.getPosition().x, body.getPosition().y, 0);
         }
 
         if (!moveToFixed && !fixed && controller != null) {
             controller.move();
             controller.look();
         } else if (moveToFixed) {
-            float dx = moveToPosition.x - body.getPosition().x;
-            float dy = moveToPosition.y - body.getPosition().y;
+            float dx = moveToPosition.x - getPosition().x;
+            float dy = moveToPosition.y - getPosition().y;
             float dist = (float)Math.sqrt(dx*dx + dy*dy);
             body.applyLinearImpulse(movementSpeed * dx / dist,
                     movementSpeed * dy / dist,
-                    body.getPosition().x, body.getPosition().y, true);
-            body.setTransform(body.getPosition(), (float)(Math.atan2(dy, dx) - Math.PI / 2f));
+                    getPosition().x, getPosition().y, true);
+            body.setTransform(getPosition(), (float)(Math.atan2(dy, dx) - Math.PI / 2f));
             if (Math.abs(dx) < 0.1 && Math.abs(dy) < 0.1) {
                 moveToFixed = false;
             }
         }
 
-        sprite.setPosition(body.getPosition().x - spriteSize / 2f, body.getPosition().y - spriteSize / 2f);
+        sprite.setPosition(getPosition().x - spriteSize / 2f, getPosition().y - spriteSize / 2f);
         sprite.setRotation((float)Math.toDegrees(body.getAngle()));
     }
 
@@ -232,18 +233,46 @@ public class Player {
         this.fixed = fixed;
     }
 
+    /**
+     * Sets the player position.
+     * @param x a new x position.
+     * @param y a new y position.
+     */
     public void setPosition(float x, float y) {
         body.setTransform(x, y, body.getAngle());
     }
 
+    /**
+     * Sets the player position.
+     * @param position a new position.
+     */
     public void setPosition(Vector2 position) {
         body.setTransform(position.x, position.y, body.getAngle());
     }
 
+    /**
+     * Gets the player position.
+     *
+     * @return the player position.
+     */
+    public Vector2 getPosition() {
+        return body.getPosition();
+    }
+
+    /**
+     * Sets the player rotation.
+     *
+     * @param degrees a new angle in radians.
+     */
     public void setRotation(float degrees) {
         body.setTransform(body.getPosition().x, body.getPosition().y, (float)Math.toRadians(degrees));
     }
 
+    /**
+     * Gets the player rotation.
+     *
+     * @return the player rotation in radians.
+     */
     public float getRotation() {
         return body.getAngle();
     }

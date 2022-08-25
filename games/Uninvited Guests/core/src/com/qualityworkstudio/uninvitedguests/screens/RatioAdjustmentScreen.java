@@ -1,6 +1,5 @@
 package com.qualityworkstudio.uninvitedguests.screens;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.assets.AssetManager;
@@ -19,11 +18,19 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.qualityworkstudio.uninvitedguests.BasicRaImage;
+import com.qualityworkstudio.uninvitedguests.Game;
 import com.qualityworkstudio.uninvitedguests.GameSettings;
 import com.qualityworkstudio.uninvitedguests.MobileRaImage;
 import com.qualityworkstudio.uninvitedguests.RaImage;
 
+/**
+ * @author Andrey Karanik
+ */
+
 public class RatioAdjustmentScreen extends ScreenAdapter {
+
+    private GameSettings settings;
+    private AssetManager assetManager;
 
     private Viewport viewport;
     private Stage stage;
@@ -32,7 +39,9 @@ public class RatioAdjustmentScreen extends ScreenAdapter {
 
     private boolean ok;
 
-    public RatioAdjustmentScreen(final int screen, final Game game, final AssetManager assetManager, final GameSettings settings) {
+    public RatioAdjustmentScreen(final Game game, final int screen) {
+        settings = game.getSettings();
+        assetManager = game.getAssetManager();
 
         viewport = new FitViewport(settings.getViewportSize(), settings.getViewportSize() * (
                 (float) Gdx.graphics.getHeight() / Gdx.graphics.getWidth()));
@@ -67,8 +76,7 @@ public class RatioAdjustmentScreen extends ScreenAdapter {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                game.setScreen(Screens.getScreen(screen, game, assetManager, settings));
-
+                game.setScreen(screen);
             }
         });
         stage.addActor(continueButton);
@@ -77,6 +85,11 @@ public class RatioAdjustmentScreen extends ScreenAdapter {
     @Override
     public void show() {
         raImage.show();
+    }
+
+    @Override
+    public void hide() {
+        dispose();
     }
 
     @Override

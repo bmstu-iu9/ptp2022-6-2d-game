@@ -1,5 +1,8 @@
 package com.qualityworkstudio.uninvitedguests;
 
+import com.badlogic.gdx.Application;
+import com.badlogic.gdx.Gdx;
+
 /**
  * Describes game settings.
  *
@@ -11,12 +14,12 @@ public class GameSettings {
     /**
      * This constant is the <em>standard</em> camera width.
      */
-    public static final float STANDARD_CAMERA_SIZE = 128f;
+    private static final float STANDARD_CAMERA_SIZE = 128f;
 
     /**
      * This constant is the <em>standard</em> viewport width.
      */
-    public static final float STANDARD_VIEWPORT_SIZE = 1920f;
+    private static final float STANDARD_VIEWPORT_SIZE = 1920f;
 
     /**
      * The float value specifies the camera width.
@@ -97,8 +100,7 @@ public class GameSettings {
     /**
      * Sets the mobile mode. Default is false.
      *
-     * @param mobileMode a value of {@code true} for the mobileMode key indicates the mobile mode will be enabled,
-     *                   and a value of {@code false} indicates the mobile mode will not be enabled.
+     * @param mobileMode whether mobile mode is enabled.
      */
     public void setMobileMode(boolean mobileMode) {
         this.mobileMode = mobileMode;
@@ -116,7 +118,7 @@ public class GameSettings {
     /**
      * Sets the developer mode. Default is false.
      *
-     * @param developerMode whether the developer mode will be enabled.
+     * @param developerMode whether the developer mode is enabled.
      */
     public void setDeveloperMode(boolean developerMode) {
         this.developerMode = developerMode;

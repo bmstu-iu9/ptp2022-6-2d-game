@@ -3,13 +3,11 @@ package com.qualityworkstudio.uninvitedguests;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.Filter;
-import com.badlogic.gdx.physics.box2d.Fixture;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+
+/**
+ * @author Andrey Karanik
+ */
 
 public class BasicDoor extends Door {
 
@@ -22,7 +20,7 @@ public class BasicDoor extends Door {
     private Texture redDoorTexture;
 
     /**
-     * Constructs a door.
+     * Constructs a basic door.
      *
      * @param world a world object.
      * @param assetManager the asset manager

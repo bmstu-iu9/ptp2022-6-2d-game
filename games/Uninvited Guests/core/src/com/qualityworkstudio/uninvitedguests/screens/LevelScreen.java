@@ -1,6 +1,5 @@
 package com.qualityworkstudio.uninvitedguests.screens;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.assets.AssetManager;
@@ -16,6 +15,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.qualityworkstudio.uninvitedguests.BasicContactListener;
 import com.qualityworkstudio.uninvitedguests.BasicPlayerController;
 import com.qualityworkstudio.uninvitedguests.BasicPlayerInterface;
+import com.qualityworkstudio.uninvitedguests.Game;
 import com.qualityworkstudio.uninvitedguests.GameSettings;
 import com.qualityworkstudio.uninvitedguests.MobilePlayerController;
 import com.qualityworkstudio.uninvitedguests.MobilePlayerInterface;
@@ -34,10 +34,10 @@ public class LevelScreen extends ScreenAdapter {
 
     Player player;
 
-    public LevelScreen(Game game, AssetManager assetManager, GameSettings gameSettings) {
+    public LevelScreen(Game game) {
         this.game = game;
-        this.assetManager = assetManager;
-        this.settings = gameSettings;
+        this.assetManager = game.getAssetManager();
+        this.settings = game.getSettings();
 
         viewport = new FitViewport(settings.getViewportSize(), settings.getViewportSize() * (
                 (float) Gdx.graphics.getHeight() / Gdx.graphics.getWidth()));
@@ -47,7 +47,7 @@ public class LevelScreen extends ScreenAdapter {
         batch = new SpriteBatch();
         world = new World(new Vector2(0, 0), false);
         world.setContactListener(new BasicContactListener());
-        player = new Player(world, assetManager.<Texture>get("character.png"), settings);
+        player = new Player(world, assetManager.<Texture>get("character.png"), settings.getCameraSize());
         if (settings.isMobileMode()) {
             MobilePlayerInterface playerInterface = new MobilePlayerInterface(stage, assetManager);
             player.setController(new MobilePlayerController(player, playerInterface.getMovementJoystick(), playerInterface.getRotationJoystick()));

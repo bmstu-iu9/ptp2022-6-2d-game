@@ -1,6 +1,5 @@
 package com.qualityworkstudio.uninvitedguests.screens;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.assets.AssetManager;
@@ -20,6 +19,7 @@ import com.qualityworkstudio.uninvitedguests.BasicContactListener;
 import com.qualityworkstudio.uninvitedguests.BasicDoor;
 import com.qualityworkstudio.uninvitedguests.BasicPlayerController;
 import com.qualityworkstudio.uninvitedguests.BasicPlayerInterface;
+import com.qualityworkstudio.uninvitedguests.Game;
 import com.qualityworkstudio.uninvitedguests.GameSettings;
 import com.qualityworkstudio.uninvitedguests.BasicLevelMenu;
 import com.qualityworkstudio.uninvitedguests.InteractionArea;
@@ -37,8 +37,8 @@ import com.qualityworkstudio.uninvitedguests.Player;
 
 public class MainScreen extends ScreenAdapter {
 
-    private Game game;
     private GameSettings settings;
+    private AssetManager assetManager;
 
     private SpriteBatch batch;
     private World world;
@@ -54,9 +54,9 @@ public class MainScreen extends ScreenAdapter {
     private Box2DDebugRenderer debugRenderer;
 
 
-    public MainScreen(Game game, AssetManager assetManager, GameSettings gameSettings) {
-        this.game = game;
-        this.settings = gameSettings;
+    public MainScreen(Game game) {
+        settings = game.getSettings();
+        assetManager = game.getAssetManager();
 
         viewport = new FitViewport(settings.getViewportSize(), settings.getViewportSize() * (
                 (float)Gdx.graphics.getHeight() / Gdx.graphics.getWidth()));
@@ -78,7 +78,7 @@ public class MainScreen extends ScreenAdapter {
         door = new BasicDoor(world, assetManager);
         door.setPosition(0f, 16f);
         door.setType(BasicDoor.Type.GREEN);
-        player = new Player(world, assetManager.<Texture>get("character.png"), settings);
+        player = new Player(world, assetManager.<Texture>get("character.png"), settings.getCameraSize());
         if (settings.isMobileMode()) {
             MobilePlayerInterface playerInterface = new MobilePlayerInterface(stage, assetManager);
             player.setController(new MobilePlayerController(player, playerInterface.getMovementJoystick(), playerInterface.getRotationJoystick()));

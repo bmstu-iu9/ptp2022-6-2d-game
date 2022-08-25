@@ -6,14 +6,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.Filter;
-import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 
 /**
- * The class represents a door that the {@code Player} can interact with.
+ * The class represents a door.
  *
  * @author Andrey Karanik
  */
@@ -231,12 +229,40 @@ public class Door {
         rightPartSprite.setTexture(texture);
     }
 
+    /**
+     * Sets the radius.
+     *
+     * @param radius a new radius.
+     */
     public void setRadius(float radius) {
         this.radius = radius;
     }
 
+    /**
+     * Gets the radius.
+     *
+     * @return the radius.
+     */
+    public float getRadius() {
+        return radius;
+    }
+
+    /**
+     * Sets the max openness degree.
+     *
+     * @param value a new max openness degree.
+     */
     public void setMaxOpennessDegree(float value) {
         maxOpennessDegree = value;
+    }
+
+    /**
+     * Gets the max openness degree.
+     *
+     * @return the max openness degree.
+     */
+    public float getMaxOpennessDegree() {
+        return maxOpennessDegree;
     }
 
     /**
@@ -248,6 +274,11 @@ public class Door {
         return state;
     }
 
+    /**
+     * Sets the door state.
+     *
+     * @param state a new door state.
+     */
     public void setState(int state) {
         this.state = state;
     }

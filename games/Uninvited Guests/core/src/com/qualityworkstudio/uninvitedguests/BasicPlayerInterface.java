@@ -1,5 +1,10 @@
 package com.qualityworkstudio.uninvitedguests;
 
+/**
+ * @author Andrey Karanik
+ * @see PlayerInterface
+ */
+
 public class BasicPlayerInterface implements PlayerInterface {
 
     public BasicPlayerInterface() {

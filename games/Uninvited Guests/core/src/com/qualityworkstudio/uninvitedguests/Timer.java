@@ -1,5 +1,8 @@
 package com.qualityworkstudio.uninvitedguests;
 
+/**
+ * @author Andrey Karanik
+ */
 
 public class Timer {
     private Task currentTask;

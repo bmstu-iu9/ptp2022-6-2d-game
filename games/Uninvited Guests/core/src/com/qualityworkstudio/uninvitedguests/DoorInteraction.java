@@ -1,5 +1,9 @@
 package com.qualityworkstudio.uninvitedguests;
 
+/**
+ * @author Andrey Karanik
+ */
+
 public class DoorInteraction implements Interaction {
 
     private Door door;

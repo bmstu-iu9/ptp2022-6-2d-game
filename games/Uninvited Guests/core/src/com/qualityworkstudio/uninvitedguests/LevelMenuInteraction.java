@@ -1,10 +1,13 @@
 package com.qualityworkstudio.uninvitedguests;
 
+/**
+ * @author Andrey Karanik
+ */
+
 public class LevelMenuInteraction implements Interaction {
 
     private LevelMenu levelMenu;
     private Player player;
-    private GameSettings settings;
 
     public LevelMenuInteraction(LevelMenu levelMenu, Player player) {
         this.levelMenu = levelMenu;

@@ -1,6 +1,5 @@
 package com.qualityworkstudio.uninvitedguests;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
@@ -18,10 +17,13 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
-import com.qualityworkstudio.uninvitedguests.screens.Level1;
 
 import java.util.ArrayList;
 import java.util.List;
+
+/**
+ * @author Andrey Karanik
+ */
 
 public class BasicLevelMenu implements LevelMenu {
 
@@ -97,12 +99,7 @@ public class BasicLevelMenu implements LevelMenu {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                switch (selectedLevelIndex) {
-                    case 0:
-                        game.setScreen(new Level1(game, assetManager, settings));
-                        break;
-                }
-
+                game.setScreen(100 + selectedLevelIndex);
             }
         });
 
