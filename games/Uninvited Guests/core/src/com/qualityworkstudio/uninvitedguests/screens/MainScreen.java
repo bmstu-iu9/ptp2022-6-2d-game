@@ -102,6 +102,7 @@ public class MainScreen extends ScreenAdapter {
             }
         });
         levelMenuArea.setPosition(door.getPosition());
+        debugRenderer = new Box2DDebugRenderer();
     }
 
     @Override
@@ -125,6 +126,9 @@ public class MainScreen extends ScreenAdapter {
         map.draw(batch);
         player.draw(batch);
         batch.end();
+
+        //debugRenderer.render(world, player.getCamera().combined);
+
         stage.draw();
     }
 

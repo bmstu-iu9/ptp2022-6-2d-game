@@ -15,14 +15,17 @@ public class LevelMenuInteraction implements Interaction {
     }
 
     @Override
-    public void interactIn() {
+    public void interactIn(int groupIndex) {
+        if (groupIndex != GroupIndices.PLAYER) {
+            return;
+        }
+
         levelMenu.show();
         player.setFixed(true);
         player.getPlayerInterface().hide();
     }
 
     @Override
-    public void interactOut() {
-
+    public void interactOut(int groupIndex) {
     }
 }

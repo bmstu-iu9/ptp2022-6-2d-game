@@ -47,17 +47,11 @@ public class BasicDoor extends Door {
 
     @Override
     public void open() {
-        if (type != Type.GREEN) {
-            return;
-        }
         setState(IS_OPENING);
     }
 
     @Override
     public void close() {
-        if (type != Type.GREEN) {
-            return;
-        }
         setState(IS_CLOSING);
     }
 

@@ -17,8 +17,8 @@ public class MobilePlayerInterface implements PlayerInterface {
     private Joystick rotationJoystick;
 
     public MobilePlayerInterface(Stage stage, AssetManager assetManager) {
-        movementJoystick = new BasicJoystick(stage, assetManager);
-        rotationJoystick = new BasicJoystick(stage, assetManager);
+        movementJoystick = new BasicJoystick(stage, assetManager, "movement_joystick_bg.png");
+        rotationJoystick = new BasicJoystick(stage, assetManager, "rotation_joystick_bg.png");
         movementJoystick.setSize(new Vector2(420, 420));
         rotationJoystick.setSize(new Vector2(420, 420));
         movementJoystick.setRadius(140);

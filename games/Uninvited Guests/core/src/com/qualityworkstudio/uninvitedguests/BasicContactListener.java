@@ -17,15 +17,15 @@ public class BasicContactListener implements ContactListener {
         Fixture a = contact.getFixtureA();
         Fixture b = contact.getFixtureB();
 
-        if (a.getFilterData().groupIndex == GroupIndices.PLAYER && b.getFilterData().groupIndex == GroupIndices.INTERACTION_AREA) {
+        if (b.getFilterData().groupIndex == GroupIndices.INTERACTION_AREA) {
             InteractionArea area = (InteractionArea)b.getBody().getUserData();
-            area.getInteraction().interactIn();
+            area.getInteraction().interactIn(a.getFilterData().groupIndex);
             return;
         }
 
-        if (a.getFilterData().groupIndex == GroupIndices.INTERACTION_AREA && b.getFilterData().groupIndex == GroupIndices.PLAYER) {
+        if (a.getFilterData().groupIndex == GroupIndices.INTERACTION_AREA) {
             InteractionArea area = (InteractionArea)a.getBody().getUserData();
-            area.getInteraction().interactIn();
+            area.getInteraction().interactIn(b.getFilterData().groupIndex);
             return;
         }
     }
@@ -35,15 +35,15 @@ public class BasicContactListener implements ContactListener {
         Fixture a = contact.getFixtureA();
         Fixture b = contact.getFixtureB();
 
-        if (a.getFilterData().groupIndex == GroupIndices.PLAYER && b.getFilterData().groupIndex == GroupIndices.INTERACTION_AREA) {
+        if (b.getFilterData().groupIndex == GroupIndices.INTERACTION_AREA) {
             InteractionArea area = (InteractionArea)b.getBody().getUserData();
-            area.getInteraction().interactOut();
+            area.getInteraction().interactOut(a.getFilterData().groupIndex);
             return;
         }
 
-        if (a.getFilterData().groupIndex == GroupIndices.INTERACTION_AREA && b.getFilterData().groupIndex == GroupIndices.PLAYER) {
+        if (a.getFilterData().groupIndex == GroupIndices.INTERACTION_AREA) {
             InteractionArea area = (InteractionArea)a.getBody().getUserData();
-            area.getInteraction().interactOut();
+            area.getInteraction().interactOut(b.getFilterData().groupIndex);
             return;
         }
     }

@@ -23,16 +23,16 @@ import com.qualityworkstudio.uninvitedguests.Player;
 
 public class LevelScreen extends ScreenAdapter {
 
-    Game game;
-    AssetManager assetManager;
-    GameSettings settings;
+    protected Game game;
+    protected AssetManager assetManager;
+    protected GameSettings settings;
 
-    SpriteBatch batch;
-    World world;
-    Viewport viewport;
-    Stage stage;
+    protected SpriteBatch batch;
+    protected World world;
+    protected Viewport viewport;
+    protected Stage stage;
 
-    Player player;
+    protected Player player;
 
     public LevelScreen(Game game) {
         this.game = game;
@@ -80,7 +80,6 @@ public class LevelScreen extends ScreenAdapter {
     }
 
     public void update(float delta) {
-
     }
 
     public void draw() {

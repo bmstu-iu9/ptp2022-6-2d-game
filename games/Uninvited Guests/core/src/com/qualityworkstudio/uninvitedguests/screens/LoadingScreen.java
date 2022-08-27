@@ -104,7 +104,7 @@ public class LoadingScreen extends ScreenAdapter {
 
     @Override
     public void hide() {
-        dispose();
+
     }
 
     @Override
@@ -129,6 +129,7 @@ public class LoadingScreen extends ScreenAdapter {
                 break;
             case 3:
                 game.setScreen(screen);
+                step++;
                 break;
         }
 

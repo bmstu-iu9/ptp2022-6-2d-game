@@ -6,19 +6,27 @@ package com.qualityworkstudio.uninvitedguests;
 
 public class DoorInteraction implements Interaction {
 
-    private Door door;
+    private BasicDoor door;
 
-    public DoorInteraction(Door door) {
+    public DoorInteraction(BasicDoor door) {
         this.door = door;
     }
 
     @Override
-    public void interactIn() {
+    public void interactIn(int groupIndex) {
+        if (groupIndex != GroupIndices.PLAYER || door.getType() != BasicDoor.Type.GREEN) {
+            return;
+        }
+
         door.open();
     }
 
     @Override
-    public void interactOut() {
+    public void interactOut(int groupIndex) {
+        if (groupIndex != GroupIndices.PLAYER || door.getType() != BasicDoor.Type.GREEN) {
+            return;
+        }
+
         door.close();
     }
 }

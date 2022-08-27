@@ -37,11 +37,11 @@ public class MobilePlayerController implements PlayerController {
         Body body = player.getBody();
         if (rotationJoystick.isTouched()) {
             switchCurrentTime = switchDelay;
-            body.setTransform(body.getPosition(), (float) Math.toRadians(rotationJoystick.getAngle() - 90f));
+            body.setTransform(body.getPosition(), (float) Math.toRadians(rotationJoystick.getAngle()));
         } else {
             if (movementJoystick.isTouched()) {
                 if (switchCurrentTime <= 0) {
-                    body.setTransform(body.getPosition(), (float) Math.toRadians(movementJoystick.getAngle() - 90f));
+                    body.setTransform(body.getPosition(), (float) Math.toRadians(movementJoystick.getAngle()));
                 } else {
                     switchCurrentTime -= Gdx.graphics.getDeltaTime();
                 }

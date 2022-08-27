@@ -5,6 +5,8 @@
     "yellow_door_part.png",
     "red_door_part.png",
     "joystick_bg.png",
+    "movement_joystick_bg.png",
+    "rotation_joystick_bg.png",
     "joystick_stick.png",
     "level1_image.png",
     "level_button.png",
@@ -19,7 +21,8 @@
     "ra_h_window_image.png",
     "ra_v_window_image.png",
     "ra_mobile_image.png",
-    "ra_image.png"
+    "ra_image.png",
+    "box_1.png"
   ],
 
   "bitmapFontFiles": [

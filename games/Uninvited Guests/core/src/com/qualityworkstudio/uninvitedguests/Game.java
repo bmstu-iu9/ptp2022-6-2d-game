@@ -7,9 +7,11 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.qualityworkstudio.uninvitedguests.screens.Level1;
+import com.qualityworkstudio.uninvitedguests.screens.LoadingScreen;
 import com.qualityworkstudio.uninvitedguests.screens.MainScreen;
 import com.qualityworkstudio.uninvitedguests.screens.RatioAdjustmentScreen;
 import com.qualityworkstudio.uninvitedguests.screens.Screens;
+import com.qualityworkstudio.uninvitedguests.screens.SettingsScreen;
 
 /**
  * The main class.

@@ -28,8 +28,10 @@ public class BasicJoystick implements Joystick {
     private float radius;
     private boolean isTouched;
 
-    public BasicJoystick(Stage stage, AssetManager assetManager) {
-        Drawable backgroundDrawable = new TextureRegionDrawable(assetManager.<Texture>get("joystick_bg.png"));
+    public BasicJoystick(Stage stage, AssetManager assetManager, String bgTextureName) {
+        radius = 220f;
+
+        Drawable backgroundDrawable = new TextureRegionDrawable(assetManager.<Texture>get(bgTextureName));
         Drawable stickDrawable = new TextureRegionDrawable(assetManager.<Texture>get("joystick_stick.png"));
         background = new Image(backgroundDrawable);
         background.setOrigin(background.getWidth() / 2f, background.getHeight() / 2f);
@@ -80,8 +82,6 @@ public class BasicJoystick implements Joystick {
                 }
             }
         });
-
-        radius = 220f;
     }
 
     @Override

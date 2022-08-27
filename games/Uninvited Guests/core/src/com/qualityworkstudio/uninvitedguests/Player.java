@@ -27,6 +27,10 @@ public class Player {
 
     private float spriteSize;
     private float bodyRadius;
+    private float spriteOffsetX;
+    private float spriteOffsetY;
+    private float cameraOffset;
+    private float extraSpriteAngle;
     private float movementSpeed;
     private boolean moveToFixed;
     private Vector2 moveToPosition;
@@ -43,8 +47,12 @@ public class Player {
      * @param cameraSize a camera size.
      */
     public Player(World world, Texture texture, float cameraSize) {
-        spriteSize = 16f;
-        bodyRadius = 2f;
+        spriteSize = cameraSize / 8f;
+        bodyRadius = spriteSize / 8f;
+        spriteOffsetX = 0f;
+        spriteOffsetY = 1.5f;
+        cameraOffset = 1.5f;
+        extraSpriteAngle = 90f;
         movementSpeed = bodyRadius * cameraSize * 0.25f;
 
         BodyDef bodyDef = new BodyDef();
@@ -67,7 +75,7 @@ public class Player {
 
         sprite = new Sprite(texture);
         sprite.setSize(spriteSize, spriteSize);
-        sprite.setOriginCenter();
+        sprite.setOrigin(spriteSize / 2f - spriteOffsetX, spriteSize / 2f - spriteOffsetY);
         camera = new OrthographicCamera(cameraSize, cameraSize *
                 ((float) Gdx.graphics.getHeight() / Gdx.graphics.getWidth()));
     }
@@ -81,9 +89,8 @@ public class Player {
         camera.update();
 
         if (!fixedCamera) {
-            camera.position.set(camera.position.x + (getPosition().x - camera.position.x) * 0.1f,
-                                camera.position.y + (getPosition().y - camera.position.y) * 0.1f, 0);
-            //camera.position.set(body.getPosition().x, body.getPosition().y, 0);
+            camera.position.set(camera.position.x + (getPosition().x + (float)Math.cos(body.getAngle()) * cameraOffset - camera.position.x) * 0.1f,
+                    camera.position.y + (getPosition().y + (float)Math.sin(body.getAngle()) * cameraOffset - camera.position.y) * 0.1f, 0);
         }
 
         if (!moveToFixed && !fixed && controller != null) {
@@ -96,14 +103,14 @@ public class Player {
             body.applyLinearImpulse(movementSpeed * dx / dist,
                     movementSpeed * dy / dist,
                     getPosition().x, getPosition().y, true);
-            body.setTransform(getPosition(), (float)(Math.atan2(dy, dx) - Math.PI / 2f));
+            body.setTransform(getPosition(), (float)(Math.atan2(dy, dx)));
             if (Math.abs(dx) < 0.1 && Math.abs(dy) < 0.1) {
                 moveToFixed = false;
             }
         }
 
-        sprite.setPosition(getPosition().x - spriteSize / 2f, getPosition().y - spriteSize / 2f);
-        sprite.setRotation((float)Math.toDegrees(body.getAngle()));
+        sprite.setPosition(getPosition().x - spriteSize / 2f + spriteOffsetX, getPosition().y - spriteSize / 2f + spriteOffsetY);
+        sprite.setRotation((float)Math.toDegrees(body.getAngle() - (float)Math.toRadians(extraSpriteAngle)));
     }
 
     /**
@@ -162,6 +169,15 @@ public class Player {
     }
 
     /**
+     * Sets the player sprite.
+     *
+     * @param sprite a new sprite.
+     */
+    public void setSprite(Sprite sprite) {
+        this.sprite = sprite;
+    }
+
+    /**
      * Gets the player sprite.
      *
      * @return the player sprite.
@@ -186,6 +202,15 @@ public class Player {
      */
     public void setMovementSpeed(float movementSpeed) {
         this.movementSpeed = movementSpeed;
+    }
+
+    /**
+     * Sets the camera.
+     *
+     * @param camera a new camera.
+     */
+    public void setCamera(OrthographicCamera camera) {
+        this.camera = camera;
     }
 
     /**
@@ -277,10 +302,83 @@ public class Player {
         return body.getAngle();
     }
 
-    public Vector2 getMoveToPosition() {
-        return body.getPosition();
+    /**
+     * Sets the sprite offset x.
+     *
+     * @param spriteOffsetX a new sprite offset y.
+     */
+    public void setSpriteOffsetX(float spriteOffsetX) {
+        this.spriteOffsetX = spriteOffsetX;
     }
 
+    /**
+     * Gets the sprite offset x.
+     *
+     * @return the sprite offset x.
+     */
+    public float getSpriteOffsetX() {
+        return spriteOffsetX;
+    }
+
+    /**
+     * Sets the sprite offset y.
+     *
+     * @param spriteOffsetY a new sprite offset y.
+     */
+    public void setSpriteOffsetY(float spriteOffsetY) {
+        this.spriteOffsetY = spriteOffsetY;
+    }
+
+    /**
+     * Gets the sprite offset y.
+     *
+     * @return the sprite offset y.
+     */
+    public float getSpriteOffsetY() {
+        return spriteOffsetY;
+    }
+
+    /**
+     * Sets the camera offset.
+     *
+     * @param cameraOffset a new camera offset.
+     */
+    public void setCameraOffset(float cameraOffset) {
+        this.cameraOffset = cameraOffset;
+    }
+
+    /**
+     * Gets the camera offset.
+     *
+     * @return the camera offset.
+     */
+    public float getCameraOffset() {
+        return cameraOffset;
+    }
+
+    /**
+     * Sets the extra sprite angle.
+     *
+     * @param degrees a new angle in degrees.
+     */
+    public void setExtraSpriteAngle(float degrees) {
+        extraSpriteAngle = degrees;
+    }
+
+    /**
+     * Gets the extra sprite angle.
+     *
+     * @return the extra sprite angle.
+     */
+    public float getExtraSpriteAngle() {
+        return extraSpriteAngle;
+    }
+
+    /**
+     * Directs the player to the specified position.
+     *
+     * @param position the position.
+     */
     public void moveTo(Vector2 position) {
         moveToPosition = position;
         moveToFixed = true;

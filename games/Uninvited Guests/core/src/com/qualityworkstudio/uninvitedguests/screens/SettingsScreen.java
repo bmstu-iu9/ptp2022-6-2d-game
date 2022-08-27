@@ -44,8 +44,8 @@ public class SettingsScreen extends ScreenAdapter {
         stage = new Stage(viewport);
         Gdx.input.setInputProcessor(stage);
 
-        final Drawable image1 = new TextureRegionDrawable(game.getAssetManager().<Texture>get("mobile_mode_button.png"));
-        final Drawable image2 = new TextureRegionDrawable(game.getAssetManager().<Texture>get("selected_mobile_mode_button.png"));
+        final Drawable image1 = new TextureRegionDrawable(assetManager.<Texture>get("mobile_mode_button.png"));
+        final Drawable image2 = new TextureRegionDrawable(assetManager.<Texture>get("selected_mobile_mode_button.png"));
         mobileModeToggle = new Image(settings.isMobileMode() ? image2 : image1);
         mobileModeToggle.setSize(400f, 200f);
         mobileModeToggle.setOrigin(Align.center);

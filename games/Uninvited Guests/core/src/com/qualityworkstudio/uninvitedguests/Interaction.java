@@ -9,10 +9,10 @@ public interface Interaction {
     /**
      * Called when something starts interacting.
      */
-    void interactIn();
+    void interactIn(int groupIndex);
 
     /**
      * Called when something finishes interacting.
      */
-    void interactOut();
+    void interactOut(int groupIndex);
 }
