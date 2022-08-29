@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.qualityworkstudio.uninvitedguests.BasicDoor;
+import com.qualityworkstudio.uninvitedguests.Box;
 import com.qualityworkstudio.uninvitedguests.Game;
 import com.qualityworkstudio.uninvitedguests.GroupIndices;
 import com.qualityworkstudio.uninvitedguests.Interaction;

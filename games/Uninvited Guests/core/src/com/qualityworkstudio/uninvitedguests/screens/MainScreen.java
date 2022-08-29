@@ -28,6 +28,7 @@ import com.qualityworkstudio.uninvitedguests.Map;
 import com.qualityworkstudio.uninvitedguests.MobilePlayerController;
 import com.qualityworkstudio.uninvitedguests.MobilePlayerInterface;
 import com.qualityworkstudio.uninvitedguests.Player;
+import com.qualityworkstudio.uninvitedguests.ScreenTransition;
 
 /**
  * The main screen of the game.

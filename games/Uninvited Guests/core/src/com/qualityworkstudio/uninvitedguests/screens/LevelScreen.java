@@ -20,6 +20,7 @@ import com.qualityworkstudio.uninvitedguests.GameSettings;
 import com.qualityworkstudio.uninvitedguests.MobilePlayerController;
 import com.qualityworkstudio.uninvitedguests.MobilePlayerInterface;
 import com.qualityworkstudio.uninvitedguests.Player;
+import com.qualityworkstudio.uninvitedguests.ScreenTransition;
 
 public class LevelScreen extends ScreenAdapter {
 

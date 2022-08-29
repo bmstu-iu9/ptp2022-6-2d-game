@@ -16,6 +16,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.qualityworkstudio.uninvitedguests.Game;
 import com.qualityworkstudio.uninvitedguests.GameSettings;
+import com.qualityworkstudio.uninvitedguests.Loader;
 import com.qualityworkstudio.uninvitedguests.LoadingImage;
 
 /**
