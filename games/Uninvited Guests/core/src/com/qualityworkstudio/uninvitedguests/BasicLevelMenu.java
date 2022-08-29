@@ -1,6 +1,7 @@
 package com.qualityworkstudio.uninvitedguests;
 
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -17,6 +18,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
+import com.qualityworkstudio.uninvitedguests.screens.LoadingScreen;
+import com.qualityworkstudio.uninvitedguests.screens.Screens;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +38,7 @@ public class BasicLevelMenu implements LevelMenu {
     private List<LevelButton> buttonList;
     private ImageButton startButton;
     private ImageButton closeButton;
+    private Sound buttonSound;
 
     private Drawable levelButtonImage;
     private Drawable selectedLevelButtonImage;
@@ -56,6 +60,7 @@ public class BasicLevelMenu implements LevelMenu {
         levelButtonFont = assetManager.get("font.fnt", BitmapFont.class);
         levelImagePadTop = 10;
         labelPadTop = 50;
+        buttonSound = assetManager.get("click.wav");
 
         buttonList = new ArrayList<>();
 
@@ -84,7 +89,15 @@ public class BasicLevelMenu implements LevelMenu {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                game.setScreen(100 + selectedLevelIndex);
+                buttonSound.play();
+                switch (selectedLevelIndex) {
+                    case 0:
+                        game.setScreen(new LoadingScreen(game, Screens.LEVEL1, "json/level1.json"));
+                        break;
+                    case 1:
+                        game.setScreen(new LoadingScreen(game, Screens.LEVEL2, "json/level1.json"));
+                        break;
+                }
             }
         });
 
@@ -104,6 +117,12 @@ public class BasicLevelMenu implements LevelMenu {
                 super.touchUp(event, x, y, pointer, button);
                 closeButton.addAction(Actions.scaleTo(1f, 1f, 0.1f, Interpolation.swingOut));
                 closeButton.getImage().setColor(1f, 1f, 1f, 1f);
+            }
+
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+                buttonSound.play();
             }
         });
 
@@ -140,6 +159,7 @@ public class BasicLevelMenu implements LevelMenu {
         style.labelStyle = new Label.LabelStyle(levelButtonFont, Color.WHITE);
         style.levelImagePadTop = levelImagePadTop;
         style.labelPadTop = labelPadTop;
+        style.sound = buttonSound;
 
         LevelButton button = new LevelButton(style,this, name, buttonList.size());
 

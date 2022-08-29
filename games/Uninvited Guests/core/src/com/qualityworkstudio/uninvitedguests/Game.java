@@ -7,7 +7,6 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.qualityworkstudio.uninvitedguests.screens.Level1;
-import com.qualityworkstudio.uninvitedguests.screens.LoadingScreen;
 import com.qualityworkstudio.uninvitedguests.screens.MainScreen;
 import com.qualityworkstudio.uninvitedguests.screens.RatioAdjustmentScreen;
 import com.qualityworkstudio.uninvitedguests.screens.Screens;
@@ -23,6 +22,7 @@ public class Game implements ApplicationListener {
 
 	private GameSettings settings;
 	private AssetManager assetManager;
+	private Loader loader;
 	private Screen screen;
 
 	public Game(GameSettings settings) {
@@ -43,10 +43,20 @@ public class Game implements ApplicationListener {
 		assetManager.load("selected_mobile_mode_button.png", Texture.class);
 		assetManager.load("continue_button.png", Texture.class);
 		assetManager.load("loading_image2.png", Texture.class);
+		assetManager.load("ra_h_window_image.png", Texture.class);
+		assetManager.load("ra_v_window_image.png", Texture.class);
+		assetManager.load("ra_mobile_image.png", Texture.class);
+		assetManager.load("ra_image.png", Texture.class);
 		assetManager.load("font.fnt", BitmapFont.class);
 		assetManager.finishLoading();
 
+		loader = new Loader(assetManager);
+
 		setScreen(new SettingsScreen(this, Screens.MAIN_SCREEN));
+	}
+
+	public Loader getLoader() {
+		return loader;
 	}
 
 	/**
@@ -164,6 +174,9 @@ public class Game implements ApplicationListener {
 					break;
 				case Screens.LEVEL1:
 					setScreen(new Level1(this));
+					break;
+				case Screens.LEVEL2:
+					setScreen(new Level2(this));
 					break;
 			}
 		}

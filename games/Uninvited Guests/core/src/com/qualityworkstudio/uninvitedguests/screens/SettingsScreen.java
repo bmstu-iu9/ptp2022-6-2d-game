@@ -75,8 +75,7 @@ public class SettingsScreen extends ScreenAdapter {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                LoadingData loadingData = new LoadingData("json/firstload.json");
-                game.setScreen(new LoadingScreen( game, screen, loadingData));
+                game.setScreen(new LoadingScreen( game, screen, "json/firstload.json"));
             }
         });
         stage.addActor(continueButton);

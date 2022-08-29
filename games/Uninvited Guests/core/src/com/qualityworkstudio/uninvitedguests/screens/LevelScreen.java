@@ -31,6 +31,7 @@ public class LevelScreen extends ScreenAdapter {
     protected World world;
     protected Viewport viewport;
     protected Stage stage;
+    private ScreenTransition screenTransition;
 
     protected Player player;
 
@@ -43,6 +44,8 @@ public class LevelScreen extends ScreenAdapter {
                 (float) Gdx.graphics.getHeight() / Gdx.graphics.getWidth()));
         stage = new Stage(viewport);
         Gdx.input.setInputProcessor(stage);
+
+        screenTransition = new ScreenTransition(stage, assetManager);
 
         batch = new SpriteBatch();
         world = new World(new Vector2(0, 0), false);
@@ -61,6 +64,7 @@ public class LevelScreen extends ScreenAdapter {
     @Override
     public void show() {
         player.getPlayerInterface().show();
+        screenTransition.out(1f);
     }
 
     @Override

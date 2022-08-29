@@ -45,6 +45,7 @@ public class MainScreen extends ScreenAdapter {
     private Viewport viewport;
     private Stage stage;
     private BasicLevelMenu levelMenu;
+    private ScreenTransition screenTransition;
 
     private Player player;
     private Map map;
@@ -70,6 +71,8 @@ public class MainScreen extends ScreenAdapter {
         levelMenu.addLevel("Level 4", assetManager.<Texture>get("level1_image.png"));
         levelMenu.addLevel("Level 5", assetManager.<Texture>get("level1_image.png"));
         levelMenu.addLevel("Level 6", assetManager.<Texture>get("level1_image.png"));
+
+        screenTransition = new ScreenTransition(stage, assetManager);
 
         batch = new SpriteBatch();
         world = new World(new Vector2(0, 0), false);
@@ -108,6 +111,7 @@ public class MainScreen extends ScreenAdapter {
     @Override
     public void show() {
         player.getPlayerInterface().show();
+        screenTransition.out(1f);
     }
 
     @Override
@@ -126,8 +130,6 @@ public class MainScreen extends ScreenAdapter {
         map.draw(batch);
         player.draw(batch);
         batch.end();
-
-        //debugRenderer.render(world, player.getCamera().combined);
 
         stage.draw();
     }

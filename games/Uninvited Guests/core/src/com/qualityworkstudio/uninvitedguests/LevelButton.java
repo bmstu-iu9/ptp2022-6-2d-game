@@ -1,5 +1,6 @@
 package com.qualityworkstudio.uninvitedguests;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
@@ -21,10 +22,12 @@ public class LevelButton extends Table {
     private BasicLevelMenu levelMenu;
     private boolean selected;
     private int index;
+    private Sound sound;
 
     public LevelButton(LevelButtonStyle style, BasicLevelMenu menu, String text, int i) {
         super();
         this.style = style;
+        sound = style.sound;
         levelMenu = menu;
         index = i;
 
@@ -45,6 +48,9 @@ public class LevelButton extends Table {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 setSelected(!selected);
+                if (sound != null) {
+                    sound.play();
+                }
                 if (selected) {
                     levelMenu.setSelectedLevelIndex(index);
                 } else {
@@ -81,18 +87,20 @@ public class LevelButton extends Table {
         public Label.LabelStyle labelStyle;
         public float levelImagePadTop;
         public float labelPadTop;
+        public Sound sound;
 
         public LevelButtonStyle() {
         }
 
         public LevelButtonStyle(Drawable levelImage, Drawable levelButtonImage, Drawable selectedLevelButtonImage,
-                                Label.LabelStyle labelStyle, float levelImagePadTop, float labelPadTop) {
+                                Label.LabelStyle labelStyle, float levelImagePadTop, float labelPadTop, Sound sound) {
             this.levelImage = levelImage;
             this.levelButtonImage = levelButtonImage;
             this.selectedLevelButtonImage = selectedLevelButtonImage;
             this.labelStyle = labelStyle;
             this.levelImagePadTop = levelImagePadTop;
             this.labelPadTop = labelPadTop;
+            this.sound = sound;
         }
     }
 }

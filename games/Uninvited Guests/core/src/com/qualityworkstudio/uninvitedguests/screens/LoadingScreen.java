@@ -3,9 +3,7 @@ package com.qualityworkstudio.uninvitedguests.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -18,7 +16,6 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.qualityworkstudio.uninvitedguests.Game;
 import com.qualityworkstudio.uninvitedguests.GameSettings;
-import com.qualityworkstudio.uninvitedguests.LoadingData;
 import com.qualityworkstudio.uninvitedguests.LoadingImage;
 
 /**
@@ -42,7 +39,7 @@ public class LoadingScreen extends ScreenAdapter {
     private float currentTime;
     private int step;
 
-    public LoadingScreen(Game game, int screen, LoadingData loadingData) {
+    public LoadingScreen(Game game, int screen, String fileName) {
         this.game = game;
         this.assetManager = game.getAssetManager();
         this.settings = game.getSettings();
@@ -73,25 +70,13 @@ public class LoadingScreen extends ScreenAdapter {
 
         stage.addActor(labelContainer);
 
-        for (String fileName : loadingData.getUnloadFiles()) {
-            assetManager.unload(fileName);
+        Loader loader = game.getLoader();
+        if (fileName != null) {
+            loader.add(fileName);
         }
-
-        for (String fileName : loadingData.getTextureFiles()) {
-            assetManager.load(fileName, Texture.class);
-        }
-
-        for (String fileName : loadingData.getBitmapFontFiles()) {
-            assetManager.load(fileName, BitmapFont.class);
-        }
-
-        for (String fileName : loadingData.getSoundFiles()) {
-            assetManager.load(fileName, Sound.class);
-        }
-
-        for (String fileName : loadingData.getMusicFiles()) {
-            assetManager.load(fileName, Sound.class);
-        }
+        loader.unload();
+        assetManager.finishLoading();
+        loader.load();
 
         minDelay = 3f;
     }

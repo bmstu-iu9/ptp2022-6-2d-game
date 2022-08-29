@@ -13,6 +13,7 @@ public class Screens {
     public static final int MAIN_SCREEN = 0;
 
     public static final int LEVEL1 = 100;
+    public static final int LEVEL2 = 101;
 
     @Deprecated
     public static Screen getScreen(Game game, int screen) {
