@@ -10,6 +10,7 @@ import com.qualityworkstudio.uninvitedguests.GroupIndices;
 import com.qualityworkstudio.uninvitedguests.Interaction;
 import com.qualityworkstudio.uninvitedguests.InteractionArea;
 import com.qualityworkstudio.uninvitedguests.Map;
+import com.qualityworkstudio.uninvitedguests.Timer;
 
 import java.util.ArrayList;
 
@@ -24,8 +25,8 @@ public class Level1 extends LevelScreen {
 
     private Box2DDebugRenderer renderer;
 
-    public Level1(final Game game) {
-        super(game);
+    public Level1(Game gm) {
+        super(gm);
 
         map = new Map(128, assetManager.<Texture>get("maps/lvl1_map_layer1.png"), assetManager.<Texture>get("maps/lvl1_map_layer2.png"));
         doors = new ArrayList<>();
@@ -66,20 +67,13 @@ public class Level1 extends LevelScreen {
         });
         interactionArea.setPosition(new Vector2(0f, 12f));
 
-        new InteractionArea(world, new Vector2(6f, 1f), new Interaction() {
+        completeTimer.setTask(new Timer.Task() {
             @Override
-            public void interactIn(int groupIndex) {
-                if (groupIndex != GroupIndices.PLAYER) {
-                    return;
-                }
+            public void doTask() {
                 game.setScreen(new LoadingScreen(game, Screens.LEVEL2, "json/level1.json"));
             }
-
-            @Override
-            public void interactOut(int groupIndex) {
-            }
-
-        }).setPosition(new Vector2(0f, 32f));
+        });
+        finishArea.setPosition(new Vector2(0f, 32f));
 
         renderer = new Box2DDebugRenderer();
     }

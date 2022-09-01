@@ -49,13 +49,13 @@ public class MobileRaImage implements RaImage {
         image.addAction(Actions.forever(Actions.sequence(Actions.scaleTo(1.2f, 1.2f, 1f, Interpolation.swingOut),
                 Actions.scaleTo(1f, 1f, 1f, Interpolation.swingIn),
                 Actions.rotateTo(90f, 1f, Interpolation.pow2),
-                Actions.scaleTo(1f, 1f, 1f),
+                Actions.delay(1f),
                 Actions.scaleTo(0f, 0f, 1f, Interpolation.swingIn),
                 Actions.rotateTo(0f))));
         raImage.addAction(Actions.forever(Actions.sequence(Actions.scaleTo(1.2f, 1.2f, 1f, Interpolation.swingOut),
                 Actions.parallel(Actions.scaleTo(1f, 1f, 1f, Interpolation.swingIn),
                 Actions.alpha(0f, 1f, Interpolation.pow2)),
-                Actions.rotateTo(0f, 1f),
+                Actions.delay(1f),
                 Actions.alpha(1f, 1f, Interpolation.pow2),
                 Actions.scaleTo(0f, 0f, 1f, Interpolation.swingIn))));
     }

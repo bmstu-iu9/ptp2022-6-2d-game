@@ -48,6 +48,7 @@ public class Game implements ApplicationListener {
 		assetManager.load("ra_v_window_image.png", Texture.class);
 		assetManager.load("ra_mobile_image.png", Texture.class);
 		assetManager.load("ra_image.png", Texture.class);
+		assetManager.load("font.png", Texture.class);
 		assetManager.load("font.fnt", BitmapFont.class);
 		assetManager.finishLoading();
 

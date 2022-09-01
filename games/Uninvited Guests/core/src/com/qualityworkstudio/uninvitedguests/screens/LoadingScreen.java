@@ -36,7 +36,7 @@ public class LoadingScreen extends ScreenAdapter {
     private Container<Label> labelContainer;
     private Label label;
 
-    private float minDelay;
+    private float minDelay = 3f;
     private float currentTime;
     private int step;
 
@@ -78,19 +78,12 @@ public class LoadingScreen extends ScreenAdapter {
         loader.unload();
         assetManager.finishLoading();
         loader.load();
-
-        minDelay = 3f;
     }
 
     @Override
     public void show() {
         loadingImage.show();
         labelContainer.addAction(Actions.scaleTo(1f, 1f, 1f, Interpolation.swingOut));
-    }
-
-    @Override
-    public void hide() {
-
     }
 
     @Override

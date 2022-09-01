@@ -66,20 +66,7 @@ public class Level2 extends LevelScreen {
         });
         interactionArea.setPosition(new Vector2(0f, 12f));
 
-        new InteractionArea(world, new Vector2(6f, 1f), new Interaction() {
-            @Override
-            public void interactIn(int groupIndex) {
-                if (groupIndex != GroupIndices.PLAYER) {
-                    return;
-                }
-                game.setScreen(new LoadingScreen(game, Screens.LEVEL1, "json/level1.json"));
-            }
-
-            @Override
-            public void interactOut(int groupIndex) {
-            }
-
-        }).setPosition(new Vector2(0f, 32f));
+        finishArea.setPosition(new Vector2(0f, 32f));
 
         renderer = new Box2DDebugRenderer();
     }

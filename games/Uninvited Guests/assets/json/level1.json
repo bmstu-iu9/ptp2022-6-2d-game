@@ -11,11 +11,12 @@
     "maps/lvl1_map_layer1.png",
     "maps/lvl1_map_layer2.png",
     "box_1.png",
-    "white_square.png"
+    "white_square.png",
+    "level_complete_font.png"
   ],
 
   "bitmapFontFiles": [
-
+    "level_complete_font.fnt"
   ],
 
   "soundFiles": [

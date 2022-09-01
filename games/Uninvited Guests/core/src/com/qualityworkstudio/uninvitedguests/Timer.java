@@ -8,6 +8,9 @@ public class Timer {
     private Task currentTask;
     private boolean active;
 
+    public Timer() {
+    }
+
     public Timer(Task task) {
         currentTask = task;
     }
@@ -29,6 +32,9 @@ public class Timer {
     }
 
     public void start(float delay) {
+        if (currentTask == null) {
+            return;
+        }
         active = true;
         currentTask.start(delay);
     }

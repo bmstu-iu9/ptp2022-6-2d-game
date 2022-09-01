@@ -78,11 +78,6 @@ public class RatioAdjustmentScreen extends ScreenAdapter {
     }
 
     @Override
-    public void hide() {
-        dispose();
-    }
-
-    @Override
     public void render(float delta) {
         stage.act(delta);
 
