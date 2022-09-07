@@ -17,15 +17,15 @@ public class BasicContactListener implements ContactListener {
         Fixture a = contact.getFixtureA();
         Fixture b = contact.getFixtureB();
 
-        if (b.getFilterData().groupIndex == GroupIndices.INTERACTION_AREA) {
+        if (a.getFilterData().groupIndex != GroupIndices.UNKNOWN && b.getFilterData().groupIndex == GroupIndices.INTERACTION_AREA) {
             InteractionArea area = (InteractionArea)b.getBody().getUserData();
-            area.getInteraction().interactIn(a.getFilterData().groupIndex);
+            area.getInteraction().interactIn((GameObject)a.getBody().getUserData());
             return;
         }
 
-        if (a.getFilterData().groupIndex == GroupIndices.INTERACTION_AREA) {
+        if (a.getFilterData().groupIndex == GroupIndices.INTERACTION_AREA && b.getFilterData().groupIndex != GroupIndices.UNKNOWN) {
             InteractionArea area = (InteractionArea)a.getBody().getUserData();
-            area.getInteraction().interactIn(b.getFilterData().groupIndex);
+            area.getInteraction().interactIn((GameObject)b.getBody().getUserData());
             return;
         }
     }
@@ -35,15 +35,15 @@ public class BasicContactListener implements ContactListener {
         Fixture a = contact.getFixtureA();
         Fixture b = contact.getFixtureB();
 
-        if (b.getFilterData().groupIndex == GroupIndices.INTERACTION_AREA) {
+        if (a.getFilterData().groupIndex != GroupIndices.UNKNOWN && b.getFilterData().groupIndex == GroupIndices.INTERACTION_AREA) {
             InteractionArea area = (InteractionArea)b.getBody().getUserData();
-            area.getInteraction().interactOut(a.getFilterData().groupIndex);
+            area.getInteraction().interactOut((GameObject)a.getBody().getUserData());
             return;
         }
 
-        if (a.getFilterData().groupIndex == GroupIndices.INTERACTION_AREA) {
+        if (a.getFilterData().groupIndex == GroupIndices.INTERACTION_AREA && b.getFilterData().groupIndex != GroupIndices.UNKNOWN) {
             InteractionArea area = (InteractionArea)a.getBody().getUserData();
-            area.getInteraction().interactOut(b.getFilterData().groupIndex);
+            area.getInteraction().interactOut((GameObject)b.getBody().getUserData());
             return;
         }
     }

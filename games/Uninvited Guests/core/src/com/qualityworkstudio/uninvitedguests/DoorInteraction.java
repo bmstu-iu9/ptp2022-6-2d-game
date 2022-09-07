@@ -13,8 +13,8 @@ public class DoorInteraction implements Interaction {
     }
 
     @Override
-    public void interactIn(int groupIndex) {
-        if (groupIndex != GroupIndices.PLAYER || door.getType() != BasicDoor.Type.GREEN) {
+    public void interactIn(GameObject object) {
+        if (object.getGroupIndex() != GroupIndices.PLAYER || door.getType() != BasicDoor.Type.GREEN) {
             return;
         }
 
@@ -22,8 +22,8 @@ public class DoorInteraction implements Interaction {
     }
 
     @Override
-    public void interactOut(int groupIndex) {
-        if (groupIndex != GroupIndices.PLAYER || door.getType() != BasicDoor.Type.GREEN) {
+    public void interactOut(GameObject object) {
+        if (object.getGroupIndex() != GroupIndices.PLAYER || door.getType() != BasicDoor.Type.GREEN) {
             return;
         }
 

@@ -18,7 +18,6 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.qualityworkstudio.uninvitedguests.BasicClickListener;
 import com.qualityworkstudio.uninvitedguests.Game;
 import com.qualityworkstudio.uninvitedguests.GameSettings;
-import com.qualityworkstudio.uninvitedguests.LoadingData;
 
 public class SettingsScreen extends ScreenAdapter {
 
@@ -75,7 +74,7 @@ public class SettingsScreen extends ScreenAdapter {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                game.setScreen(new LoadingScreen( game, screen, "json/firstload.json"));
+                game.setScreen(new LoadingScreen( game, screen, "loads/main.json"));
             }
         });
         stage.addActor(continueButton);

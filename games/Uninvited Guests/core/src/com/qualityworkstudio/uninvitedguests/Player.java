@@ -1,6 +1,7 @@
 package com.qualityworkstudio.uninvitedguests;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -18,7 +19,7 @@ import com.badlogic.gdx.physics.box2d.World;
  * @author Andrey Karanik
  */
 
-public class Player {
+public class Player extends GameObject {
 
     private Body body;
     private Sprite sprite;
@@ -30,6 +31,7 @@ public class Player {
     private float spriteOffsetX;
     private float spriteOffsetY;
     private float cameraOffset;
+    private float weaponOffset;
     private float extraSpriteAngle;
     private float movementSpeed;
     private boolean moveToFixed;
@@ -39,6 +41,8 @@ public class Player {
     private boolean fixedCamera;
     private boolean fixed;
 
+    private Weapon weapon;
+
     /**
      * Constructs a new player.
      *
@@ -47,11 +51,14 @@ public class Player {
      * @param cameraSize a camera size.
      */
     public Player(World world, Texture texture, float cameraSize) {
+        super(0, GroupIndices.PLAYER);
+
         spriteSize = cameraSize / 8f;
         bodyRadius = spriteSize / 8f;
         spriteOffsetX = 0f;
         spriteOffsetY = 1.5f;
         cameraOffset = 1.5f;
+        weaponOffset = bodyRadius + 1f;
         extraSpriteAngle = 90f;
         movementSpeed = bodyRadius * cameraSize * 0.25f;
 
@@ -67,7 +74,7 @@ public class Player {
         fixtureDef.friction = 0.5f;
         Fixture fixture = body.createFixture(fixtureDef);
         Filter filter = new Filter();
-        filter.groupIndex = GroupIndices.PLAYER;
+        filter.groupIndex = (short)getGroupIndex();
         fixture.setFilterData(filter);
         body.setFixedRotation(true);
         body.setUserData(this);
@@ -86,11 +93,20 @@ public class Player {
      * @param deltaTime the time span between the last frame and the current frame in seconds.
      */
     public void update(float deltaTime) {
-        camera.update();
-
         if (!fixedCamera) {
             camera.position.set(camera.position.x + (getPosition().x + (float)Math.cos(body.getAngle()) * cameraOffset - camera.position.x) * 0.1f,
                     camera.position.y + (getPosition().y + (float)Math.sin(body.getAngle()) * cameraOffset - camera.position.y) * 0.1f, 0);
+        }
+        camera.update();
+
+        if (weapon != null) {
+            weapon.setPosition(new Vector2(body.getPosition().x + (float)Math.cos(body.getAngle()) * weaponOffset, body.getPosition().y + (float)Math.sin(body.getAngle()) * weaponOffset));
+            weapon.setRotation((float) Math.toDegrees(body.getAngle()));
+            weapon.update(deltaTime);
+        }
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.F)) {
+            shoot();
         }
 
         if (!moveToFixed && !fixed && controller != null) {
@@ -120,15 +136,23 @@ public class Player {
      */
     public void draw(SpriteBatch batch) {
         sprite.draw(batch);
+        weapon.draw(batch);
     }
 
-    /**
-     * Gets the player controller.
-     *
-     * @return the player controller.
-     */
-    public PlayerController getController() {
-        return controller;
+    public void shoot() {
+        weapon.shoot();
+    }
+
+    public void reload() {
+        weapon.reload();
+    }
+
+    public void setWeapon(Weapon weapon) {
+        this.weapon = weapon;
+    }
+
+    public Weapon getWeapon() {
+        return weapon;
     }
 
     /**
@@ -139,6 +163,15 @@ public class Player {
     public void setController(PlayerController controller) {
         // Following the dependency inversion principle (DIP from SOLID)
         this.controller = controller;
+    }
+
+    /**
+     * Gets the player controller.
+     *
+     * @return the player controller.
+     */
+    public PlayerController getController() {
+        return controller;
     }
 
     /**
@@ -287,7 +320,7 @@ public class Player {
     /**
      * Sets the player rotation.
      *
-     * @param degrees a new angle in radians.
+     * @param degrees a new angle in degrees.
      */
     public void setRotation(float degrees) {
         body.setTransform(body.getPosition().x, body.getPosition().y, (float)Math.toRadians(degrees));

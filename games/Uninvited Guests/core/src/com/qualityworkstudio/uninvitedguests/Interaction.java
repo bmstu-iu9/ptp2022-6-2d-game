@@ -7,12 +7,12 @@ package com.qualityworkstudio.uninvitedguests;
 public interface Interaction {
 
     /**
-     * Called when something starts interacting.
+     * Called when the game object starts interacting.
      */
-    void interactIn(int groupIndex);
+    void interactIn(GameObject object);
 
     /**
-     * Called when something finishes interacting.
+     * Called when the game object finishes interacting.
      */
-    void interactOut(int groupIndex);
+    void interactOut(GameObject object);
 }

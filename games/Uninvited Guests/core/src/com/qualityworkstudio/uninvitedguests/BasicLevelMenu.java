@@ -92,10 +92,10 @@ public class BasicLevelMenu implements LevelMenu {
                 buttonSound.play();
                 switch (selectedLevelIndex) {
                     case 0:
-                        game.setScreen(new LoadingScreen(game, Screens.LEVEL1, "json/level1.json"));
+                        game.setScreen(new LoadingScreen(game, Screens.LEVEL1, "loads/level1.json"));
                         break;
                     case 1:
-                        game.setScreen(new LoadingScreen(game, Screens.LEVEL2, "json/level1.json"));
+                        game.setScreen(new LoadingScreen(game, Screens.LEVEL2, "loads/level2.json"));
                         break;
                 }
             }

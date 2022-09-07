@@ -1,5 +1,6 @@
 package com.qualityworkstudio.uninvitedguests;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -14,7 +15,7 @@ import com.badlogic.gdx.physics.box2d.World;
  * @author Andrey Karanik
  */
 
-public class InteractionArea {
+public class InteractionArea extends GameObject {
 
     private Body body;
     private Interaction interaction;
@@ -27,6 +28,8 @@ public class InteractionArea {
      * @param interaction an interaction.
      */
     public InteractionArea(World world, Vector2 size, Interaction interaction) {
+        super(0, GroupIndices.INTERACTION_AREA);
+
         this.interaction = interaction;
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.StaticBody;
@@ -38,7 +41,7 @@ public class InteractionArea {
         fixtureDef.isSensor = true;
         Fixture fixture = body.createFixture(fixtureDef);
         Filter filter = new Filter();
-        filter.groupIndex = GroupIndices.INTERACTION_AREA;
+        filter.groupIndex = (short)getGroupIndex();
         fixture.setFilterData(filter);
         shape.dispose();
         body.setUserData(this);
@@ -52,6 +55,8 @@ public class InteractionArea {
      * @param interaction an interaction.
      */
     public InteractionArea(World world, float radius, Interaction interaction) {
+        super(0, GroupIndices.INTERACTION_AREA);
+
         this.interaction = interaction;
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.StaticBody;
@@ -63,7 +68,7 @@ public class InteractionArea {
         fixtureDef.isSensor = true;
         Fixture fixture = body.createFixture(fixtureDef);
         Filter filter = new Filter();
-        filter.groupIndex = GroupIndices.INTERACTION_AREA;
+        filter.groupIndex = (short)getGroupIndex();
         fixture.setFilterData(filter);
         shape.dispose();
         body.setUserData(this);
@@ -121,5 +126,15 @@ public class InteractionArea {
      */
     public Interaction getInteraction() {
         return interaction;
+    }
+
+    @Override
+    public void update(float deltaTime) {
+
+    }
+
+    @Override
+    public void draw(SpriteBatch batch) {
+
     }
 }

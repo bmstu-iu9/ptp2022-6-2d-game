@@ -6,6 +6,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
@@ -22,9 +23,11 @@ import com.qualityworkstudio.uninvitedguests.BasicPlayerInterface;
 import com.qualityworkstudio.uninvitedguests.Game;
 import com.qualityworkstudio.uninvitedguests.GameSettings;
 import com.qualityworkstudio.uninvitedguests.BasicLevelMenu;
+import com.qualityworkstudio.uninvitedguests.Gun;
 import com.qualityworkstudio.uninvitedguests.InteractionArea;
 import com.qualityworkstudio.uninvitedguests.LevelMenuInteraction;
 import com.qualityworkstudio.uninvitedguests.Map;
+import com.qualityworkstudio.uninvitedguests.MapData;
 import com.qualityworkstudio.uninvitedguests.MobilePlayerController;
 import com.qualityworkstudio.uninvitedguests.MobilePlayerInterface;
 import com.qualityworkstudio.uninvitedguests.Player;
@@ -78,7 +81,7 @@ public class MainScreen extends ScreenAdapter {
         batch = new SpriteBatch();
         world = new World(new Vector2(0, 0), false);
         world.setContactListener(new BasicContactListener());
-        map = new Map(128, assetManager.<Texture>get("maps/main_map_layer1.png"), assetManager.<Texture>get("maps/main_map_layer2.png"));
+        map = new Map(new MapData("maps/main_map.json"), assetManager, world);
         door = new BasicDoor(world, assetManager);
         door.setPosition(0f, 16f);
         door.setType(BasicDoor.Type.GREEN);
@@ -92,6 +95,7 @@ public class MainScreen extends ScreenAdapter {
             player.setPlayerInterface(new BasicPlayerInterface());
         }
         player.setFixedCamera(true);
+        player.setWeapon(new Gun(world, assetManager));
         levelMenuArea = new InteractionArea(world, new Vector2(6f, 1f), new LevelMenuInteraction(levelMenu, player));
         levelMenu.getCloseButton().addListener(new ClickListener() {
             @Override

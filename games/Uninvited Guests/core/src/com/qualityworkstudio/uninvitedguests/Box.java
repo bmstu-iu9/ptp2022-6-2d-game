@@ -12,12 +12,14 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 
-public class Box {
+public class Box extends GameObject {
 
     private Body body;
     private Sprite sprite;
 
     public Box(World world, Texture texture, Vector2 spriteSize, Vector2 bodySize) {
+        super(0, GroupIndices.BOX);
+
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         bodyDef.linearDamping = 15;
@@ -31,8 +33,9 @@ public class Box {
         fixtureDef.friction = 0.5f;
         Fixture fixture = body.createFixture(fixtureDef);
         Filter filter = new Filter();
-        filter.groupIndex = GroupIndices.BOX;
+        filter.groupIndex = (short)getGroupIndex();
         fixture.setFilterData(filter);
+        body.setUserData(this);
         shape.dispose();
 
         sprite = new Sprite(texture);
@@ -40,7 +43,8 @@ public class Box {
         sprite.setOriginCenter();
     }
 
-    public void update() {
+    @Override
+    public void update(float deltaTime) {
         sprite.setPosition(body.getPosition().x - sprite.getWidth() / 2f, body.getPosition().y - sprite.getHeight() / 2f);
         sprite.setRotation((float)Math.toDegrees(body.getAngle()));
     }
@@ -51,5 +55,9 @@ public class Box {
 
     public void setPosition(float x, float y) {
         body.setTransform(x, y, body.getAngle());
+    }
+
+    public Vector2 getPosition() {
+        return body.getPosition();
     }
 }

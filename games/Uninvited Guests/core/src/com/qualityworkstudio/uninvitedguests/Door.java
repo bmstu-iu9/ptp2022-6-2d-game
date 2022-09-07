@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.Filter;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
@@ -16,7 +18,7 @@ import com.badlogic.gdx.physics.box2d.World;
  * @author Andrey Karanik
  */
 
-public class Door {
+public class Door extends GameObject {
 
     // Door states
     public static final int CLOSED = 1;
@@ -52,6 +54,7 @@ public class Door {
      * @param texture a texture.
      */
     public Door(World world, Vector2 shapeSize, Vector2 spriteSize, Texture texture) {
+        super(0, GroupIndices.DOOR);
         this.world = world;
         state = CLOSED;
 
@@ -63,8 +66,14 @@ public class Door {
         shape.setAsBox(shapeSize.x, shapeSize.y);
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
-        leftPartBody.createFixture(fixtureDef);
-        rightPartBody.createFixture(fixtureDef);
+        Fixture fixture1 = leftPartBody.createFixture(fixtureDef);
+        Fixture fixture2 = rightPartBody.createFixture(fixtureDef);
+        Filter filter = new Filter();
+        filter.groupIndex = (short)getGroupIndex();
+        fixture1.setFilterData(filter);
+        fixture2.setFilterData(filter);
+        leftPartBody.setUserData(this);
+        rightPartBody.setUserData(this);
         shape.dispose();
 
         leftPartSprite = new Sprite(texture);

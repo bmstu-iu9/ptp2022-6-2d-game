@@ -2,14 +2,15 @@ package com.qualityworkstudio.uninvitedguests.screens;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.qualityworkstudio.uninvitedguests.BasicDoor;
 import com.qualityworkstudio.uninvitedguests.Box;
 import com.qualityworkstudio.uninvitedguests.Game;
+import com.qualityworkstudio.uninvitedguests.GameObject;
 import com.qualityworkstudio.uninvitedguests.GroupIndices;
 import com.qualityworkstudio.uninvitedguests.Interaction;
 import com.qualityworkstudio.uninvitedguests.InteractionArea;
 import com.qualityworkstudio.uninvitedguests.Map;
+import com.qualityworkstudio.uninvitedguests.MapData;
 import com.qualityworkstudio.uninvitedguests.Timer;
 
 import java.util.ArrayList;
@@ -23,12 +24,10 @@ public class Level1 extends LevelScreen {
 
     private InteractionArea interactionArea;
 
-    private Box2DDebugRenderer renderer;
-
     public Level1(Game gm) {
         super(gm);
 
-        map = new Map(128, assetManager.<Texture>get("maps/lvl1_map_layer1.png"), assetManager.<Texture>get("maps/lvl1_map_layer2.png"));
+        map = new Map(new MapData("maps/lvl1_map.json"), assetManager, world);
         doors = new ArrayList<>();
         BasicDoor door1 = new BasicDoor(world, assetManager);
         door1.setType(BasicDoor.Type.RED);
@@ -45,11 +44,12 @@ public class Level1 extends LevelScreen {
         player.setPosition(0f, -36f);
 
         box = new Box(world, assetManager.<Texture>get("box_1.png"), new Vector2(6f, 6f), new Vector2(2.5f, 2.5f));
+        box.setPosition(12f, 0f);
 
         interactionArea = new InteractionArea(world, new Vector2(1f, 1f), new Interaction() {
             @Override
-            public void interactIn(int groupIndex) {
-                if (groupIndex != GroupIndices.BOX) {
+            public void interactIn(GameObject object) {
+                if (object.getGroupIndex() != GroupIndices.BOX) {
                     return;
                 }
 
@@ -57,8 +57,8 @@ public class Level1 extends LevelScreen {
             }
 
             @Override
-            public void interactOut(int groupIndex) {
-                if (groupIndex != GroupIndices.BOX) {
+            public void interactOut(GameObject object) {
+                if (object.getGroupIndex() != GroupIndices.BOX) {
                     return;
                 }
 
@@ -70,12 +70,10 @@ public class Level1 extends LevelScreen {
         completeTimer.setTask(new Timer.Task() {
             @Override
             public void doTask() {
-                game.setScreen(new LoadingScreen(game, Screens.LEVEL2, "json/level1.json"));
+                game.setScreen(new LoadingScreen(game, Screens.LEVEL2, "loads/level2.json"));
             }
         });
         finishArea.setPosition(new Vector2(0f, 32f));
-
-        renderer = new Box2DDebugRenderer();
     }
 
     @Override
@@ -86,7 +84,7 @@ public class Level1 extends LevelScreen {
     @Override
     public void update(float delta) {
         player.update(delta);
-        box.update();
+        box.update(delta);
         for (BasicDoor door : doors) {
             door.update(delta);
         }
@@ -101,10 +99,5 @@ public class Level1 extends LevelScreen {
         map.draw(batch);
         box.draw(batch);
         player.draw(batch);
-    }
-
-    @Override
-    public void render(float delta) {
-        super.render(delta);
     }
 }

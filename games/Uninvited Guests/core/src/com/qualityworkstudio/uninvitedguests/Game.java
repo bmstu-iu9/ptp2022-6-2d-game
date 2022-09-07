@@ -57,6 +57,11 @@ public class Game implements ApplicationListener {
 		setScreen(new SettingsScreen(this, Screens.MAIN_SCREEN));
 	}
 
+	/**
+	 * Gets the loader.
+	 *
+	 * @return the loader.
+	 */
 	public Loader getLoader() {
 		return loader;
 	}
