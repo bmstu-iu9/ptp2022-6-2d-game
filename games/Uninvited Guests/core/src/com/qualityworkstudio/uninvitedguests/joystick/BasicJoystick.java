@@ -59,7 +59,7 @@ public class BasicJoystick implements Joystick {
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 super.touchUp(event, x, y, pointer, button);
                 isTouched = false;
-                direction.set(0,0);
+                direction.set(0, 0);
                 stick.addAction(Actions.moveTo(joystickPosition.x - stick.getWidth() / 2f,
                         joystickPosition.y - stick.getHeight() / 2f, 0.25f, Interpolation.swingOut));
             }

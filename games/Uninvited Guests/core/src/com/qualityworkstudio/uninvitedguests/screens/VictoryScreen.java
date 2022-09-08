@@ -5,9 +5,13 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
@@ -23,62 +27,45 @@ import com.qualityworkstudio.uninvitedguests.GameSettings;
  * @author Andrey Karanik
  */
 
-public class SettingsScreen extends ScreenAdapter {
+public class VictoryScreen extends ScreenAdapter {
 
+    private Game game;
     private GameSettings settings;
     private AssetManager assetManager;
+    private Label label;
 
     private Viewport viewport;
     private Stage stage;
     private Image continueButton;
-    private Image mobileModeToggle;
 
-    public SettingsScreen(final Game game, final int screen) {
+    public VictoryScreen(Game gm) {
+        this.game = gm;
         settings = game.getSettings();
         assetManager = game.getAssetManager();
 
-        if (Gdx.graphics.getWidth() - Gdx.graphics.getHeight() < 0) {
-            viewport = new FitViewport(settings.getViewportSize() * (
-                    (float) Gdx.graphics.getWidth() / Gdx.graphics.getHeight()), settings.getViewportSize());
-        } else {
-            viewport = new FitViewport(settings.getViewportSize(), settings.getViewportSize() * (
-                    (float) Gdx.graphics.getHeight() / Gdx.graphics.getWidth()));
-        }
+        viewport = new FitViewport(settings.getViewportSize(), settings.getViewportSize() * (
+                (float)Gdx.graphics.getHeight() / Gdx.graphics.getWidth()));
         stage = new Stage(viewport);
         Gdx.input.setInputProcessor(stage);
 
-        final Drawable image1 = new TextureRegionDrawable(assetManager.<Texture>get("mobile_mode_button.png"));
-        final Drawable image2 = new TextureRegionDrawable(assetManager.<Texture>get("selected_mobile_mode_button.png"));
-        mobileModeToggle = new Image(settings.isMobileMode() ? image2 : image1);
-        mobileModeToggle.setSize(400f, 200f);
-        mobileModeToggle.setOrigin(Align.center);
-        mobileModeToggle.setPosition(stage.getWidth() / 2f, stage.getHeight() / 2f, Align.center);
-        mobileModeToggle.addListener(new BasicClickListener(mobileModeToggle));
-        mobileModeToggle.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                super.clicked(event, x, y);
-                if (settings.isMobileMode()) {
-                    mobileModeToggle.setDrawable(image1);
-                } else {
-                    mobileModeToggle.setDrawable(image2);
-                }
-                settings.setMobileMode(!settings.isMobileMode());
-            }
-        });
-        stage.addActor(mobileModeToggle);
+        Label.LabelStyle labelStyle = new Label.LabelStyle(assetManager.<BitmapFont>get("level_complete_font.fnt"), Color.WHITE);
+        label = new Label("You have won! You are saved!", labelStyle);
+        label.setAlignment(Align.center);
+        label.setPosition(stage.getWidth() / 2f, stage.getHeight() / 2f, Align.center);
+        stage.addActor(label);
 
-        Drawable drawable = new TextureRegionDrawable(game.getAssetManager().<Texture>get("continue_button.png"));
+        Drawable drawable = new TextureRegionDrawable(assetManager.<Texture>get("continue_button.png"));
         continueButton = new Image(drawable);
-        continueButton.setSize(400f, 200f);
+        continueButton.setSize(512f, 256f);
         continueButton.setOrigin(Align.center);
-        continueButton.setPosition(stage.getWidth() / 2f, stage.getHeight() / 2f - 150, Align.center);
+        continueButton.setPosition(stage.getWidth() / 2f, stage.getHeight() / 2f - 128f, Align.center);
+        continueButton.setScale(0f);
         continueButton.addListener(new BasicClickListener(continueButton));
         continueButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                game.setScreen(new LoadingScreen( game, screen, "loads/main.json"));
+                game.start();
             }
         });
         stage.addActor(continueButton);
@@ -86,6 +73,7 @@ public class SettingsScreen extends ScreenAdapter {
 
     @Override
     public void show() {
+        continueButton.addAction(Actions.scaleTo(1f, 1f, 0.25f, Interpolation.swingOut));
     }
 
     @Override
@@ -107,3 +95,4 @@ public class SettingsScreen extends ScreenAdapter {
         stage.dispose();
     }
 }
+

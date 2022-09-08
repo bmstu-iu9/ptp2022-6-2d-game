@@ -27,20 +27,32 @@ public class MobilePlayerInterface implements PlayerInterface {
         rotationJoystick.setPosition(new Vector2(stage.getWidth() - 235, 235));
     }
 
+    @Override
     public void show() {
         movementJoystick.show();
         rotationJoystick.show();
     }
 
+    @Override
     public void hide() {
         movementJoystick.hide();
         rotationJoystick.hide();
     }
 
+    /**
+     * Gets the movement joystick.
+     *
+     * @return the joystick.
+     */
     public Joystick getMovementJoystick() {
         return movementJoystick;
     }
 
+    /**
+     * Gets the rotation joystick.
+     *
+     * @return the joystick.
+     */
     public Joystick getRotationJoystick() {
         return rotationJoystick;
     }

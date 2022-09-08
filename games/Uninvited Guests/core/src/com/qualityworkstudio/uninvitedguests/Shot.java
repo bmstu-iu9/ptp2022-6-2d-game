@@ -5,9 +5,12 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
+/**
+ * @author Andrey Karanik
+ */
+
 public class Shot extends GameObject {
     private Timer shotTimer;
-    private float shotTime;
     private boolean destroyed;
     private Sprite shotSprite;
 

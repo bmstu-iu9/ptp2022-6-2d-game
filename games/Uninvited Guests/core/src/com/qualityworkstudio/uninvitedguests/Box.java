@@ -12,6 +12,10 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 
+/**
+ * @author Andrey Karanik
+ */
+
 public class Box extends GameObject {
 
     private Body body;
@@ -22,8 +26,8 @@ public class Box extends GameObject {
 
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
-        bodyDef.linearDamping = 15;
-        bodyDef.angularDamping = 15;
+        bodyDef.linearDamping = 50;
+        bodyDef.angularDamping = 50;
         body = world.createBody(bodyDef);
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(bodySize.x, bodySize.y);
@@ -53,10 +57,21 @@ public class Box extends GameObject {
         sprite.draw(batch);
     }
 
+    /**
+     * Sets the box position.
+     *
+     * @param x a new x position.
+     * @param y a new y position.
+     */
     public void setPosition(float x, float y) {
         body.setTransform(x, y, body.getAngle());
     }
 
+    /**
+     * Gets the box position.
+     *
+     * @return the box position.
+     */
     public Vector2 getPosition() {
         return body.getPosition();
     }

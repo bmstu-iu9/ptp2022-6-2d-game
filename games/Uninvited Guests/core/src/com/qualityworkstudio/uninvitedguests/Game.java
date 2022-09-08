@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.qualityworkstudio.uninvitedguests.screens.Level1;
 import com.qualityworkstudio.uninvitedguests.screens.Level2;
 import com.qualityworkstudio.uninvitedguests.screens.MainScreen;
+import com.qualityworkstudio.uninvitedguests.screens.MapEditorScreen;
 import com.qualityworkstudio.uninvitedguests.screens.RatioAdjustmentScreen;
 import com.qualityworkstudio.uninvitedguests.screens.Screens;
 import com.qualityworkstudio.uninvitedguests.screens.SettingsScreen;
@@ -25,6 +26,11 @@ public class Game implements ApplicationListener {
 	private AssetManager assetManager;
 	private Loader loader;
 	private Screen screen;
+
+	private Timer gameTimer;
+	private boolean isOver;
+	private float playSeconds = 120f;
+	private boolean[] completeLevels;
 
 	public Game(GameSettings settings) {
 		this.settings = settings;
@@ -54,7 +60,70 @@ public class Game implements ApplicationListener {
 
 		loader = new Loader(assetManager);
 
+		start();
+	}
+
+	/**
+	 * Starts the game. (restarts)
+	 */
+	public void start() {
+		isOver = false;
+		gameTimer = new Timer(new Timer.Task() {
+			@Override
+			public void doTask() {
+				isOver = true;
+			}
+		});
+		gameTimer.start(playSeconds);
+		completeLevels = new boolean[2];
 		setScreen(new SettingsScreen(this, Screens.MAIN_SCREEN));
+	}
+
+	/**
+	 * Sets the level is complete.
+	 *
+	 * @param level the level.
+	 * @param complete whether the level is complete.
+	 */
+	public void setLevelComplete(int level, boolean complete) {
+		completeLevels[level] = complete;
+	}
+
+	/**
+	 * Returns true when the level is complete.
+	 *
+	 * @param level the level.
+	 * @return whether the level is complete.
+	 */
+	public boolean isLevelComplete(int level) {
+		return completeLevels[level];
+	}
+
+	/**
+	 * Returns true when the game is over.
+	 *
+	 * @return whether the game is over.
+	 */
+	public boolean isOver() {
+		return isOver;
+	}
+
+	public boolean isVictory() {
+		for (boolean completeLevel : completeLevels) {
+			if (!completeLevel) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	/**
+	 * Returns the game timer.
+	 *
+	 * @return the timer.
+	 */
+	public Timer getGameTimer() {
+		return gameTimer;
 	}
 
 	/**

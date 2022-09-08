@@ -8,6 +8,7 @@ package com.qualityworkstudio.uninvitedguests;
 
 public interface PlayerController {
 
+    void shootAndReload();
     /**
      * Moves the {@link Player}.
      */

@@ -24,12 +24,18 @@ public class MobilePlayerController implements PlayerController {
     }
 
     @Override
+    public void shootAndReload() {
+        if (rotationJoystick.isTouched()) {
+            player.shoot();
+        }
+    }
+
+    @Override
     public void move() {
         Body body = player.getBody();
         float movementSpeed = player.getMovementSpeed();
-        body.applyLinearImpulse(movementSpeed*movementJoystick.getDirection().x,
-                movementSpeed*movementJoystick.getDirection().y,
-                body.getPosition().x, body.getPosition().y, true);
+        body.setLinearVelocity(movementSpeed * movementJoystick.getDirection().x,
+                movementSpeed * movementJoystick.getDirection().y);
     }
 
     @Override

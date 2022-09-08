@@ -15,6 +15,10 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * @author Andrey Karanik
+ */
+
 public class Loader {
 
     public final static int TEXTURE_FILE = 0;

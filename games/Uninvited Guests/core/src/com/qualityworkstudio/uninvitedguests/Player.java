@@ -2,6 +2,7 @@ package com.qualityworkstudio.uninvitedguests;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -23,8 +24,11 @@ public class Player extends GameObject {
 
     private Body body;
     private Sprite sprite;
+    private Texture texture1;
+    private Texture texture2;
     private PlayerController controller;
     private PlayerInterface playerInterface;
+    private ReloadWidget reloadWidget;
 
     private float spriteSize;
     private float bodyRadius;
@@ -32,6 +36,10 @@ public class Player extends GameObject {
     private float spriteOffsetY;
     private float cameraOffset;
     private float weaponOffset;
+    private float shootingTime;
+    private boolean shooting;
+    private boolean autoReloading;
+    private Timer shootingTimer;
     private float extraSpriteAngle;
     private float movementSpeed;
     private boolean moveToFixed;
@@ -46,12 +54,14 @@ public class Player extends GameObject {
     /**
      * Constructs a new player.
      *
-     * @param world a world object.
-     * @param texture a texture.
-     * @param cameraSize a camera size.
+     * @param world the world object.
+     * @param assetManager the asset manager.
+     * @param cameraSize the camera size.
      */
-    public Player(World world, Texture texture, float cameraSize) {
+    public Player(World world, AssetManager assetManager, float cameraSize) {
         super(0, GroupIndices.PLAYER);
+        texture1 = assetManager.get("character.png");
+        texture2 = assetManager.get("character_shooting.png");
 
         spriteSize = cameraSize / 8f;
         bodyRadius = spriteSize / 8f;
@@ -59,8 +69,10 @@ public class Player extends GameObject {
         spriteOffsetY = 1.5f;
         cameraOffset = 1.5f;
         weaponOffset = bodyRadius + 1f;
+        shootingTime = 0.05f;
+        autoReloading = true;
         extraSpriteAngle = 90f;
-        movementSpeed = bodyRadius * cameraSize * 0.25f;
+        movementSpeed = bodyRadius * cameraSize * 0.125f;
 
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
@@ -80,11 +92,18 @@ public class Player extends GameObject {
         body.setUserData(this);
         shape.dispose();
 
-        sprite = new Sprite(texture);
+        sprite = new Sprite(texture1);
         sprite.setSize(spriteSize, spriteSize);
         sprite.setOrigin(spriteSize / 2f - spriteOffsetX, spriteSize / 2f - spriteOffsetY);
         camera = new OrthographicCamera(cameraSize, cameraSize *
                 ((float) Gdx.graphics.getHeight() / Gdx.graphics.getWidth()));
+        shootingTimer = new Timer(new Timer.Task() {
+            @Override
+            public void doTask() {
+                shooting = false;
+                sprite.setTexture(texture1);
+            }
+        });
     }
 
     /**
@@ -105,22 +124,20 @@ public class Player extends GameObject {
             weapon.update(deltaTime);
         }
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.F)) {
-            shoot();
-        }
+        shootingTimer.update(deltaTime);
 
         if (!moveToFixed && !fixed && controller != null) {
             controller.move();
             controller.look();
+            controller.shootAndReload();
         } else if (moveToFixed) {
             float dx = moveToPosition.x - getPosition().x;
             float dy = moveToPosition.y - getPosition().y;
             float dist = (float)Math.sqrt(dx*dx + dy*dy);
-            body.applyLinearImpulse(movementSpeed * dx / dist,
-                    movementSpeed * dy / dist,
-                    getPosition().x, getPosition().y, true);
+            body.setLinearVelocity(movementSpeed * dx / dist,
+                    movementSpeed * dy / dist);
             body.setTransform(getPosition(), (float)(Math.atan2(dy, dx)));
-            if (Math.abs(dx) < 0.1 && Math.abs(dy) < 0.1) {
+            if (Math.abs(dx) < 0.25 && Math.abs(dy) < 0.25) {
                 moveToFixed = false;
             }
         }
@@ -135,16 +152,34 @@ public class Player extends GameObject {
      * @param batch a sprite batch.
      */
     public void draw(SpriteBatch batch) {
-        sprite.draw(batch);
         weapon.draw(batch);
+        sprite.draw(batch);
     }
 
     public void shoot() {
-        weapon.shoot();
+        if (weapon.shoot()) {
+            if (!shooting) {
+                shooting = true;
+                sprite.setTexture(texture2);
+                shootingTimer.start(shootingTime);
+            }
+        } else if (autoReloading && weapon.isEmpty() && !weapon.isReloading()) {
+            reload();
+        }
+    }
+
+    public void setReloadWidget(ReloadWidget reloadWidget) {
+        this.reloadWidget = reloadWidget;
+    }
+
+    public ReloadWidget getReloadWidget() {
+        return reloadWidget;
     }
 
     public void reload() {
-        weapon.reload();
+        if (weapon.reload() && reloadWidget != null) {
+            reloadWidget.show(weapon);
+        }
     }
 
     public void setWeapon(Weapon weapon) {
@@ -293,6 +328,7 @@ public class Player extends GameObject {
 
     /**
      * Sets the player position.
+     *
      * @param x a new x position.
      * @param y a new y position.
      */
@@ -302,6 +338,7 @@ public class Player extends GameObject {
 
     /**
      * Sets the player position.
+     *
      * @param position a new position.
      */
     public void setPosition(Vector2 position) {

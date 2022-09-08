@@ -5,6 +5,7 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
@@ -12,7 +13,9 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -31,7 +34,9 @@ import com.qualityworkstudio.uninvitedguests.MapData;
 import com.qualityworkstudio.uninvitedguests.MobilePlayerController;
 import com.qualityworkstudio.uninvitedguests.MobilePlayerInterface;
 import com.qualityworkstudio.uninvitedguests.Player;
+import com.qualityworkstudio.uninvitedguests.ReloadWidget;
 import com.qualityworkstudio.uninvitedguests.ScreenTransition;
+import com.qualityworkstudio.uninvitedguests.Timer;
 
 /**
  * The main screen of the game.
@@ -41,6 +46,7 @@ import com.qualityworkstudio.uninvitedguests.ScreenTransition;
 
 public class MainScreen extends ScreenAdapter {
 
+    private Game game;
     private GameSettings settings;
     private AssetManager assetManager;
 
@@ -50,6 +56,9 @@ public class MainScreen extends ScreenAdapter {
     private Stage stage;
     private BasicLevelMenu levelMenu;
     private ScreenTransition screenTransition;
+    private Timer gameTimer;
+    private Label timerLabel;
+    private Label helpLabel;
 
     private Player player;
     private Map map;
@@ -60,21 +69,27 @@ public class MainScreen extends ScreenAdapter {
 
 
     public MainScreen(Game game) {
+        this.game = game;
         settings = game.getSettings();
         assetManager = game.getAssetManager();
+        gameTimer = game.getGameTimer();
 
         viewport = new FitViewport(settings.getViewportSize(), settings.getViewportSize() * (
                 (float)Gdx.graphics.getHeight() / Gdx.graphics.getWidth()));
         stage = new Stage(viewport);
         Gdx.input.setInputProcessor(stage);
 
-        levelMenu = new BasicLevelMenu(stage, game);
-        levelMenu.addLevel("Level 1", assetManager.<Texture>get("level1_image.png"));
-        levelMenu.addLevel("Level 2", assetManager.<Texture>get("level1_image.png"));
-        levelMenu.addLevel("Level 3", assetManager.<Texture>get("level1_image.png"));
-        levelMenu.addLevel("Level 4", assetManager.<Texture>get("level1_image.png"));
-        levelMenu.addLevel("Level 5", assetManager.<Texture>get("level1_image.png"));
-        levelMenu.addLevel("Level 6", assetManager.<Texture>get("level1_image.png"));
+        Label.LabelStyle labelStyle = new Label.LabelStyle(assetManager.<BitmapFont>get("level_complete_font.fnt"), Color.WHITE);
+        timerLabel = new Label("", labelStyle);
+        timerLabel.setAlignment(Align.center);
+        timerLabel.setPosition(stage.getWidth() / 2f, stage.getHeight() - 64f, Align.center);
+        stage.addActor(timerLabel);
+
+        Label.LabelStyle style = new Label.LabelStyle(assetManager.<BitmapFont>get("font.fnt"), Color.WHITE);
+        helpLabel = new Label("Complete all levels before the time runs out!", style);
+        helpLabel.setAlignment(Align.center);
+        helpLabel.setPosition(stage.getWidth() / 2f, 64f, Align.center);
+        stage.addActor(helpLabel);
 
         screenTransition = new ScreenTransition(stage, assetManager);
 
@@ -85,7 +100,7 @@ public class MainScreen extends ScreenAdapter {
         door = new BasicDoor(world, assetManager);
         door.setPosition(0f, 16f);
         door.setType(BasicDoor.Type.GREEN);
-        player = new Player(world, assetManager.<Texture>get("character.png"), settings.getCameraSize());
+        player = new Player(world, assetManager, settings.getCameraSize());
         if (settings.isMobileMode()) {
             MobilePlayerInterface playerInterface = new MobilePlayerInterface(stage, assetManager);
             player.setController(new MobilePlayerController(player, playerInterface.getMovementJoystick(), playerInterface.getRotationJoystick()));
@@ -96,6 +111,17 @@ public class MainScreen extends ScreenAdapter {
         }
         player.setFixedCamera(true);
         player.setWeapon(new Gun(world, assetManager));
+        player.setReloadWidget(new ReloadWidget(stage, assetManager));
+
+        levelMenu = new BasicLevelMenu(stage, game);
+        for (int i = 1; i < 3; i++) {
+            if (game.isLevelComplete(i-1)) {
+                levelMenu.addLevel("Completed", assetManager.<Texture>get("level" + i + "_image.png"));
+            } else {
+                levelMenu.addLevel("Level " + i, assetManager.<Texture>get("level" + i + "_image.png"));
+            }
+        }
+
         levelMenuArea = new InteractionArea(world, new Vector2(6f, 1f), new LevelMenuInteraction(levelMenu, player));
         levelMenu.getCloseButton().addListener(new ClickListener() {
             @Override
@@ -125,6 +151,14 @@ public class MainScreen extends ScreenAdapter {
         player.update(delta);
         door.update(delta);
         stage.act(delta);
+        gameTimer.update(delta);
+        timerLabel.setText(String.valueOf((int)gameTimer.getCurrentTime()));
+        if (game.isOver()) {
+            game.setScreen(new DefeatScreen(game));
+        }
+        if (game.isVictory()) {
+            game.setScreen(new VictoryScreen(game));
+        }
 
         ScreenUtils.clear(Color.BLACK);
 

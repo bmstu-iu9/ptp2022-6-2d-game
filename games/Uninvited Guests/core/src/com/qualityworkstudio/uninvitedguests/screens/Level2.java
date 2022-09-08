@@ -18,6 +18,10 @@ import com.qualityworkstudio.uninvitedguests.Timer;
 import java.awt.image.AreaAveragingScaleFilter;
 import java.util.ArrayList;
 
+/**
+ * @author Andrey Karanik
+ */
+
 public class Level2 extends LevelScreen {
 
     private Map map;
@@ -133,7 +137,8 @@ public class Level2 extends LevelScreen {
         completeTimer.setTask(new Timer.Task() {
             @Override
             public void doTask() {
-                game.setScreen(new LoadingScreen(game, Screens.LEVEL1, "loads/level1.json"));
+                game.setScreen(new LoadingScreen(game, Screens.MAIN_SCREEN, "loads/main.json"));
+                game.setLevelComplete(1, true);
             }
         });
         finishArea.setPosition(new Vector2(0f, 32f));

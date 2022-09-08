@@ -30,6 +30,10 @@ import com.qualityworkstudio.uninvitedguests.WallData;
 
 import java.util.List;
 
+/**
+ * @author Andrey Karanik
+ */
+
 public class MapEditorScreen extends ScreenAdapter {
 
     private GameSettings settings;

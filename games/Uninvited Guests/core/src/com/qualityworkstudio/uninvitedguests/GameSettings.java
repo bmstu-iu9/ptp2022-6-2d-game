@@ -1,8 +1,5 @@
 package com.qualityworkstudio.uninvitedguests;
 
-import com.badlogic.gdx.Application;
-import com.badlogic.gdx.Gdx;
-
 /**
  * Describes game settings.
  *
@@ -14,12 +11,12 @@ public class GameSettings {
     /**
      * This constant is the <em>standard</em> camera width.
      */
-    private static final float STANDARD_CAMERA_SIZE = 128f;
+    public final float STANDARD_CAMERA_SIZE = 128f;
 
     /**
      * This constant is the <em>standard</em> viewport width.
      */
-    private static final float STANDARD_VIEWPORT_SIZE = 1920f;
+    public static final float STANDARD_VIEWPORT_SIZE = 1920f;
 
     /**
      * The float value specifies the camera width.

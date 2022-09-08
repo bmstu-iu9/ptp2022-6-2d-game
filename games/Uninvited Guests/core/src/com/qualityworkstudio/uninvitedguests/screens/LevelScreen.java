@@ -34,10 +34,15 @@ import com.qualityworkstudio.uninvitedguests.InteractionArea;
 import com.qualityworkstudio.uninvitedguests.MobilePlayerController;
 import com.qualityworkstudio.uninvitedguests.MobilePlayerInterface;
 import com.qualityworkstudio.uninvitedguests.Player;
+import com.qualityworkstudio.uninvitedguests.ReloadWidget;
 import com.qualityworkstudio.uninvitedguests.ScreenTransition;
 import com.qualityworkstudio.uninvitedguests.Timer;
 
 import java.util.ArrayList;
+
+/**
+ * @author Andrey Karanik
+ */
 
 public class LevelScreen extends ScreenAdapter {
 
@@ -51,6 +56,8 @@ public class LevelScreen extends ScreenAdapter {
     protected Stage stage;
     protected Table completeTable;
     protected ScreenTransition screenTransition;
+    protected Timer gameTimer;
+    protected Label timerLabel;
 
     protected Player player;
     protected InteractionArea finishArea;
@@ -60,11 +67,18 @@ public class LevelScreen extends ScreenAdapter {
         this.game = game;
         this.assetManager = game.getAssetManager();
         this.settings = game.getSettings();
+        gameTimer = game.getGameTimer();
 
         viewport = new FitViewport(settings.getViewportSize(), settings.getViewportSize() * (
                 (float) Gdx.graphics.getHeight() / Gdx.graphics.getWidth()));
         stage = new Stage(viewport);
         Gdx.input.setInputProcessor(stage);
+
+        Label.LabelStyle style = new Label.LabelStyle(assetManager.<BitmapFont>get("level_complete_font.fnt"), Color.WHITE);
+        timerLabel = new Label("", style);
+        timerLabel.setAlignment(Align.center);
+        timerLabel.setPosition(stage.getWidth() / 2f, stage.getHeight() - 64f, Align.center);
+        stage.addActor(timerLabel);
 
         screenTransition = new ScreenTransition(stage, assetManager);
 
@@ -105,7 +119,7 @@ public class LevelScreen extends ScreenAdapter {
         batch = new SpriteBatch();
         world = new World(new Vector2(0, 0), false);
         world.setContactListener(new BasicContactListener());
-        player = new Player(world, assetManager.<Texture>get("character.png"), settings.getCameraSize());
+        player = new Player(world, assetManager, settings.getCameraSize());
         if (settings.isMobileMode()) {
             MobilePlayerInterface playerInterface = new MobilePlayerInterface(stage, assetManager);
             player.setController(new MobilePlayerController(player, playerInterface.getMovementJoystick(), playerInterface.getRotationJoystick()));
@@ -115,6 +129,7 @@ public class LevelScreen extends ScreenAdapter {
             player.setPlayerInterface(new BasicPlayerInterface());
         }
         player.setWeapon(new Gun(world, assetManager));
+        player.setReloadWidget(new ReloadWidget(stage, assetManager));
 
         completeTimer = new Timer();
 
@@ -150,6 +165,11 @@ public class LevelScreen extends ScreenAdapter {
         world.step(1 / 60f, 6, 2);
         stage.act(delta);
         completeTimer.update(delta);
+        gameTimer.update(delta);
+        timerLabel.setText(String.valueOf((int)gameTimer.getCurrentTime()));
+        if (game.isOver()) {
+            game.setScreen(new DefeatScreen(game));
+        }
         update(delta);
 
         ScreenUtils.clear(Color.BLACK);
