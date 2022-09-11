@@ -25,4 +25,6 @@ public interface Weapon {
     float getCurrentReloadTime();
     void setReloadTime(float reloadTime);
     float getReloadTime();
+    void setDamage(float damage);
+    float getDamage();
 }

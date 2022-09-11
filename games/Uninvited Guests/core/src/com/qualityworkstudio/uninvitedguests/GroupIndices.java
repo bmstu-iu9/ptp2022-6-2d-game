@@ -11,4 +11,5 @@ public class GroupIndices {
     public static final int BOX = 3;
     public static final int WALL = 4;
     public static final int DOOR = 5;
+    public static final int ENEMY = 6;
 }

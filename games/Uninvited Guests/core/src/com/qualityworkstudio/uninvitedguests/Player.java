@@ -20,7 +20,7 @@ import com.badlogic.gdx.physics.box2d.World;
  * @author Andrey Karanik
  */
 
-public class Player extends GameObject {
+public class Player extends GameObject implements HealthSystem {
 
     private Body body;
     private Sprite sprite;
@@ -50,6 +50,9 @@ public class Player extends GameObject {
     private boolean fixed;
 
     private Weapon weapon;
+
+    private float health = 100f;
+    private boolean died;
 
     /**
      * Constructs a new player.
@@ -154,6 +157,18 @@ public class Player extends GameObject {
     public void draw(SpriteBatch batch) {
         weapon.draw(batch);
         sprite.draw(batch);
+    }
+
+    @Override
+    public void setHealth(float health) {
+        died = health <= 0;
+
+        this.health = health;
+    }
+
+    @Override
+    public float getHealth() {
+        return health;
     }
 
     public void shoot() {
@@ -452,5 +467,9 @@ public class Player extends GameObject {
     public void moveTo(Vector2 position) {
         moveToPosition = position;
         moveToFixed = true;
+    }
+
+    public boolean isDied() {
+        return died;
     }
 }

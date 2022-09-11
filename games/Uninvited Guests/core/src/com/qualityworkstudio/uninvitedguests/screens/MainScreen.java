@@ -114,7 +114,7 @@ public class MainScreen extends ScreenAdapter {
         player.setReloadWidget(new ReloadWidget(stage, assetManager));
 
         levelMenu = new BasicLevelMenu(stage, game);
-        for (int i = 1; i < 3; i++) {
+        for (int i = 1; i < 4; i++) {
             if (game.isLevelComplete(i-1)) {
                 levelMenu.addLevel("Completed", assetManager.<Texture>get("level" + i + "_image.png"));
             } else {
@@ -153,7 +153,7 @@ public class MainScreen extends ScreenAdapter {
         stage.act(delta);
         gameTimer.update(delta);
         timerLabel.setText(String.valueOf((int)gameTimer.getCurrentTime()));
-        if (game.isOver()) {
+        if (game.isOver() || player.isDied()) {
             game.setScreen(new DefeatScreen(game));
         }
         if (game.isVictory()) {

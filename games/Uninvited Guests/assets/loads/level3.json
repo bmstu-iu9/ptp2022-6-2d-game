@@ -9,19 +9,17 @@
     "movement_joystick_bg.png",
     "rotation_joystick_bg.png",
     "joystick_stick.png",
-    "level1_image.png",
-    "level2_image.png",
-    "level3_image.png",
-    "level_button.png",
-    "selected_level_button.png",
-    "level_start_button.png",
-    "level_close_button.png",
-    "levelmenu_bg.png",
-    "maps/main_map_layer1.png",
-    "maps/main_map_layer2.png",
+    "maps/lvl3_map_layer1.png",
+    "maps/lvl3_map_layer2.png",
+    "box_lifo.png",
+    "box_fifo.png",
+    "box_oop.png",
+    "box_jdk.png",
     "white_square.png",
     "level_complete_font.png",
-    "shot.png"
+    "shot.png",
+    "enemy.png",
+    "enemy_dead.png"
   ],
 
   "bitmapFontFiles": [
@@ -29,7 +27,7 @@
   ],
 
   "soundFiles": [
-    "click.wav"
+
   ],
 
   "musicFiles": [

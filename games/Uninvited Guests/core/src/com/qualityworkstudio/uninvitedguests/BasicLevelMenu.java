@@ -97,6 +97,9 @@ public class BasicLevelMenu implements LevelMenu {
                     case 1:
                         game.setScreen(new LoadingScreen(game, Screens.LEVEL2, "loads/level2.json"));
                         break;
+                    case 2:
+                        game.setScreen(new LoadingScreen(game, Screens.LEVEL3, "loads/level3.json"));
+                        break;
                 }
             }
         });

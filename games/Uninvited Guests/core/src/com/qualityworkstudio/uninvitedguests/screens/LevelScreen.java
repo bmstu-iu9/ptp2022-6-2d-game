@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
@@ -167,7 +168,8 @@ public class LevelScreen extends ScreenAdapter {
         completeTimer.update(delta);
         gameTimer.update(delta);
         timerLabel.setText(String.valueOf((int)gameTimer.getCurrentTime()));
-        if (game.isOver()) {
+
+        if (game.isOver() || player.isDied()) {
             game.setScreen(new DefeatScreen(game));
         }
         update(delta);
@@ -178,7 +180,6 @@ public class LevelScreen extends ScreenAdapter {
         batch.begin();
         draw();
         batch.end();
-
         stage.draw();
     }
 

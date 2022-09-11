@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.qualityworkstudio.uninvitedguests.screens.Level1;
 import com.qualityworkstudio.uninvitedguests.screens.Level2;
+import com.qualityworkstudio.uninvitedguests.screens.Level3;
 import com.qualityworkstudio.uninvitedguests.screens.MainScreen;
 import com.qualityworkstudio.uninvitedguests.screens.MapEditorScreen;
 import com.qualityworkstudio.uninvitedguests.screens.RatioAdjustmentScreen;
@@ -75,7 +76,7 @@ public class Game implements ApplicationListener {
 			}
 		});
 		gameTimer.start(playSeconds);
-		completeLevels = new boolean[2];
+		completeLevels = new boolean[3];
 		setScreen(new SettingsScreen(this, Screens.MAIN_SCREEN));
 	}
 
@@ -253,6 +254,9 @@ public class Game implements ApplicationListener {
 					break;
 				case Screens.LEVEL2:
 					setScreen(new Level2(this));
+					break;
+				case Screens.LEVEL3:
+					setScreen(new Level3(this));
 					break;
 			}
 		}

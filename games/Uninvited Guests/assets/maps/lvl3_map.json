@@ -1,9 +1,9 @@
 {
-"name": "lvl2",
+"name": "lvl3",
 "size": 128,
 "layers": [
-	"maps/lvl2_map_layer1.png",
-	"maps/lvl2_map_layer2.png"
+	"maps/lvl3_map_layer1.png",
+	"maps/lvl3_map_layer2.png"
 ],
 "wallDataList": [
 	{

@@ -25,6 +25,7 @@ public class Gun extends GameObject implements Weapon {
     private Vector2 position;
     private float rotation;
     private float currentFraction;
+    private Fixture currentFixture;
     private Vector2 shotPoint;
     private float weaponLength = 1.5f;
     private float maxShotLength = 100f;
@@ -44,6 +45,7 @@ public class Gun extends GameObject implements Weapon {
     private Vector2 startPoint;
     private Vector2 endPoint;
     private boolean infinity;
+    private float damage = 10f;
 
     /**
      * Constructs a gun.
@@ -104,6 +106,7 @@ public class Gun extends GameObject implements Weapon {
                     return 1;
                 }
                 if (currentFraction > fraction) {
+                    currentFixture = fixture;
                     currentFraction = fraction;
                     shotPoint.set(point.x, point.y);
                 }
@@ -112,6 +115,10 @@ public class Gun extends GameObject implements Weapon {
         };
         currentFraction = 1;
         world.rayCast(callback, startPoint, endPoint);
+        if (currentFixture.getFilterData().groupIndex == GroupIndices.PLAYER || currentFixture.getFilterData().groupIndex == GroupIndices.ENEMY) {
+            HealthSystem obj = (HealthSystem) currentFixture.getBody().getUserData();
+            obj.setHealth(obj.getHealth() - damage);
+        }
         if (currentFraction == 1) {
             shotPoint.set(endPoint.x, endPoint.y);
         }
@@ -314,6 +321,16 @@ public class Gun extends GameObject implements Weapon {
     @Override
     public float getReloadTime() {
         return reloadTime;
+    }
+
+    @Override
+    public void setDamage(float damage) {
+        this.damage = damage;
+    }
+
+    @Override
+    public float getDamage() {
+        return damage;
     }
 
     /**
