@@ -28,6 +28,7 @@ h6 {
 }
 html,
 body {
+  background: url('../website/img/black_hole2.jpg') 0 0 no-repeat fixed;
   height: 100%;
   line-height: 1;
   font-size: 16px;
@@ -46,12 +47,11 @@ body._lock {
 }
 
 .page_section {
-  max-width: 1920px;
   padding: 30px;
   margin: 0px auto;
 }
 
-.page_section_4 .page_text1 {
+.page_section_3 .page_text1 {
   font-style: oblique;
 }
 
@@ -62,7 +62,7 @@ body._lock {
   left: 0;
   width: 100%;
   z-index: 10;
-  background: black;
+  
 
 }
 
@@ -185,7 +185,6 @@ body._lock {
     top: 0;
     left: 0;
     height: 70px;
-    background-color: rgb(0, 0, 0);
     z-index: 2;
 
   }
@@ -245,3 +244,4 @@ body._lock {
     color: red;
   }
 }
+
