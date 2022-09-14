@@ -26,14 +26,36 @@ h6 {
   font-weight: inherit;
   font-size: inherit;
 }
-html,
+html {
+  font-family: 'Bahianita', cursive;
+  font-weight: 500;
+}
 body {
   background: url('../website/img/black_hole2.jpg') 0 0 no-repeat fixed;
   height: 100%;
   line-height: 1;
-  font-size: 16px;
   background-color: black;
   color: white;
+  width: 80%;
+  max-width: 20em;
+  padding: 25vh 1em;
+  margin: auto;
+}
+
+.wrapper {
+  background-image: linear-gradient(transparent 10%, currentColor 30%, currentColor 70%, transparent 90%);
+-webkit-background-clip: text;
+  background-clip: text;
+  background-attachment: fixed;
+}
+.wrapper > * {
+    color: transparent;
+  }
+
+@media (min-width: 800px) {
+  html {
+    font-size: 28px;
+  }
 }
 body._lock {
   overflow: hidden;
@@ -62,6 +84,8 @@ body._lock {
   left: 0;
   width: 100%;
   z-index: 10;
+  font-size: 16px;
+
   
 
 }
@@ -244,4 +268,3 @@ body._lock {
     color: red;
   }
 }
-
