@@ -31,7 +31,7 @@ html {
   font-weight: 500;
 }
 body {
-  background: url('../website/img/black_hole2.jpg') 0 0 no-repeat fixed;
+  background: url('../website/img/black_hole2.2.jpg') 0 0 no-repeat fixed;
   height: 100%;
   line-height: 1;
   background-color: black;
@@ -68,9 +68,11 @@ body._lock {
   padding: 60px 0px 30px 0px;
 }
 
+@import url('https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,200;1,200&family=PT+Sans+Narrow&display=swap');
 .page_section {
   padding: 30px;
   margin: 0px auto;
+  font-family: "Jost";
 }
 
 .page_section_3 .page_text1 {
@@ -195,7 +197,7 @@ body._lock {
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.9);
-    padding: 100px 30px 30px 30px;
+    padding: 100px 0px 0px 0px;
     transition: left 0.3s ease 0s;
     overflow: auto;
   }
@@ -230,7 +232,6 @@ body._lock {
   width: 150px;
   height: 26px;
   border: none;
-  background-color: black; /* Green */
   text-align: center;
   display: inline-block;
   font-size: 16px;
@@ -246,7 +247,7 @@ body._lock {
 }
 .button1 {
   font-size: 24px;
-  background-color: black; 
+  background-color: rgba(0, 0, 0, 0); 
   color: red; 
   animation: animate_pulse 3s infinite;
 }
@@ -262,7 +263,7 @@ body._lock {
 		color: red;
 	}
 	50% {
-		color: black;
+		color: rgba(0, 0, 0, 0);
 	}
   100% {
     color: red;
