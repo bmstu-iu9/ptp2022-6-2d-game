@@ -77,7 +77,9 @@ body._lock {
 .page_section_3 .page_text1 {
   font-style: oblique;
 }
-
+.page_title {
+  font-size: 40px;
+}
 
 .header {
   position: fixed;
