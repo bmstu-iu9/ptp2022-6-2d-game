@@ -27,11 +27,10 @@ h6 {
   font-size: inherit;
 }
 html {
-  font-family: 'Bahianita', cursive;
   font-weight: 500;
 }
 body {
-  background: url('../website/img/black_hole2.2.jpg') 0 0 no-repeat fixed;
+  background: url('img/black_hole2.2.jpg') 0 0 no-repeat fixed;
   height: 100%;
   line-height: 1;
   background-color: black;
@@ -52,7 +51,7 @@ body {
     color: transparent;
   }
 
-@media (min-width: 800px) {
+@media (min-width: 767px) {
   html {
     font-size: 28px;
   }
