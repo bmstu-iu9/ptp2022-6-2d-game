@@ -45,7 +45,7 @@ body {
   background-image: linear-gradient(transparent 10%, currentColor 30%, currentColor 70%, transparent 90%);
 -webkit-background-clip: text;
   background-clip: text;
-  background-attachment: fixed;
+  background-attachment: fixed; 
 }
 .wrapper > * {
     color: transparent;
@@ -189,7 +189,7 @@ body._lock {
     bottom: 50%;
     transform: rotate(-45deg) translate(0px, -50%);
   }
-
+  
 
   .menu_body {
     position: fixed;
@@ -230,8 +230,9 @@ body._lock {
 /* Стиль кнопки */
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+SC:wght@300&family=Dancing+Script&display=swap');
 .button {
+  font-family: "Dancing Script";
   width: 150px;
-  height: 26px;
+  height: 32px;
   border: none;
   text-align: center;
   display: inline-block;
@@ -243,11 +244,9 @@ body._lock {
   position: relative;
   left: 50%;
   transform: translate(-50%, 0);
-  font-family: "Dancing Script";
-
 }
 .button1 {
-  font-size: 24px;
+  font-size: 30px;
   background-color: rgba(0, 0, 0, 0); 
   color: red; 
   animation: animate_pulse 3s infinite;
@@ -255,7 +254,7 @@ body._lock {
 
 .button1:hover {
   color: blue;
-  font-size: 25px;
+  font-size: 32px;
   animation: none;
 }
 
