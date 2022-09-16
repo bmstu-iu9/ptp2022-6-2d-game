@@ -251,7 +251,7 @@ body._lock {
 }
 .button1 {
   font-size: 30px;
-  background-color: rgba(0, 0, 0, 0); 
+  background-color: transparent; 
   color: red; 
   animation: animate_pulse 3s infinite;
 }
@@ -267,7 +267,7 @@ body._lock {
 		color: red;
 	}
 	50% {
-		color: rgba(0, 0, 0, 0);
+		color: transparent;
 	}
   100% {
     color: red;
