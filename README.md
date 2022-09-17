@@ -1,6 +1,6 @@
 # ptp2022-6-2d-game
 
-## *Инструкция по запуску 2D игры - Uninvited Guests*
+## Инструкция по запуску 2D игры - Uninvited Guests
 
 Для запуска игры необходимо перейти на наш сайт [QualityWorkStudio](https://qualityworkstudio.ru "Перейти к сайту") и нажать "Play Game". Далее вам необходимо выбрать режим игры
 ![Выбор режима игры](readMeFiles/mode.png "Выбор режима игры")
