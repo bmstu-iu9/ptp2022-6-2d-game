@@ -11,11 +11,15 @@
 Затем откроется карта с игроком. Вам надо будет проследовать к выходу с помощью:
 1. кнопок управление WASD на компьюторе ![Начало](readMeFiles/startMenu.png "Start")
 
-2. или с помощью джойстика на мобильном устройстве ![Начало](readMeFiles/startMenu2.png "Start")
+2. джойстика на мобильном устройстве ![Начало](readMeFiles/startMenu2.png "Start")
+
+
+Далее откроется меню с выбором уровня ![Уровни](readMeFiles/levelMenu.png "Levels")
+Выбираем и играем)
 
 
 
-
+## Участники проекта
 * *Караник Андрей Алексадрович* - [@Andrey-Karanik](https://github.com/Andrey-Karanik "Перейти на GitHub Караника А.А")
 * Терюхов Богдан Андреевич - [@BogdanTeryukhov](https://github.com/BogdanTeryukhov "Перейти на GitHub Терюхова Б.А")
 * Джабаров Рауль Асипович - [@xb0yx2k20](https://github.com/xb0yx2k20 "Перейти на GitHub Джабарова Р.А")
