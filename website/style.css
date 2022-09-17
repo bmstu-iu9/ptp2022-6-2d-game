@@ -1,9 +1,18 @@
+/*
+* Prefixed by https://autoprefixer.github.io
+* PostCSS: v8.4.14,
+* Autoprefixer: v10.4.7
+* Browsers: last 4 version
+*/
+
+
 ::before, 
 ::after {
   padding: 0;
   margin: 0;
   border: 0;
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
 }
 a {
   text-decoration: none;
@@ -26,9 +35,7 @@ h6 {
   font-weight: inherit;
   font-size: inherit;
 }
-html {
-  font-weight: 500;
-}
+
 body {
   background: url('img/black_hole2.2.jpg') 0 0 repeat fixed;
   background-size: cover;
@@ -40,20 +47,26 @@ body {
   max-width: 20em;
   padding: 25vh 1em;
   margin: auto;
+
 }
 
-.wrapper {
+.page {
+  background-image: -o-linear-gradient(transparent 10%, currentColor 30%, currentColor 70%, transparent 90%);
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(10%, transparent), color-stop(30%, currentColor), color-stop(70%, currentColor), color-stop(90%, transparent));
   background-image: linear-gradient(transparent 10%, currentColor 30%, currentColor 70%, transparent 90%);
--webkit-background-clip: text;
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
   background-clip: text;
   background-attachment: fixed; 
+  font-weight: 700;
 }
-.wrapper > * {
+.page > * {
     color: transparent;
   }
 
 .checkout .checkout-form .info-container.visible {
-    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+            transform: translateZ(0);
 }
 @media (min-width: 767px) {
   html {
@@ -76,6 +89,7 @@ body._lock {
   padding: 30px;
   margin: 0px auto;
   font-family: "Jost";
+  
 }
 
 .page_section_3 .page_text1 {
@@ -99,10 +113,16 @@ body._lock {
 
 .header_container {
   margin: 0px auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   padding: 0px 30px;
-  align-items: center;
-  justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   min-height: 70px;  
 
 }
@@ -112,7 +132,9 @@ body._lock {
   border-radius: 50%;
   position: relative;
   z-index: 5;
-  flex: 0 0 60px;
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 60px;
+          flex: 0 0 60px;
   overflow: hidden;
 }
 
@@ -139,8 +161,12 @@ body._lock {
 
 @media (min-width: 767px) {
   .menu_list {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    align-items: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
   }
   .menu_list > li {
     padding: 10px 0;
@@ -164,6 +190,8 @@ body._lock {
     position: absolute;
     height: 10%;
     width: 100%;
+    -webkit-transition: all 0.3s ease 0s;
+    -o-transition: all 0.3s ease 0s;
     transition: all 0.3s ease 0s;
     background-color: white;
   }
@@ -179,19 +207,27 @@ body._lock {
   }
   .menu_icon span{
     top: 50%;
-    transform: scale(1) translate(0px, -50%);
+    -webkit-transform: scale(1) translate(0px, -50%);
+        -ms-transform: scale(1) translate(0px, -50%);
+            transform: scale(1) translate(0px, -50%);
   }
   /*Анимация полос*/
   .menu_icon._active span {
-    transform: scale(0) translate(0px, -50%);
+    -webkit-transform: scale(0) translate(0px, -50%);
+        -ms-transform: scale(0) translate(0px, -50%);
+            transform: scale(0) translate(0px, -50%);
   }
   .menu_icon._active::before {
     top: 50%;
-    transform: rotate(45deg) translate(0px, 50%);
+    -webkit-transform: rotate(45deg) translate(0px, 50%);
+        -ms-transform: rotate(45deg) translate(0px, 50%);
+            transform: rotate(45deg) translate(0px, 50%);
   }
   .menu_icon._active::after {
     bottom: 50%;
-    transform: rotate(-45deg) translate(0px, -50%);
+    -webkit-transform: rotate(-45deg) translate(0px, -50%);
+        -ms-transform: rotate(-45deg) translate(0px, -50%);
+            transform: rotate(-45deg) translate(0px, -50%);
   }
   
 
@@ -203,6 +239,8 @@ body._lock {
     height: 100%;
     background-color: rgba(0, 0, 0, 0.9);
     padding: 100px 0px 0px 0px;
+    -webkit-transition: left 0.3s ease 0s;
+    -o-transition: left 0.3s ease 0s;
     transition: left 0.3s ease 0s;
     overflow: auto;
   }
@@ -220,7 +258,8 @@ body._lock {
 
   }
   .menu_list > li {
-    flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
     margin: 0px 0px 30px 0px;
   }
   .menu_list > li::last-child {
@@ -236,40 +275,61 @@ body._lock {
 .button {
   font-family: "Dancing Script";
   width: 150px;
-  height: 32px;
+  height: 50px;
   border: none;
   text-align: center;
   display: inline-block;
   font-size: 16px;
   margin: 4px 2px;
   -webkit-transition-duration: 0.4s; /* Safari */
-  transition-duration: 0.4s;
+  -o-transition-duration: 0.4s;
+     transition-duration: 0.4s;
   cursor: pointer;
   position: relative;
   left: 50%;
-  transform: translate(-50%, 0);
+  -webkit-transform: translate(-50%, 0);
+      -ms-transform: translate(-50%, 0);
+          transform: translate(-50%, 0);
 }
 .button1 {
   font-size: 30px;
-  background-color: rgba(0, 0, 0, 0); 
+  background-color: transparent; 
   color: red; 
-  animation: animate_pulse 3s infinite;
+  opacity: 0;
+  -webkit-animation: animate_pulse 3s infinite; 
+          animation: animate_pulse 3s infinite;
 }
 
 .button1:hover {
   color: blue;
+  opacity: 1;
   font-size: 32px;
-  animation: none;
+  -webkit-animation: none;
+          animation: none;
 }
+
+
+@-webkit-keyframes animate_pulse {
+	0% {
+		opacity: 1;
+	}
+	50% {
+		opacity: 0;
+	}
+  100% {
+    opacity: 1;
+  }
+}
+
 
 @keyframes animate_pulse {
 	0% {
-		color: red;
+		opacity: 1;
 	}
 	50% {
-		color: rgba(0, 0, 0, 0);
+		opacity: 0;
 	}
   100% {
-    color: red;
+    opacity: 1;
   }
 }
