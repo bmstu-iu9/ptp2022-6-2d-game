@@ -35,9 +35,7 @@ h6 {
   font-weight: inherit;
   font-size: inherit;
 }
-html {
-  font-weight: 500;
-}
+
 body {
   background: url('img/black_hole2.2.jpg') 0 0 repeat fixed;
   background-size: cover;
@@ -49,6 +47,7 @@ body {
   max-width: 20em;
   padding: 25vh 1em;
   margin: auto;
+
 }
 
 .page {
@@ -59,6 +58,7 @@ body {
   -moz-background-clip: text;
   background-clip: text;
   background-attachment: fixed; 
+  font-weight: 700;
 }
 .page > * {
     color: transparent;
@@ -89,6 +89,7 @@ body._lock {
   padding: 30px;
   margin: 0px auto;
   font-family: "Jost";
+  
 }
 
 .page_section_3 .page_text1 {
