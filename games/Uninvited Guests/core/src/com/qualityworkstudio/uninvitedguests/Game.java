@@ -32,6 +32,7 @@ public class Game implements ApplicationListener {
 	private boolean isOver;
 	private float playSeconds = 120f;
 	private boolean[] completeLevels;
+	private int numberOfLevels = 3;
 
 	public Game(GameSettings settings) {
 		this.settings = settings;
@@ -76,7 +77,7 @@ public class Game implements ApplicationListener {
 			}
 		});
 		gameTimer.start(playSeconds);
-		completeLevels = new boolean[3];
+		completeLevels = new boolean[numberOfLevels];
 		setScreen(new SettingsScreen(this, Screens.MAIN_SCREEN));
 	}
 
