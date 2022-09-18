@@ -308,6 +308,26 @@ body._lock {
           animation: none;
 }
 
+.downloadButton {
+  display: block;
+  background: white;
+  color: black;
+  padding: 15px;
+  cursor: pointer;
+  text-decoration: none;
+  width: 200px;
+  text-align: center;
+  border-radius: 5px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-style: italic;
+  font-weight: lighter;
+  font-size: 20px
+}
+
+.downloadButton:hover {
+  background: #dcdcdc;
+}
+
 
 @-webkit-keyframes animate_pulse {
 	0% {
