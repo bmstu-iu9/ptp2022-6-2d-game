@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.qualityworkstudio.uninvitedguests.screens.Level1;
 import com.qualityworkstudio.uninvitedguests.screens.Level2;
 import com.qualityworkstudio.uninvitedguests.screens.Level3;
+import com.qualityworkstudio.uninvitedguests.screens.LoadingScreen;
 import com.qualityworkstudio.uninvitedguests.screens.MainScreen;
 import com.qualityworkstudio.uninvitedguests.screens.MapEditorScreen;
 import com.qualityworkstudio.uninvitedguests.screens.RatioAdjustmentScreen;
@@ -43,7 +44,6 @@ public class Game implements ApplicationListener {
 	 */
 	@Override
 	public void create () {
-		settings.setDeveloperMode(true);
 
 		assetManager = new AssetManager();
 		assetManager.load("loading_image1.png", Texture.class);
@@ -78,7 +78,11 @@ public class Game implements ApplicationListener {
 		});
 		gameTimer.start(playSeconds);
 		completeLevels = new boolean[numberOfLevels];
-		setScreen(new SettingsScreen(this, Screens.MAIN_SCREEN));
+		if (!settings.isBrowserMode()) {
+			setScreen(new LoadingScreen(this, Screens.MAIN_SCREEN, "loads/main.json"));
+		} else {
+			setScreen(new SettingsScreen(this, Screens.MAIN_SCREEN));
+		}
 	}
 
 	/**

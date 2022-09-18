@@ -65,8 +65,6 @@ public class MainScreen extends ScreenAdapter {
     private BasicDoor door;
     private InteractionArea levelMenuArea;
 
-    private Box2DDebugRenderer debugRenderer;
-
 
     public MainScreen(Game game) {
         this.game = game;
@@ -136,7 +134,6 @@ public class MainScreen extends ScreenAdapter {
             }
         });
         levelMenuArea.setPosition(door.getPosition());
-        debugRenderer = new Box2DDebugRenderer();
     }
 
     @Override
@@ -147,7 +144,7 @@ public class MainScreen extends ScreenAdapter {
 
     @Override
     public void render(float delta) {
-        world.step(1 / 60f, 6, 2);
+        world.step(delta, 6, 2);
         player.update(delta);
         door.update(delta);
         stage.act(delta);

@@ -16,6 +16,7 @@ public class HtmlLauncher extends GwtApplication {
         @Override
         public ApplicationListener createApplicationListener () {
                 GameSettings settings = new GameSettings();
+                settings.setBrowserMode(true);
                 return new Game(settings);
         }
 }

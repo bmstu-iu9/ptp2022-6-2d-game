@@ -34,6 +34,11 @@ public class GameSettings {
     private boolean mobileMode;
 
     /**
+     * The boolean value indicates whether the browser mode is enabled.
+     */
+    private boolean browserMode;
+
+    /**
      * The boolean value indicates whether the developer mode is enabled.
      */
     private boolean developerMode;
@@ -119,5 +124,23 @@ public class GameSettings {
      */
     public void setDeveloperMode(boolean developerMode) {
         this.developerMode = developerMode;
+    }
+
+    /**
+     * Sets the browser mode. Default is false.
+     *
+     * @param browserMode whether the browser mode is enabled.
+     */
+    public void setBrowserMode(boolean browserMode) {
+        this.browserMode = browserMode;
+    }
+
+    /**
+     * Returns true when the browser mode is enabled.
+     *
+     * @return whether the browser mode is enabled.
+     */
+    public boolean isBrowserMode() {
+        return browserMode;
     }
 }

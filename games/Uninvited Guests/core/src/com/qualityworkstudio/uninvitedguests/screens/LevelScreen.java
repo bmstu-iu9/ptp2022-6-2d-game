@@ -163,7 +163,7 @@ public class LevelScreen extends ScreenAdapter {
 
     @Override
     public void render(float delta) {
-        world.step(1 / 60f, 6, 2);
+        world.step(delta, 6, 2);
         stage.act(delta);
         completeTimer.update(delta);
         gameTimer.update(delta);
