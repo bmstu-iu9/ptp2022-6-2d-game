@@ -1,0 +1,34 @@
+{
+  "textureFiles": [
+    "character.png",
+    "character_shooting.png",
+    "green_door_part.png",
+    "yellow_door_part.png",
+    "red_door_part.png",
+    "joystick_bg.png",
+    "movement_joystick_bg.png",
+    "rotation_joystick_bg.png",
+    "joystick_stick.png",
+    "maps/lvl2_map_layer1.png",
+    "maps/lvl2_map_layer2.png",
+    "box.png",
+    "box_1x.png",
+    "box_x.png",
+    "box_x2.png",
+    "white_square.png",
+    "level_complete_font.png",
+    "shot.png"
+  ],
+
+  "bitmapFontFiles": [
+    "level_complete_font.fnt"
+  ],
+
+  "soundFiles": [
+
+  ],
+
+  "musicFiles": [
+
+  ]
+}
